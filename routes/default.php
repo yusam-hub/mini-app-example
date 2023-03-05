@@ -9,7 +9,7 @@ return function (RoutingConfigurator $routes) {
         ->controller(
             [\App\Http\Controllers\TestController::class, 'home']
         )
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET', 'POST', 'HEAD'])
     ;
 
     $routes
@@ -18,7 +18,7 @@ return function (RoutingConfigurator $routes) {
             [\App\Http\Controllers\TestController::class, 'hello']
         )
         ->requirements(['name' => '\d+'])
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET', 'POST', 'HEAD'])
     ;
 
     $routes
@@ -26,7 +26,7 @@ return function (RoutingConfigurator $routes) {
         ->controller(
             [\App\Http\Controllers\TestController::class, 'json']
         )
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET', 'POST', 'HEAD'])
     ;
 
     $routes
@@ -34,7 +34,7 @@ return function (RoutingConfigurator $routes) {
         ->controller(
             [\App\Http\Controllers\TestController::class, 'array']
         )
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET', 'POST', 'HEAD'])
     ;
 
     $routes
@@ -42,7 +42,7 @@ return function (RoutingConfigurator $routes) {
         ->controller(
             [\App\Http\Controllers\TestController::class, 'obj']
         )
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET',  'POST','HEAD'])
     ;
 
     $routes
@@ -50,6 +50,14 @@ return function (RoutingConfigurator $routes) {
         ->controller(
             \App\Http\Controllers\TestController::class
         )
-        ->methods(['GET', 'HEAD'])
+        ->methods(['GET',  'POST', 'HEAD'])
+    ;
+
+    $routes
+        ->add('exception', '/exception/{id}')
+        ->controller(
+            [\App\Http\Controllers\TestController::class, 'actionException']
+        )
+        ->methods(['GET', 'POST', 'HEAD'])
     ;
 };

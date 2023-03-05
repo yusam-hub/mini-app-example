@@ -71,14 +71,20 @@ class TestController extends BaseHttpController
         );
     }
 
-    public function array(Request $request, int $id): array
+    public function array(Request $request): array
     {
         return [
             'status' => 'ok',
             'data' => [
-                'id' => $id,
-                'id_get' => $request->get('id'),
+                'id' => $request->get('id'),
             ],
+        ];
+    }
+
+    public function actionException(Request $request): array
+    {
+        throw new \RuntimeException("Some error");
+        return [
         ];
     }
 

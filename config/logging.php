@@ -21,11 +21,11 @@ return [
 
             ]
         ],
-        'http-server-0' => [
+        'react-http-server-0' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
                 'logDir' => ROOT_DIR . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'logs',
-                'name' => 'http-server-0',
+                'name' => 'react-http-server-0',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,
                 'level' => app_ext_env('LOGGING_LEVEL', \Psr\Log\LogLevel::ERROR),

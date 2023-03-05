@@ -3578,10 +3578,11 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yusam-hub/app-ext.git",
-                "reference": "a31bbc9f703ecce14229d1f40e44d401005e8709"
+                "reference": "169ff47e5cc6a5691213d86be9e155153fde90a5"
             },
             "require": {
                 "ext-json": "*",
+                "ext-pcntl": "*",
                 "php": "^7.4|^8.0|^8.1|^8.2",
                 "psr/log": "^1.1",
                 "react/http": "^1.8",
@@ -3613,7 +3614,7 @@
                 "files": []
             },
             "description": "yusam-hub/app-ext",
-            "time": "2023-03-05T11:12:48+00:00"
+            "time": "2023-03-05T11:56:17+00:00"
         },
         {
             "name": "yusam-hub/captcha",
