@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/global-inc.php';
+
+$consoleKernel = new \App\Console\ConsoleKernel(ROOT_DIR);
+$consoleKernel->run();
+
