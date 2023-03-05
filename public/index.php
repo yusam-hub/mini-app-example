@@ -4,10 +4,6 @@ require __DIR__ . '/../global-inc.php';
 
 use Symfony\Component\HttpFoundation\Request;
 
-try {
-    $controllerKernel = new \YusamHub\AppExt\SymfonyExt\ControllerKernel(app()->getRootDir() . '/routes', Request::createFromGlobals(), 'default.php');
-    $controllerKernel->setLogger(app_ext_logger('app'));
-    $controllerKernel->runIndex();
-} catch (\Throwable $e) {
-    echo "Exception: " . $e->getMessage() , ' ' . get_class($e) .', ' . $e->getFile() . ':'. $e->getLine();
-}
+$controllerKernel = new \YusamHub\AppExt\SymfonyExt\ControllerKernel(app()->getRootDir() . '/routes', Request::createFromGlobals(), 'default.php');
+$controllerKernel->setLogger(app_ext_logger('app'));
+$controllerKernel->runIndex();
