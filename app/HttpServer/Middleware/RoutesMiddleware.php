@@ -33,9 +33,9 @@ class RoutesMiddleware
             array_merge(
                 $request->getServerParams(),
                 [
+                    'REQUEST_METHOD' => $request->getMethod(),
                     'HTTP_HOST' => $request->getUri()->getHost(),
                     'REQUEST_SCHEME' => $request->getUri()->getScheme(),
-                    'REQUEST_METHOD' => $request->getMethod(),
                     'QUERY_STRING' => $request->getUri()->getQuery(),
                     'REQUEST_URI' => $request->getUri()->getPath() . $request->getUri()->getQuery(),
                     'DOCUMENT_URI' => $request->getUri()->getPath(),
