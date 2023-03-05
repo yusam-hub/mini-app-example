@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 const ROOT_DIR = __DIR__;
 
 define('APP_START', microtime(true));

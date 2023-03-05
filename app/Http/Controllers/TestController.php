@@ -5,53 +5,28 @@ namespace App\Http\Controllers;
 use App\Classes\TestJsonObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use YusamHub\AppExt\SymfonyExt\Http\Controllers\BaseHttpController;
 
 class TestController extends BaseHttpController
 {
-    public function __invoke(Request $request, int $id): Response
+    public static function routesRegister(RoutingConfigurator $routes): void
     {
-        return new Response(
-            json_encode(
-                [
-                    'request' => [
-                        $request->getBasePath(),
-                        $request->getPathInfo(),
-                        $request->getRequestUri(),
-                        $request->getQueryString(),
-                        $request->query->all()
-                    ],
-                    'status' => 'ok',
-                    'data' => [
-                        'id' => $id,
-                        'id_get' => $request->get('id'),
-                    ],
-                    'duration' => sprintf("%.6F", microtime(true) - APP_START),
-                ],
-                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-            ),
-            200,
-            [
-                'Content-Type' => 'application/json',
-            ]
-        );
+        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/hello/{id}', 'actionHello');
+        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/json/{id}', 'actionJson');
+        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/array/{id}', 'actionArray');
+        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/obj/{id}', 'actionObj');
+        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/exception/{id}', 'actionException');
     }
 
-    public function home(Request $request): Response
-    {
-        return new Response(
-            __METHOD__
-        );
-    }
-
-    public function hello(Request $request, int $id): Response
+    public function actionHello(Request $request, int $id): Response
     {
         return new Response(
             $id
         );
     }
 
-    public function json(Request $request, int $id): Response
+    public function actionJson(Request $request, int $id): Response
     {
         return new Response(
             json_encode(
@@ -71,29 +46,34 @@ class TestController extends BaseHttpController
         );
     }
 
-    public function array(Request $request): array
+    public function actionArray(Request $request, int $id): array
     {
         return [
             'status' => 'ok',
             'data' => [
+                'args' => [
+                    $id
+                ],
                 'id' => $request->get('id'),
             ],
         ];
     }
 
-    public function actionException(Request $request): array
-    {
-        throw new \RuntimeException("Some error");
-        return [
-        ];
-    }
 
-    public function obj(Request $request, int $id): object
+    public function actionObj(Request $request, int $id): object
     {
         $source = '{"id":1}';
         $o = new TestJsonObject();
         $o->import($source);
         return (object) $o->toArray();
     }
+
+    public function actionException(Request $request, int $id): array
+    {
+        throw new \RuntimeException("Some error");
+        return [
+        ];
+    }
+
 
 }
