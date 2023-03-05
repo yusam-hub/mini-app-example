@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\Show;
 
-use App\Console\Commands\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use YusamHub\AppExt\SymfonyExt\Console\Commands\BaseConsoleCommand;
 
-class ShowEnvCommand extends BaseCommand
+class ShowEnvCommand extends BaseConsoleCommand
 {
     protected function configure(): void
     {

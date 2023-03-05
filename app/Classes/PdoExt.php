@@ -27,6 +27,6 @@ class PdoExt extends \YusamHub\DbExt\PdoExt
      */
     protected function debugLog(string $sql, array $bindings): void
     {
-        app_logger()->debug('[DB:'.strtoupper($this->connectionName) . "]: " . $sql, $bindings);
+        app_ext_logger()->debug('[DB:'.strtoupper($this->connectionName) . "]: " . $sql, $bindings);
     }
 }

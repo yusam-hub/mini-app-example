@@ -6,10 +6,15 @@ use App\HttpServer\Interfaces\HttpServerInterface;
 use App\HttpServer\Routes\DateTimeRoute;
 use App\Model\HttpServerConfigModel;
 use App\Traits\AppLoggingTrait;
+use YusamHub\AppExt\Interfaces\GetSetConsoleInterface;
+use YusamHub\AppExt\Interfaces\GetSetLoggerInterface;
+use YusamHub\AppExt\Traits\GetSetConsoleTrait;
+use YusamHub\AppExt\Traits\GetSetLoggerTrait;
 
-class HttpServer implements HttpServerInterface
+class HttpServer implements GetSetConsoleInterface, GetSetLoggerInterface
 {
-    use AppLoggingTrait;
+    use GetSetConsoleTrait;
+    use GetSetLoggerTrait;
     public const SUCCESS = 0;
     public const FAILURE = 1;
     protected HttpServerConfigModel $httpServerConfig;
@@ -37,10 +42,10 @@ class HttpServer implements HttpServerInterface
      */
     public function run(): int
     {
-        $this->logInfo(sprintf('Http Server [%s] started at [%s]', __CLASS__, date("Y-m-d H:i:s")));
-        $this->logInfo('--socket-mode: ' . $this->httpServerConfig->socketServerMode);
-        $this->logInfo('--worker-number: ' . $this->workerNumber);
-        $this->logInfo('--testing: ' . $this->testing);
+        $this->info(sprintf('Http Server [%s] started at [%s]', __CLASS__, date("Y-m-d H:i:s")));
+        $this->info('--socket-mode: ' . $this->httpServerConfig->socketServerMode);
+        $this->info('--worker-number: ' . $this->workerNumber);
+        $this->info('--testing: ' . $this->testing);
 
         $loop = \React\EventLoop\Loop::get();
 
@@ -53,9 +58,9 @@ class HttpServer implements HttpServerInterface
         );
 
         $http->on('error', function (\Exception $e) {
-            $this->logError($e->getMessage());
+            $this->error($e->getMessage());
             if ($e->getPrevious() !== null) {
-                $this->logError('PREVIOUS: ' . $e->getPrevious()->getMessage());
+                $this->error('PREVIOUS: ' . $e->getPrevious()->getMessage());
             }
         });
 
@@ -64,18 +69,18 @@ class HttpServer implements HttpServerInterface
             $socket = new \React\Socket\SocketServer($uri, [], $loop);
         } else {
             $dir = pathinfo($this->httpServerConfig->socketServerPathUri, PATHINFO_DIRNAME);
-            $this->logInfo('Checking dir: ' . $dir);
+            $this->info('Checking dir: ' . $dir);
             if (!file_exists($dir)) {
-                $this->logInfo('Creating dir: ' . $dir);
+                $this->info('Creating dir: ' . $dir);
                 $f = mkdir(pathinfo($this->httpServerConfig->socketServerPathUri, PATHINFO_DIRNAME), 0777, true);
                 if ($f) {
-                    $this->logInfo('Success dir: ' . $dir);
+                    $this->info('Success dir: ' . $dir);
                 } else {
-                    $this->logError(sprintf('Dir [%s] not created', $dir));
+                    $this->error(sprintf('Dir [%s] not created', $dir));
                     return self::FAILURE;
                 }
             } else {
-                $this->logInfo('Success dir: ' . $dir);
+                $this->info('Success dir: ' . $dir);
             }
 
             $workerFile = sprintf($this->httpServerConfig->socketServerPathUri,  $this->workerNumber);
@@ -88,21 +93,21 @@ class HttpServer implements HttpServerInterface
 
             if (file_exists($workerFile) && is_readable($workerFile)) {
                 if (chmod($workerFile, 0777) === false) {
-                    $this->logError(sprintf('Failed to change permission for socket file [%s]', $workerFile));
+                    $this->error(sprintf('Failed to change permission for socket file [%s]', $workerFile));
                     return self::FAILURE;
                 }
             } else {
-                $this->logError(sprintf('Unix socket file [%s] not found', $workerFile));
+                $this->error(sprintf('Unix socket file [%s] not found', $workerFile));
                 return self::FAILURE;
             }
         }
-        $this->logInfo('LISTEN: ' . $uri);
+        $this->info('LISTEN: ' . $uri);
 
         $stop_func = function ($signal) use ($loop, $socket, &$stop_func) {
             $loop->removeSignal($signal, $stop_func);
-            $this->logInfo(sprintf('Unix signal [%d]', $signal));
+            $this->info(sprintf('Unix signal [%d]', $signal));
             $socket->close();
-            $this->logInfo(sprintf('Http Server [%s] finished at [%s]', __CLASS__, date("Y-m-d H:i:s")));
+            $this->info(sprintf('Http Server [%s] finished at [%s]', __CLASS__, date("Y-m-d H:i:s")));
             if ($this->httpServerConfig->socketServerMode === $this->httpServerConfig::SOCKET_SERVER_MODE_UNIX_FILE) {
                 unlink(sprintf($this->httpServerConfig->socketServerPathUri,  $this->workerNumber));
             }

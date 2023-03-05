@@ -14,9 +14,9 @@ if (!defined('YUSAM_HUB_DEBUG_LOG_DIR')) {
 
 require __DIR__ . '/vendor/autoload.php';
 
-function app(): \App\AppKernel
+function app():\YusamHub\AppExt\SymfonyExt\AppKernel
 {
-    return \App\AppKernel::instance([
+    return \YusamHub\AppExt\SymfonyExt\AppKernel::instance([
         'rootDir' => ROOT_DIR,
         'appDir' => ROOT_DIR . DIRECTORY_SEPARATOR . 'app',
         'configDir' => ROOT_DIR . DIRECTORY_SEPARATOR . 'config',

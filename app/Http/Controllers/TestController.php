@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Classes\TestJsonObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use YusamHub\AppExt\SymfonyExt\Http\Controllers\BaseHttpController;
 
-class TestController extends BaseController
+class TestController extends BaseHttpController
 {
     public function __invoke(Request $request, int $id): Response
     {

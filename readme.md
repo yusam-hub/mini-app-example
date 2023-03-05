@@ -34,9 +34,9 @@
 
         curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://localhost
         curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc
-        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/hello/1
-        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/hello2/1
-        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/hello3/1
+        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/json/1
+        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/array/1
+        curl --unix-socket /tmp/http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/obj/1
 
 ####
     curl -vvv -X GET http://dev.vk-api.wodcom.online.loc/favicon.ico

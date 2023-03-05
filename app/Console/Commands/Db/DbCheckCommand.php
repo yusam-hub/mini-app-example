@@ -3,13 +3,13 @@
 namespace App\Console\Commands\Db;
 
 use App\Classes\PdoExt;
-use App\Console\Commands\BaseCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use YusamHub\AppExt\SymfonyExt\Console\Commands\BaseConsoleCommand;
 
-class DbCheckCommand extends BaseCommand
+class DbCheckCommand extends BaseConsoleCommand
 {
     protected function configure(): void
     {

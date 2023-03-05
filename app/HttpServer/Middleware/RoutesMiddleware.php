@@ -2,18 +2,18 @@
 
 namespace App\HttpServer\Middleware;
 
-use App\HttpServer\Interfaces\HttpServerInterface;
-use Fig\Http\Message\StatusCodeInterface;
+use App\HttpServer\HttpServer;
 use Psr\Http\Message\ServerRequestInterface;
-use React\EventLoop\Loop;
 use React\Http\Message\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use YusamHub\AppExt\SymfonyExt\ControllerKernel;
 
 class RoutesMiddleware
 {
-    protected HttpServerInterface $httpServer;
+    protected HttpServer $httpServer;
 
-    public function __construct(HttpServerInterface $httpServer)
+    public function __construct(HttpServer $httpServer)
     {
         $this->httpServer = $httpServer;
     }
@@ -24,6 +24,7 @@ class RoutesMiddleware
      */
     public function __invoke(ServerRequestInterface $request)
     {
+
         $symphonyRequest = new Request(
             $request->getQueryParams(),
             (array) $request->getParsedBody(),
@@ -44,7 +45,12 @@ class RoutesMiddleware
             $request->getBody()->getContents()
         );
 
-        $controllerKernel = new \App\Http\ControllerKernel(
+        $this->httpServer->debug("REQUEST: " . $symphonyRequest->getMethod() . ' ' . $symphonyRequest->getRequestUri(), [
+            'query' => $request->getQueryParams(),
+            'params' => $symphonyRequest->request->all(),
+        ]);
+
+        $controllerKernel = new ControllerKernel(
             app()->getRootDir() . '/routes',
             $symphonyRequest,
             'default.php',
@@ -53,10 +59,18 @@ class RoutesMiddleware
 
         try {
 
-            return $controllerKernel->fetchResponse();
+            $response = $controllerKernel->fetchResponse();
+
+            $this->httpServer->debug(sprintf("RESPONSE (%d): %s", $response->getStatusCode(), $response->getBody()->getContents()));
+
+            return $response;
 
         } catch (\Throwable $e) {
-            $response = [
+
+            $responseStatusCode = 500;
+            $responseStatusMessage = "Internal Server Error";
+
+            $this->httpServer->error(sprintf("RESPONSE (%d): %s", $responseStatusCode, $responseStatusMessage), [
                 'error' => [
                     'message' => $e->getMessage(),
                     'code' => $e->getCode(),
@@ -64,8 +78,9 @@ class RoutesMiddleware
                     'line' => $e->getLine(),
                     'class' => get_class($e),
                 ],
-            ];
-            return Response::plaintext(print_r($response, true))->withStatus(417);
+            ]);
+
+            return Response::plaintext($responseStatusMessage)->withStatus($responseStatusCode);
         }
     }
 }

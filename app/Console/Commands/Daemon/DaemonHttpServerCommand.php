@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\Daemon;
 
-use App\Console\Commands\BaseCommand;
 use App\HttpServer\HttpServer;
 use App\Model\HttpServerConfigModel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use YusamHub\AppExt\SymfonyExt\Console\Commands\BaseConsoleCommand;
 
-class DaemonHttpServerCommand extends BaseCommand
+class DaemonHttpServerCommand extends BaseConsoleCommand
 {
     protected function configure(): void
     {
@@ -47,11 +47,12 @@ class DaemonHttpServerCommand extends BaseCommand
             $testing
         );
 
-        $httpServer->logSetOutput($output);
-
-        $httpServer->logSetLogger(
-            //app_logger('http-server-' . $workerNumber)
-            app_logger('queue-logging', ['channel' => 'http-server-' . $workerNumber])
+        $httpServer->setConsoleOutput($output);
+        $httpServer->setConsoleOutputEnabled(true);
+        $httpServer->setLogger(
+            app_ext_config('app.isDebugging')
+                ? app_ext_logger('http-server-' . $workerNumber)
+                : app_ext_logger('queue-logging', ['channel' => 'http-server-' . $workerNumber])
         );
 
         return $httpServer->run();

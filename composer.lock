@@ -3578,12 +3578,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yusam-hub/app-ext.git",
-                "reference": "f18a98384085fcf8ba47f98310264771a7acaa4c"
+                "reference": "a31bbc9f703ecce14229d1f40e44d401005e8709"
             },
             "require": {
                 "ext-json": "*",
                 "php": "^7.4|^8.0|^8.1|^8.2",
                 "psr/log": "^1.1",
+                "react/http": "^1.8",
+                "symfony/config": "^5.4",
+                "symfony/console": "^5.4",
+                "symfony/finder": "^5.4",
+                "symfony/http-foundation": "^5.4",
+                "symfony/http-kernel": "^5.4",
+                "symfony/routing": "^5.4",
                 "vlucas/phpdotenv": "^5.5"
             },
             "require-dev": {
@@ -3606,7 +3613,7 @@
                 "files": []
             },
             "description": "yusam-hub/app-ext",
-            "time": "2023-03-03T03:56:28+00:00"
+            "time": "2023-03-05T11:12:48+00:00"
         },
         {
             "name": "yusam-hub/captcha",

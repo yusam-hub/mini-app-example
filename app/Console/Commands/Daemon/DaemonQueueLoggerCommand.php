@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands\Daemon;
 
-use App\Console\Commands\BaseCommand;
 use App\Queue\QueueDaemon;
 use App\Queue\QueueLogger;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use YusamHub\AppExt\SymfonyExt\Console\Commands\BaseConsoleCommand;
 
-class DaemonQueueLoggerCommand extends BaseCommand
+class DaemonQueueLoggerCommand extends BaseConsoleCommand
 {
     protected function configure(): void
     {
