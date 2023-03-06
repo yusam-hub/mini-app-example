@@ -4,6 +4,7 @@
 require __DIR__ . '/global-inc.php';
 
 //\YusamHub\AppExt\SymfonyExt\ConsoleKernel::$isDebugging = true;
+
 $consoleKernel = new \YusamHub\AppExt\SymfonyExt\ConsoleKernel(app()->getRootDir());
 $consoleKernel->run();
 
