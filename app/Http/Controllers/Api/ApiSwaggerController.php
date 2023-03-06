@@ -17,22 +17,13 @@ class ApiSwaggerController extends BaseHttpController
      */
     public static function routesRegister(RoutingConfigurator $routes): void
     {
-        static::routesAdd($routes, ['GET'],'/api/front', 'getApiHome');
-        static::routesAdd($routes, ['GET'],'/api/back', 'getApiHome');
         static::routesAdd($routes, ['GET'],'/swagger-ui/front', 'getSwaggerUiFront');
         static::routesAdd($routes, ['GET'],'/swagger-ui/back', 'getSwaggerUiBack');
         static::routesAdd($routes, ['GET'],'/swagger-ui/front/open-api', 'getSwaggerUiFrontOpenApi');
         static::routesAdd($routes, ['GET'],'/swagger-ui/back/open-api', 'getSwaggerUiBackOpenApi');
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function getApiHome(Request $request): array
-    {
-        return [];
-    }
+
 
     /**
      * @param Request $request

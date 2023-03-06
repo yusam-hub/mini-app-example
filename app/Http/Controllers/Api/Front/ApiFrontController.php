@@ -11,7 +11,15 @@ class ApiFrontController extends BaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/hello/{id}', 'actionHello');
+        static::routesAdd($routes, ['GET'],'/api/front', 'getApiHome');
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getApiHome(Request $request): array
+    {
+        return [];
+    }
 }
