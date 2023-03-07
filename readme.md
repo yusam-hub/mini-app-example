@@ -20,13 +20,21 @@
 
 #### curl ip|domain:port
 
-        curl -vvv -X GET http://localhost:18080
+    curl -vvv -X GET http://localhost:18080
 
 #### curl unix-socket
 
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://localhost
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/json/1
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/array/1
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/obj/1
-        curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X POST http://mini-api-php-app-8074.loc/array/1?q=1 -F "foo=test"
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://localhost
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/json/1
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/array/1
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/obj/1
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X POST http://mini-api-php-app-8074.loc/array/1?q=1 -F "foo=test"
+
+#### dockers
+
+    docker exec -it yusam-php74 sh
+        cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app
+        php console daemon:react-http-server
+
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console daemon:react-http-server"
