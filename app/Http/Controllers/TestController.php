@@ -12,11 +12,11 @@ class TestController extends BaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/hello/{id}', 'actionHello');
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/json/{id}', 'actionJson');
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/array/{id}', 'actionArray');
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/obj/{id}', 'actionObj');
-        static::routesAdd($routes, ['GET', 'POST', 'HEAD'],'/exception/{id}', 'actionException');
+        static::routesAdd($routes, ['OPTIONS', 'GET', 'POST'],'/hello/{id}', 'actionHello');
+        static::routesAdd($routes, ['OPTIONS', 'GET', 'POST'],'/json/{id}', 'actionJson');
+        static::routesAdd($routes, ['OPTIONS', 'GET', 'POST'],'/array/{id}', 'actionArray');
+        static::routesAdd($routes, ['OPTIONS', 'GET', 'POST'],'/obj/{id}', 'actionObj');
+        static::routesAdd($routes, ['OPTIONS', 'GET', 'POST'],'/exception/{id}', 'actionException');
     }
 
     public function actionHello(Request $request, int $id): Response

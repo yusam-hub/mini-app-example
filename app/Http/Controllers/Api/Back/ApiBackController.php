@@ -11,7 +11,7 @@ class ApiBackController extends BaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
-        static::routesAdd($routes, ['GET'],'/api/back', 'getApiHome');
+        static::routesAdd($routes, ['OPTIONS', 'GET'],'/api/back', 'getApiHome');
     }
 
     /**

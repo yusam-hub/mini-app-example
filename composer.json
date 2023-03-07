@@ -44,17 +44,6 @@
     "ext-json": "*",
     "ext-redis": "*",
 
-    "react/http": "^1.8",
-    "react/mysql": "^0.5.7",
-
-    "symfony/console": "*",
-    "symfony/finder": "*",
-    "symfony/http-kernel": "*",
-    "symfony/http-foundation": "*",
-    "symfony/routing": "*",
-    "symfony/config": "*",
-
-    "guzzlehttp/guzzle": "*",
     "yusam-hub/debug": "dev-master",
     "yusam-hub/curl-ext": "dev-master",
     "yusam-hub/db-ext": "dev-master",
