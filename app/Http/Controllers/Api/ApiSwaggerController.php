@@ -23,8 +23,6 @@ class ApiSwaggerController extends BaseHttpController
         static::routesAdd($routes, ['GET'],'/swagger-ui/back/open-api', 'getSwaggerUiBackOpenApi');
     }
 
-
-
     /**
      * @param Request $request
      * @param string $subPath
