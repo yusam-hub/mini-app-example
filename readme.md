@@ -24,9 +24,4 @@
 
 #### curl unix-socket
 
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://localhost
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/json/1
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/array/1
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://mini-api-php-app-8074.loc/obj/1
-    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X POST http://mini-api-php-app-8074.loc/array/1?q=1 -F "foo=test"
+    curl --unix-socket /tmp/react-http-server-socks/server.worker0.sock -vvv -X GET http://localhost.loc

@@ -14,8 +14,9 @@
 
 ###### console daemon
 
-    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console daemon:rabbit-mq-consumer"
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console daemon:queue-logger"
+
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console daemon:rabbit-mq-consumer"
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console daemon:react-http-server"
 
 ###### console openapi + swagger-ui
@@ -35,6 +36,5 @@
 
 #### todo
     
-    -   добавить RabbitMq сервис
     -   добавить проверку token и sign для api
-    -   добавить использования много токенов через Db
+    -   добавить таблицу для регистрации и проверки токенов

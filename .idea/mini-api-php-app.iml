@@ -92,6 +92,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/swagger-api/swagger-ui" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/zircote/swagger-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bunny/bunny" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/clue/mq-react" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
