@@ -27,13 +27,13 @@
       "type": "git",
       "url": "https://github.com/yusam-hub/daemon.git"
     },
-    "yusam-hub/app-ext": {
-      "type": "git",
-      "url": "https://github.com/yusam-hub/app-ext.git"
-    },
     "yusam-hub/redis-ext": {
       "type": "git",
       "url": "https://github.com/yusam-hub/redis-ext.git"
+    },
+    "yusam-hub/app-ext": {
+      "type": "git",
+      "url": "https://github.com/yusam-hub/app-ext.git"
     }
   },
   "require": {
@@ -50,9 +50,8 @@
     "yusam-hub/json-ext": "dev-master",
     "yusam-hub/captcha": "dev-master",
     "yusam-hub/daemon": "dev-master",
-    "yusam-hub/app-ext": "dev-master",
-    "yusam-hub/redis-ext": "dev-master"
-
+    "yusam-hub/redis-ext": "dev-master",
+    "yusam-hub/app-ext": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
