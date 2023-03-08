@@ -21,7 +21,7 @@ class DbMigrateCommand extends BaseConsoleCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $migrations = new PdoExtMigrations(new PdoExt(), app()->getDatabaseMigrationDir());
+        $migrations = new PdoExtMigrations(new PdoExt(), app()->getDatabaseDir('/migrations'), app()->getStorageDir('/app/migrations'));
         $migrations->migrate();
 
         return self::SUCCESS;

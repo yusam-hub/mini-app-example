@@ -7,7 +7,7 @@ return [
         'app' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
-                'logDir' => ROOT_DIR . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'logs',
+                'logDir' => app()->getStorageDir('/logs'),
                 'name' => 'app',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,
@@ -24,7 +24,7 @@ return [
         'react-http-server-0' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
-                'logDir' => ROOT_DIR . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'logs',
+                'logDir' => app()->getStorageDir('/logs'),
                 'name' => 'react-http-server-0',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,

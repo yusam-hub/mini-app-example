@@ -2,5 +2,5 @@
 
 return [
     'default' => 'default.php',
-    'path' => app()->getRootDir() . '/routes',
+    'path' => app()->getRoutesDir(),
 ];
