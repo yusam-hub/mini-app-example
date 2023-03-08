@@ -9,6 +9,4 @@ return function (RoutingConfigurator $routes) {
     \App\Http\Controllers\Api\Back\ApiBackController::routesRegister($routes);
     \App\Http\Controllers\Api\Front\ApiFrontController::routesRegister($routes);
 
-    \App\Http\Controllers\TestController::routesRegister($routes);
-
 };
