@@ -8,5 +8,6 @@ return [
         'socketServerMode' => \YusamHub\AppExt\ReactHttpServer\HttpServerConfigModel::SOCKET_SERVER_MODE_UNIX_FILE,
         'socketServerPathUri' => '/tmp/react-http-server-socks/server.worker%d.sock',
         'socketServerIpUri' => '0.0.0.0:1808%d',
+        'tmpFileDir' => '/tmp/react-http-server-files',
     ],
 ];
