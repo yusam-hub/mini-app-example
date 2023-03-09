@@ -33,8 +33,3 @@
 
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console show:env"
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-api-php-app && php console show:server"
-
-#### todo
-    
-    -   добавить проверку token и sign для api
-    -   добавить таблицу для регистрации и проверки токенов
