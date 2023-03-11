@@ -22,6 +22,6 @@ class QueueLoggerJob extends DaemonJob
 
     public function handle(Daemon $daemon): void
     {
-        app_ext_logger($this->extra['channel']??'app')->log($this->level, $this->message, $this->context);
+        app_ext_logger($this->extra['channel']??null)->log($this->level, $this->message, $this->context);
     }
 }

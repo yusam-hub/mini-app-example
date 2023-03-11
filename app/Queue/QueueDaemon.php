@@ -12,17 +12,18 @@ class QueueDaemon extends DaemonQueue
     protected RedisExt $redisExt;
 
     /**
-     * @throws \RedisException
+     * @param DaemonConsole $daemonConsole
+     * @param bool $isLoop
+     * @param string $queue
      */
     public function __construct(DaemonConsole $daemonConsole, bool $isLoop, string $queue)
     {
-        $config = (array) app_ext_config("redis.connections." .  app_ext_config("redis.default"));
-        $this->redisExt = new RedisExt($config??[]);
+        $this->redisExt = app_ext_redis_global()->newRedisExt();
         parent::__construct($daemonConsole, $isLoop, $queue);
     }
 
     /**
-     * @throws \RedisException
+     * @return DaemonJobInterface|null
      */
     protected function getNextJob(): ?DaemonJobInterface
     {

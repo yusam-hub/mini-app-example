@@ -12,18 +12,21 @@ class QueueLogger extends Logger
     protected RedisExt $redisExt;
 
     protected array $config;
+
     /**
-     * @throws \RedisException
+     * @param array $config
      */
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $redisConfig = (array) app_ext_config("redis.connections." .  app_ext_config("redis.default"));
-        $this->redisExt = new RedisExt($redisConfig??[]);
+        $this->redisExt = app_ext_redis_global()->newRedisExt();
     }
 
     /**
-     * @throws \RedisException
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {
