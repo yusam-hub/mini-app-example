@@ -7,7 +7,7 @@ return [
         'app' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
-                'logDir' => app()->getStorageDir('/logs'),
+                'logDir' => app_ext()->getStorageDir('/logs'),
                 'name' => 'app',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,
@@ -24,7 +24,7 @@ return [
         'react-http-server-0' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
-                'logDir' => app()->getStorageDir('/logs'),
+                'logDir' => app_ext()->getStorageDir('/logs'),
                 'name' => 'react-http-server-0',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,
@@ -35,7 +35,7 @@ return [
         'rabbit-mq-consumer-0' => [
             'class' => \YusamHub\AppExt\Logger\FileLogger::class,
             'config' => [
-                'logDir' => app()->getStorageDir('/logs'),
+                'logDir' => app_ext()->getStorageDir('/logs'),
                 'name' => 'rabbit-mq-consumer-0',
                 'fileMaxSize' => 10 * 1024 * 1024,
                 'fileRotatorCount' => 10,

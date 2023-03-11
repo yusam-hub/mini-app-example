@@ -15,9 +15,9 @@ return [
 
     'migrations' => [
         'paths' => [
-            app()->getRootDir('/vendor/yusam-hub/app-ext/database/migrations'),
-            app()->getDatabaseDir('/migrations'),
+            app_ext()->getRootDir('/vendor/yusam-hub/app-ext/database/migrations'),
+            app_ext()->getDatabaseDir('/migrations'),
         ],
-        'savedDir' => app()->getStorageDir('/app/migrations')
+        'savedDir' => app_ext()->getStorageDir('/app/migrations')
     ],
 ];

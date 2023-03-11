@@ -19,7 +19,7 @@ class ApiSwaggerController extends \YusamHub\AppExt\SymfonyExt\Http\Controllers\
     {
         return [
             __DIR__ . DIRECTORY_SEPARATOR . ucfirst($module),
-            app()->getRootDir('/vendor/yusam-hub/app-ext/src/SymfonyExt/Http/Controllers/Api/' . ucfirst($module))
+            app_ext()->getRootDir('/vendor/yusam-hub/app-ext/src/SymfonyExt/Http/Controllers/Api/' . ucfirst($module))
         ];
     }
 }
