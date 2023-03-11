@@ -94,6 +94,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/zircote/swagger-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bunny/bunny" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/clue/mq-react" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yusam-hub/validator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

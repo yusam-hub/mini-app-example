@@ -18,7 +18,7 @@ class QueueDaemon extends DaemonQueue
      */
     public function __construct(DaemonConsole $daemonConsole, bool $isLoop, string $queue)
     {
-        $this->redisExt = app_ext_redis_global()->newRedisExt();
+        $this->redisExt = app_ext_redis_global()->redisExt();
         parent::__construct($daemonConsole, $isLoop, $queue);
     }
 

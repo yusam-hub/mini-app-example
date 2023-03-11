@@ -19,7 +19,7 @@ class QueueLogger extends Logger
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $this->redisExt = app_ext_redis_global()->newRedisExt();
+        $this->redisExt = app_ext_redis_global()->redisExt();
     }
 
     /**

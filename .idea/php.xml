@@ -101,6 +101,7 @@
       <path value="$PROJECT_DIR$/vendor/zircote/swagger-php" />
       <path value="$PROJECT_DIR$/vendor/bunny/bunny" />
       <path value="$PROJECT_DIR$/vendor/clue/mq-react" />
+      <path value="$PROJECT_DIR$/vendor/yusam-hub/validator" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
