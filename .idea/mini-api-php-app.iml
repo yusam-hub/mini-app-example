@@ -95,6 +95,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/bunny/bunny" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/clue/mq-react" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yusam-hub/validator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/smarty/smarty" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yusam-hub/smarty-ext" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yusam-hub/php-compatibility" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

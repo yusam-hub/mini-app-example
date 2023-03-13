@@ -102,6 +102,9 @@
       <path value="$PROJECT_DIR$/vendor/bunny/bunny" />
       <path value="$PROJECT_DIR$/vendor/clue/mq-react" />
       <path value="$PROJECT_DIR$/vendor/yusam-hub/validator" />
+      <path value="$PROJECT_DIR$/vendor/smarty/smarty" />
+      <path value="$PROJECT_DIR$/vendor/yusam-hub/smarty-ext" />
+      <path value="$PROJECT_DIR$/vendor/yusam-hub/php-compatibility" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
