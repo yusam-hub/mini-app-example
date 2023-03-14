@@ -32,6 +32,17 @@
     ],
     "/admin": [
       {
+        "title": "Common",
+        "href": "#",
+        "menu": [
+          {
+            "title": "Example Base",
+            "href": "/admin/common/example-base",
+            "menu": []
+          }
+        ]
+      },
+      {
         "title": "Admin 1",
         "href": "/admin_1",
         "menu": [
