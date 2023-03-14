@@ -2,24 +2,21 @@
 {str_replace search='/public' replace=""}
 <link rel="stylesheet" href="/public/static/dev/css/menu-main.css">
 {/str_replace}
-
+{tpl_menu_main_loader varName="tpl_menu_main"}
 <div id="menu_root">
 	<div class="container">
 		<div class="grid grid-17">
 			<ul id="menu_main">
-                {if (isset($yusamCommonComposer.mainMenu.options[$yusamCommonComposer.mainMenu.selected]))}
+                {if (isset($tpl_menu_main.groupDefault, $tpl_menu_main.groups, $tpl_menu_main.itemsByGroup))}
                     <li>
-                        <a href="{$yusamCommonComposer.mainMenu.options[$yusamCommonComposer.mainMenu.selected].href}" title="{t}ui.main_menu.home{/t}">^</a>
-
+                        <a href="/" title="{t}ui.main_menu.home{/t}">^</a>
                         <select size="1" onchange="window.location.href = this.options[this.selectedIndex].value;">
-                            {foreach from=$yusamCommonComposer.mainMenu.options key="key" item="option"}
-                                 <option value="{$option.href}" {if ($yusamCommonComposer.mainMenu.selected == $key)}selected{/if}>{t}{$option.title}{/t}</option>
+                            {foreach from=$tpl_menu_main.groups key="key" item="option"}
+                                 <option value="{$option.href}" {if ($tpl_menu_main.groupDefault == $key)}selected{/if}>{t}{$option.title}{/t}</option>
                             {/foreach}
                         </select>
                     </li>
-                    {if (isset($yusamCommonComposer.mainMenu.options[$yusamCommonComposer.mainMenu.selected].menu))}
-                        tpl_menu_builder menu=$yusamCommonComposer.mainMenu.options[$yusamCommonComposer.mainMenu.selected].menu
-                    {/if}
+                     {tpl_menu_main_builder menu=$tpl_menu_main.itemsByGroup[$tpl_menu_main.groupDefault]}
                 {/if}
 
                 {if (isset($yusamCommonComposer.mainMenu.user) && !empty($yusamCommonComposer.mainMenu.user))}

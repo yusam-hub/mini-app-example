@@ -1,0 +1,40 @@
+{
+  "groupDefault": "default",
+  "groups": {
+    "default": {
+      "title": "Главная",
+      "href": "/"
+    }
+  },
+  "itemsByGroup": {
+    "default": [
+      {
+        "title": "Модуль",
+        "href": "/",
+        "menu": []
+      },
+      {
+        "title": "Menu 1",
+        "href": "/menu_1",
+        "menu": [
+          {
+            "title": "Sub Menu 1 - 1",
+            "href": "/menu_1/menu1_1",
+            "menu": []
+          },
+          {
+            "title": "Sub Menu 1 - 2",
+            "href": "/menu_1/menu_1_2",
+            "menu": [
+              {
+                "title": "Sub Menu 1 - 2 - 1",
+                "href": "/menu_1/menu_1_2/menu_1_2_1",
+                "menu": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
