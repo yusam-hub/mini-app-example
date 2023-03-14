@@ -4181,7 +4181,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yusam-hub/smarty-ext.git",
-                "reference": "616aed3037bd5d1ef55394dc5072c13efd507712"
+                "reference": "f4ffceddbce25997bd3b13f74726ce64da21d29c"
             },
             "require": {
                 "php": "^7.4|^8.0|^8.1|^8.2",
@@ -4206,7 +4206,7 @@
                 "files": []
             },
             "description": "yusam-hub/smarty-ext",
-            "time": "2023-03-14T05:31:49+00:00"
+            "time": "2023-03-14T05:50:57+00:00"
         },
         {
             "name": "yusam-hub/validator",
