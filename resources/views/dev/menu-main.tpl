@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="/public/static/dev/css/menu-main.css">
 {/str_replace}
 {tpl_menu_main_loader varName="tpl_menu_main" requestPath=$_request.path}
+{tpl_locales_loader varName="tpl_locales"}
+{tpl_currencies_loader varName="tpl_currencies"}
 <div id="menu_root">
 	<div class="container">
 		<div class="grid grid-17">
@@ -18,31 +20,32 @@
                     </li>
                      {tpl_menu_main_builder menu=$tpl_menu_main.details[$tpl_menu_main.pathDefault]}
                 {/if}
-
-                {if (isset($yusamCommonComposer.mainMenu.user) && !empty($yusamCommonComposer.mainMenu.user))}
                 <li class="menu_float_right">
-                    <a href="{$yusamCommonComposer.mainMenu.user.href}">{t}{$yusamCommonComposer.mainMenu.user.title}{/t}</a>
+                    <a href="#">{t}User{/t}</a>
                     <ul class="menu_float_right">
-                        {section name=i loop=$yusamCommonComposer.mainMenu.user.menu}
-                        <li><a href="{$yusamCommonComposer.mainMenu.user.menu[i].href}">{t}{$yusamCommonComposer.mainMenu.user.menu[i].title}{/t}</a></li>
-                        {/section}
+                        <li><a href="/user/profile">{t}Profile{/t}</a></li>
+                        <li><a href="/user/settings">{t}Settings{/t}</a></li>
+                        <li><a href="/user/logout">{t}Logout{/t}</a></li>
                     </ul>
                 </li>
+                {if (isset($tpl_locales))}
+                <li class="menu_float_right">
+                    <select size="1" onchange="window.location.href = '/locale?id='+this.options[this.selectedIndex].value+'&return='+window.location.pathname;">
+                        {foreach from=$tpl_locales.items key="key" item="title"}
+                            <option value="{$key}" {if ($tpl_locales.selected == $key)}selected{/if}>{t}{$title}{/t}</option>
+                        {/foreach}
+                    </select>
+                </li>
                 {/if}
+                {if (isset($tpl_currencies))}
                 <li class="menu_float_right">
-                    <select size="1" onchange="window.location.href = '/locale?locale_id='+this.options[this.selectedIndex].value+'&return='+window.location.pathname;">
-                        {section name=i loop=$defaultComposer.locales}
-                            <option value="{$defaultComposer.locales[i]}" {if ($defaultComposer.locales[i] == $defaultComposer.locale)}selected{/if}>{t}ui.locale.{$defaultComposer.locales[i]}{/t}</option>
-                        {/section}
+                    <select size="1" onchange="window.location.href = '/currency?id='+this.options[this.selectedIndex].value+'&return='+window.location.pathname;">
+                        {foreach from=$tpl_currencies.items key="key" item="title"}
+                            <option value="{$key}" {if ($tpl_currencies.selected == $key)}selected{/if}>{t}{$title}{/t}</option>
+                        {/foreach}
                     </select>
                 </li>
-                <li class="menu_float_right">
-                    <select size="1" onchange="window.location.href = '/currency?currency_id='+this.options[this.selectedIndex].value+'&return='+window.location.pathname;">
-                        {section name=i loop=$defaultComposer.currencies}
-                            <option value="{$defaultComposer.currencies[i]}" {if ($defaultComposer.currencies[i] == $defaultComposer.currency)}selected{/if}>{$defaultComposer.currencies[i]}</option>
-                        {/section}
-                    </select>
-                </li>
+                {/if}
 			</ul>
 
 		</div>
