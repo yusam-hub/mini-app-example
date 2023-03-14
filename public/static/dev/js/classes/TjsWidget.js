@@ -6,7 +6,7 @@ let TjsWidget = function(tagId, options = {}) {
         'onDataChanged' : function(el,data){},
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this.el = document.getElementById(tagId);
 

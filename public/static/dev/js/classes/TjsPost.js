@@ -47,7 +47,6 @@ TjsPost.prototype = {
             xhr.responseType = 'json';
             xhr.open('POST', window.location.protocol + "//" + window.location.hostname + requestUri);
             xhr.setRequestHeader('Accept', 'application/json');
-            //xhr.setRequestHeader('X-CSRF-TOKEN', self.jsYusam.headMetaContent('csrf-token'));
 
             if (requestDataIsFormData === true) {
                 xhr.send(requestData);

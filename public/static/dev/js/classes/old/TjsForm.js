@@ -1,7 +1,5 @@
 let TjsForm = function(formName, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     this.jsMsg = window.jsMsg;
 
     this.jsPost = window.jsPost;
@@ -17,14 +15,14 @@ let TjsForm = function(formName, options = {}) {
         'formAction': '#',
         'formMethod': 'post',
         'formActionUri' : window.location.pathname + window.location.search.toString(),
-        'formActionConfirmMessage' : window.jsLangFunc('TjsMsg','content.messagePerform'),
+        'formActionConfirmMessage' : js_lang_func('TjsMsg','content.messagePerform'),
         'onFormActionSave' : function(res){
             //console.log("jsForm.onFormActionSave", response);
         },
         'formFieldDefs': {},
     }
 
-    this.options = this.jsYusam.mergeDeep(this.defOptions, options);
+    this.options = js_object_merge_deep(this.defOptions, options);
 
     this._init();
 
@@ -58,7 +56,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldValue' : '',
             'fieldId' : fieldName,
             'fieldName' : fieldName,
@@ -157,7 +155,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldValue' : '',
             'fieldId' : fieldName,
             'fieldName' : fieldName,
@@ -196,7 +194,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldId' : fieldName,
             'fieldName' : fieldName,
             'fieldLabel' : fieldName,
@@ -238,7 +236,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'rows': 2,
             'fieldValue' : '',
             'fieldId' : fieldName,
@@ -277,7 +275,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldValue' : '',
             'fieldOptions' : [
                 //{'value':'','html':''}
@@ -331,7 +329,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldValue' : '',
             'fieldOptions' : [
                 //{'value':'','html':''}
@@ -391,7 +389,7 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'fieldValue' : '',
             'fieldOptions' : [
                 //{'value':'','html':''}
@@ -874,5 +872,3 @@ TjsForm.prototype = {
         }
     }
 }
-
-export default TjsForm;

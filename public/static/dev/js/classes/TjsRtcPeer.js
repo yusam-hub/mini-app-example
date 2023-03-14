@@ -11,7 +11,7 @@ let TjsRtcPeer = function(options = {}) {
         'rtcConfig': {},
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
     this.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
@@ -322,7 +322,7 @@ TjsRtcPeer.prototype = {
 
         if (self.rtcInstance === null) return false;
 
-        let localJsonMessage = self.jsYusam.mergeDeep({
+        let localJsonMessage = js_object_merge_deep({
             'rtcType': '',
             'rtcFromPeerUuid': '',
             'rtcToPeerUuid': '',

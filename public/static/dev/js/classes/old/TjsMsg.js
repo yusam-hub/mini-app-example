@@ -1,10 +1,8 @@
-let TjsMsg = function(jsYusam, jsPost) {
+let TjsMsg = function() {
 
     let self = this;
 
-    this.jsYusam = jsYusam;
-    this.jsPost = jsPost;
-    this.lang = window.jsLangFunc('TjsMsg');
+    this.lang = js_lang_func('TjsMsg');
 
     this._formCounter = 0;
     this._formZindexStart = 10000;
@@ -60,10 +58,10 @@ TjsMsg.prototype = {
             },
         }
 
-        let options = self.jsYusam.mergeDeep(defFormOptions, newOptions);
+        let options = js_object_merge_deep(defFormOptions, newOptions);
 
         let backgroundEl = document.createElement('div');
-        self.jsYusam.body().append(backgroundEl);
+        document.body.append(backgroundEl);
 
         backgroundEl.classList.add('jmsgFormBackground');
         backgroundEl.id = 'jmsgFormBackground' + formIndex;
@@ -78,7 +76,7 @@ TjsMsg.prototype = {
         ].join('');
 
         let formEl = document.createElement('div');
-        self.jsYusam.body().append(formEl);
+        document.body.body().append(formEl);
 
         formEl.classList.add('jmsgForm');
         formEl.id = 'jmsgForm' + formIndex;
@@ -168,7 +166,7 @@ TjsMsg.prototype = {
 
             document.removeEventListener('mouseup',onMouseUp);
 
-            let offset = self.jsYusam.offset('jmsgForm' + formIndex);
+            let offset = js_get_offset_from_elem_by_id('jmsgForm' + formIndex);
 
             x = e.pageX - offset.left,
             y = e.pageY - offset.top;
@@ -224,7 +222,7 @@ TjsMsg.prototype = {
         formEl.style.marginTop = '-' + formEl.clientHeight / 2 + 'px';
         formEl.style.marginLeft = '-' + formEl.clientWidth / 2 + 'px';
 
-        let offset = self.jsYusam.offset('jmsgForm' + formIndex);
+        let offset = js_get_offset_from_elem_by_id('jmsgForm' + formIndex);
 
         if (offset.top < 0) {
             offset.top = 0;
@@ -255,7 +253,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -283,7 +281,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -311,7 +309,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -339,7 +337,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -367,7 +365,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -399,7 +397,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'extraMessage' : '&nbsp;',
             'extraMessageClasses' : '',
             'formWidth': 320,
@@ -431,7 +429,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'formTitle' : '&nbsp;',
             'formWidth': 320,
             'buttons': {}
@@ -453,7 +451,7 @@ TjsMsg.prototype = {
 
         let self = this;
 
-        let options = self.jsYusam.mergeDeep({
+        let options = js_object_merge_deep({
             'formTitle' : self.lang.dialog.formTitle,
             'formWidth': 320,
             'buttons': {

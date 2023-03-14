@@ -27,8 +27,7 @@ let TjsAppContentBody = function(tagIdOrElement, options = {}) {
         },
     };
 
-    this.jsYusam = window.jsYusam;
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this._init();
 
@@ -42,7 +41,7 @@ TjsAppContentBody.prototype = {
 
         self._createForm();
 
-        this.jsYusam.winReady(function(){
+        window.jsGlob.winReady(function(){
             let foundEl;
             for(let i=0; i < self.options.menuItems.length; i++) {
                 foundEl = document.getElementById('app_menu_item_' + i);
@@ -105,7 +104,7 @@ TjsAppContentBody.prototype = {
             self.menuItems().append(menuItem);
         }
 
-        self.jsYusam.winReady(function(){
+        window.jsGlob.winReady(function(){
             self._createClickEvent();
         });
     },
@@ -203,5 +202,3 @@ TjsAppContentBody.prototype = {
         return div;
     },
 }
-
-export default TjsAppContentBody;

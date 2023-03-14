@@ -16,8 +16,7 @@ let TjsAppCenteredBody = function(tagIdOrElement, options = {}) {
         },
     };
 
-    this.jsYusam = window.jsYusam;
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this._init();
 
@@ -82,5 +81,3 @@ TjsAppCenteredBody.prototype = {
         return self.el.querySelector('.app-wrap-content-main');
     },
 }
-
-export default TjsAppCenteredBody;

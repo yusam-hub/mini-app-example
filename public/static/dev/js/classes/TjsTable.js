@@ -541,7 +541,7 @@ TjsTable.prototype = {
     {
         let self = this;
         self.selectedRowIndex = -1;
-        self.dataRowsQuery = self.jsYusam.mergeDeep(self.dataRowsQuery, values);
+        self.dataRowsQuery = js_object_merge_deep(self.dataRowsQuery, values);
         self._doPost();
     },
     /**
@@ -600,13 +600,13 @@ TjsTable.prototype = {
     setData: function(query = {}, rows = [])
     {
         let self = this;
-        self.dataRowsQuery = self.jsYusam.mergeDeep(self.dataRowsQuery, {
+        self.dataRowsQuery = js_object_merge_deep(self.dataRowsQuery, {
             'page' : parseInt(query.page) || 1,
             'limit': parseInt(query.limit) || 1,
             'sortFieldName': query.sortFieldName,
             'sortDirection': query.sortDirection,
         });
-        self.dataRowsQueryFilter = self.jsYusam.mergeDeep(self.dataRowsQueryFilter, query.filter);
+        self.dataRowsQueryFilter = js_object_merge_deep(self.dataRowsQueryFilter, query.filter);
 
         if (self.options.replaceHistorySearch === true) {
             let urlSearchParams = new URLSearchParams(window.location.search);
@@ -629,7 +629,7 @@ TjsTable.prototype = {
     open: function(query = {})
     {
         let self = this;
-        self.dataRowsQueryFilter = self.jsYusam.mergeDeep(self.dataRowsQueryFilter, query);
+        self.dataRowsQueryFilter = js_object_merge_deep(self.dataRowsQueryFilter, query);
         self._doPost();
     },
     /**

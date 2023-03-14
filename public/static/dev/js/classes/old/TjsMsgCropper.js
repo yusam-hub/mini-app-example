@@ -1,8 +1,6 @@
 let TjsMsgCropper = function(CropperClass) {
-    this.jsYusam = window.jsYusam;
-    this.jsPost = window.jsPost;
     this.CropperClass = CropperClass;
-    this.lang = window.jsLangFunc('TjsMsg');
+    this.lang = js_lang_func('TjsMsg');
 };
 
 TjsMsgCropper.prototype = {
@@ -17,7 +15,7 @@ TjsMsgCropper.prototype = {
 
         if (!fileElement) return;
 
-        const options = self.jsYusam.mergeDeep({
+        const options = js_object_merge_deep({
             'fileAccept' : '.png, .jpg, .jpeg',
             'requestUri' : window.location.pathname + window.location.search.toString(),
             'cropRounded': false,
@@ -122,7 +120,7 @@ TjsMsgCropper.prototype = {
             ].join('');
 
             window.jsMsg.formCustom({
-                formTitle: window.jsLangFunc('TjsMsg', 'dialog.formSaveTitle'),
+                formTitle: js_lang_func('TjsMsg', 'dialog.formSaveTitle'),
                 formContent: formDataHTML,
                 formWidth: '480px',
                 onFormShow: function(formIndex){
@@ -148,10 +146,10 @@ TjsMsgCropper.prototype = {
                 },
                 buttons: {
                     'save': {
-                        'title' : window.jsLangFunc('TjsMsg', 'button.saveTitle'),
+                        'title' : js_lang_func('TjsMsg', 'button.saveTitle'),
                         'onClick': function(formIndex) {
                             const previewFormIndex = formIndex;
-                            window.jsMsg.dialogConfirm(window.jsLangFunc('TjsMsg', 'content.messageSave'), {
+                            window.jsMsg.dialogConfirm(js_lang_func('TjsMsg', 'content.messageSave'), {
                                 'buttons' : {
                                     'yes': {
                                         'onClick': function(formIndex) {
@@ -166,7 +164,7 @@ TjsMsgCropper.prototype = {
                         }
                     },
                     'cancel': {
-                        'title' : window.jsLangFunc('TjsMsg', 'button.cancelTitle'),
+                        'title' : js_lang_func('TjsMsg', 'button.cancelTitle'),
                         'onClick': function(formIndex) {
                             window.jsMsg.formClose(formIndex);
                         }
@@ -178,5 +176,3 @@ TjsMsgCropper.prototype = {
         fileElement.addEventListener('change', onFileElementChange);
     }
 }
-
-export default TjsMsgCropper;

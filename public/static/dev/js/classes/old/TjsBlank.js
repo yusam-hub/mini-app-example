@@ -1,13 +1,11 @@
 let TjsBlank = function(options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     let defOptions = {
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
-    this.lang = window.jsLangFunc('TjsBlank');
+    this.lang = js_lang_func('TjsBlank');
 
     this._init();
 
@@ -19,7 +17,7 @@ TjsBlank.prototype = {
     {
         let self = this;
 
-        this.jsYusam.domLoaded(function(){
+        window.jsGlob.domLoaded(function(){
             self._createForm();
         });
     },
@@ -27,5 +25,3 @@ TjsBlank.prototype = {
         let self = this;
     }
 }
-
-export default TjsBlank;
