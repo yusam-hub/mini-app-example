@@ -11,7 +11,7 @@
         window.jsGlob.winReady(function(){
 
             let jsTable = new TjsTable('jsTable', {
-                'requestUri' : '/admin/common/jsTable',
+                'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
                 /*'requestUri' : function(settings, query) {
                     jsTable.setData(settings, query, [
                         {
