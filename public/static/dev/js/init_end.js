@@ -3,6 +3,7 @@ window.jsCookie = new TjsCookie();
 window.jsWait = new TjsWait();
 window.jsPost = new TjsPost();
 
+
 console.log("appLoaded");
 
 window.jsGlob.domLoaded(function(){
@@ -11,9 +12,10 @@ window.jsGlob.domLoaded(function(){
 
 window.jsGlob.winReady(function(){
     console.log("winReady");
-    window.jsPost.request('/ajax/test?q=1',{'key1':'val1'}, function (statusCode, response, headers){
+   /* window.jsPost.request('/ajax/test?q=1',{'key1':'val1'}, function (statusCode, response, headers){
         console.log(statusCode, response);
-    });
+
+    });*/
 });
 
 /*

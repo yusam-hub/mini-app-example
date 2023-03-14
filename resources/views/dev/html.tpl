@@ -56,6 +56,8 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsCookie.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWait.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPost.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}

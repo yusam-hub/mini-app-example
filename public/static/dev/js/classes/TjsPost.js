@@ -41,8 +41,6 @@ TjsPost.prototype = {
                 }
 
             }
-            console.log(requestData);
-            console.log(formData);
 
             xhr.withCredentials = true;
             //xhr.timeout = 10000;

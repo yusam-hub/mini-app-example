@@ -16,7 +16,7 @@ Object.prototype.kSort = function()
  *
  * @returns {string}
  */
-Object.prototype.contactToString = function()
+Object.prototype.concatToString = function()
 {
     let obj = this.kSort();
     let keys = Object.keys(obj);
@@ -24,7 +24,7 @@ Object.prototype.contactToString = function()
     for (let i = 0; i < keys.length; i++) {
         if (obj[keys[i]] !== null) {
             if (typeof (obj[keys[i]]) === 'object') {
-                result += obj[keys[i]].contactToString();
+                result += obj[keys[i]].concatToString();
             } else {
                 result += obj[keys[i]];
             }

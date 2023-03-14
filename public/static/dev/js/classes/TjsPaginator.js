@@ -1,9 +1,5 @@
 let TjsPaginator = function(tagId, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
-    this.jsPost = window.jsPost;
-
     let defOptions = {
         'requestUri': false,//or '/'
         'requestOnCreate': false,
@@ -26,13 +22,13 @@ let TjsPaginator = function(tagId, options = {}) {
         }
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     if (this.options.initLocationSearch === true) {
         let urlSearchParams = new URLSearchParams(window.location.search);
         this.options.page = parseInt(urlSearchParams.get('page')) || this.options.page;
         this.options.limit = parseInt(urlSearchParams.get('limit')) || this.options.limit;
-        if (!this.options.limitList.in_array(this.options.limit)) {
+        if (!this.options.limitList.inArray(this.options.limit)) {
             this.options.limit = this.options.limitList[0];
         }
     }
@@ -288,12 +284,13 @@ TjsPaginator.prototype = {
             return;
         }
 
-        self.jsPost.request(self.options.requestUri, {
+        window.jsPost.request(self.options.requestUri, {
             'page': self.options.page,
             'limit': self.options.limit,
             'filter': {},
         }, function (statusCode, response, headers)
         {
+            console.log(statusCode, response);
             if (statusCode === 200 && response.status === 'ok') {
                 self.options.page = parseInt(response.data.query.page) || 1;
                 self.options.limit = parseInt(response.data.query.limit) || 1;
@@ -306,5 +303,3 @@ TjsPaginator.prototype = {
         });
     },
 }
-
-export default TjsPaginator;

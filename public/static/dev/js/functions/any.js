@@ -42,11 +42,15 @@ function js_object_merge_deep(target, ...sources)
 
     if (js_is_object(target) && js_is_object(source)) {
         for (const key in source) {
-            if (js_is_object(source[key])) {
-                if (!target[key]) Object.assign(target, { [key]: {} });
+            if (js_is_object(source[key]) && source.hasOwnProperty(key)) {
+                if (!target[key]) {
+                    Object.assign(target, { [key]: {} });
+                }
                 js_object_merge_deep(target[key], source[key]);
             } else {
-                Object.assign(target, { [key]: source[key] });
+                if (source.hasOwnProperty(key)) {
+                    Object.assign(target, {[key]: source[key]});
+                }
             }
         }
     }

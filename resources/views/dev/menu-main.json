@@ -39,6 +39,11 @@
             "title": "Example Base",
             "href": "/admin/common/example-base",
             "menu": []
+          },
+          {
+            "title": "Example Java Styled Table",
+            "href": "/admin/common/example-java-styled-table",
+            "menu": []
           }
         ]
       },
