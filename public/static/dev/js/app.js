@@ -1,3 +1,18 @@
+window.jsGlob = new TjsGlob();
+window.jsWait = new TjsWait();
+
+console.log("appLoaded");
+
+window.jsGlob.domLoaded(function(){
+    console.log("domLoaded");
+});
+
+window.jsGlob.winReady(function(){
+    console.log("winReady");
+    window.jsWait.show(0);
+});
+
+/*
 window.jsLocale = 'en';
 
 window.TjsDeviceUUID = require('device-uuid').DeviceUUID;
@@ -20,4 +35,4 @@ window.TjsTable = TjsTable;
 window.TjsMsgCropper = TjsMsgCropper;
 window.TjsWs = TjsWs;
 window.TjsMedia = TjsMedia;
-window.TjsRtcPeer = TjsRtcPeer;
+window.TjsRtcPeer = TjsRtcPeer;*/

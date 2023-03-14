@@ -2,7 +2,7 @@
  *
  * @param ms number
  */
-function sleep_ms(ms)
+function js_sleep_ms(ms)
 {
     ms += new Date().getTime();
     while (new Date() < ms){}
@@ -12,7 +12,7 @@ function sleep_ms(ms)
  *
  * @returns string
  */
-function generate_uuid()
+function js_generate_uuid()
 {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -24,7 +24,7 @@ function generate_uuid()
  * @param v
  * @returns {boolean}
  */
-function is_object(v) {
+function js_is_object(v) {
     return (v && typeof v === 'object' && !Array.isArray(v));
 }
 
@@ -34,24 +34,24 @@ function is_object(v) {
  * @param sources
  * @returns {*}
  */
-function object_merge_deep(target, ...sources)
+function js_object_merge_deep(target, ...sources)
 {
     if (!sources.length) return target;
 
     const source = sources.shift();
 
-    if (is_object(target) && is_object(source)) {
+    if (js_is_object(target) && js_is_object(source)) {
         for (const key in source) {
-            if (is_object(source[key])) {
+            if (js_is_object(source[key])) {
                 if (!target[key]) Object.assign(target, { [key]: {} });
-                object_merge_deep(target[key], source[key]);
+                js_object_merge_deep(target[key], source[key]);
             } else {
                 Object.assign(target, { [key]: source[key] });
             }
         }
     }
 
-    return object_merge_deep(target, ...sources);
+    return js_object_merge_deep(target, ...sources);
 }
 
 /**
@@ -59,7 +59,7 @@ function object_merge_deep(target, ...sources)
  * @param name
  * @returns {*}
  */
-function get_head_meta_content_by_name(name)
+function js_get_head_meta_content_by_name(name)
 {
     return document.querySelector(`meta[name="${name}"]`).content;
 }
@@ -69,7 +69,7 @@ function get_head_meta_content_by_name(name)
  * @param tagId
  * @returns {{top: number, left: number}}
  */
-function get_offset_from_elem_by_id(tagId) {
+function js_get_offset_from_elem_by_id(tagId) {
 
     let elem = document.getElementById(tagId);
 
@@ -90,3 +90,80 @@ function get_offset_from_elem_by_id(tagId) {
         left: rect.left + win.scrollX
     };
 }
+
+function js_lang_func(groupKey, dotKey = undefined) {
+    if (window.jsLocale === undefined) {
+        window.jsLocale = 'en';
+    }
+    if (window.jsLang === undefined) {
+        return 'window.jsLang.' + groupKey + '.' + window.jsLocale + '.' + dotKey;
+    }
+    if (window.jsLang[groupKey] === undefined) {
+        return 'window.jsLang.' + groupKey + '.' + window.jsLocale + '.' + dotKey;
+    }
+    if (window.jsLang[groupKey][window.jsLocale] === undefined) {
+        return 'window.jsLang.' + groupKey + '.' + window.jsLocale + '.' + dotKey;
+    }
+
+    if (dotKey === undefined) {
+        return window.jsLang[groupKey][window.jsLocale];
+    }
+
+    if (typeof dotKey === 'string') {
+        let keys = dotKey.split(".");
+
+        let baseLang = window.jsLang[groupKey][window.jsLocale];
+        let keyCounter = 0;
+
+        keys.forEach(function (value, index, array){
+            if (baseLang[value] !== undefined) {
+                baseLang = baseLang[value];
+                keyCounter++;
+            }
+        });
+
+        if (keys.length === keyCounter) {
+            return baseLang;
+        }
+    }
+
+    return 'window.jsLang.' + groupKey + '.' + window.jsLocale + '.' + dotKey;
+}
+
+/**
+ *
+ * @param tagName
+ * @param tagId
+ * @returns {*}
+ */
+function js_create_el(tagName, tagId = "")
+{
+    let el = document.createElement(tagName);
+    if (tagId !== "") {
+        el.id = tagId;
+    }
+    return el;
+}
+
+/*
+function js_lang(dotKey)
+{
+    if (window.jsLang !== undefined) {
+        let keys = dotKey.split(".");
+
+        let jsLang = window.jsLang;
+        let keyCounter = 0;
+
+        keys.forEach(function (value, index, array){
+            if (jsLang[value] !== undefined) {
+                jsLang = jsLang[value];
+                keyCounter++;
+            }
+        });
+
+        if (keys.length === keyCounter) {
+            return jsLang;
+        }
+    }
+    return `window.jsLang.${dotKey}`;
+}*/

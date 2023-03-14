@@ -1,8 +1,7 @@
-let TjsWait = function(jsYusam) {
-
-    this.jsYusam = jsYusam;
-
-    this.lang = window.jsLangFunc('TjsWait');
+let TjsWait = function() {
+    console.log(window.jsLang);
+    this.lang = js_lang_func('TjsWait');
+    console.log(this.lang);
 
     this._waitInit();
 };
@@ -13,22 +12,23 @@ TjsWait.prototype = {
     waitIntervalId: null,
     waitReferenceCounter: 0,
     waitReferenceCounterEl: null,
+
     _waitInit: function ()
     {
         let self = this;
 
-        self.waitReferenceCounterEl = self.jsYusam.newEl("div","js_wait_counter");
+        self.waitReferenceCounterEl = js_create_el("div","js_wait_counter");
 
-        this.jsYusam.domLoaded(function(){
-            let js_wait_background = self.jsYusam.newEl("div", "js_wait_background");
+        window.jsGlob.domLoaded(function(){
+            let js_wait_background = js_create_el("div", "js_wait_background");
             js_wait_background.style.display = 'none';
 
-            let js_wait_msg = self.jsYusam.newEl("div","js_wait_msg");
+            let js_wait_msg = js_create_el("div","js_wait_msg");
             js_wait_msg.innerHTML = self.lang.waitMessage;
 
             js_wait_msg.appendChild(self.waitReferenceCounterEl);
             js_wait_background.appendChild(js_wait_msg);
-            self.jsYusam.body().appendChild(js_wait_background);
+            document.body.appendChild(js_wait_background);
         })
     },
     /**
@@ -113,5 +113,3 @@ TjsWait.prototype = {
 
     }
 }
-
-export default TjsWait;

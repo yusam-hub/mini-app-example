@@ -1,11 +1,17 @@
 let TjsCookie = function() {
 
-    if (navigator.cookieEnabled === false){
-        console.log("cookieEnabled = " + navigator.cookieEnabled);
-    }
 };
 
 TjsCookie.prototype = {
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isCookieEnabled: function()
+    {
+        return navigator.cookieEnabled;
+    },
 
     /**
      *
@@ -72,5 +78,3 @@ TjsCookie.prototype = {
         });
     }
 }
-
-export default TjsCookie;
