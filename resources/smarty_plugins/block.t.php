@@ -11,9 +11,12 @@
  * @param Smarty_Internal_Template $template template object
  * @param boolean &$repeat  repeat flag
  *
- * @return string content
+ * @return string|void
  */
 function smarty_block_t($params, $content, Smarty_Internal_Template $template, &$repeat)
 {
-    return $content;
+    if (is_null($content)) {
+        return;
+    }
+    return app_ext_translate($content);
 }

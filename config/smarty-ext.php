@@ -6,7 +6,7 @@ return [
     'templates' => [
         \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV => [
             'smarty' => [
-                'debugging' => true,
+                'debugging' => false,
                 'force_compile' => true,
                 'caching' => false,
                 'cache_lifetime' => 120,

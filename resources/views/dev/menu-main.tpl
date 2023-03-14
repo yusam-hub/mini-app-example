@@ -11,7 +11,7 @@
 			<ul id="menu_main">
                 {if (isset($tpl_menu_main.pathDefault, $tpl_menu_main.paths, $tpl_menu_main.details))}
                     <li>
-                        <a href="{$tpl_menu_main.pathDefault}" title="{t}ui.main_menu.home{/t}">^</a>
+                        <a href="{$tpl_menu_main.pathDefault}">^</a>
                         <select size="1" onchange="window.location.href = this.options[this.selectedIndex].value;">
                             {foreach from=$tpl_menu_main.paths key="key" item="title"}
                                  <option value="{$key}" {if ($tpl_menu_main.pathDefault == $key)}selected{/if}>{t}{$title}{/t}</option>
