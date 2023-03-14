@@ -27,19 +27,6 @@
     {/literal}
     {/if}
 
-    <link rel="stylesheet" href="/static/dev/css/app.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-msg-cropper.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-table.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-wait.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-button.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-common.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-form.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-js-msg-form.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-styled-table.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/js-yusam-tmp.css?rnd={ts}">
-    <link rel="stylesheet" href="/static/dev/css/social-icons.css?rnd={ts}">
-
     {if (isset($defaultComposer))}
     {literal}
     <script type="text/javascript">
@@ -116,6 +103,14 @@
 {/if}
 
 <div class="margin-bottom-20"></div>
+
+{if (isset($smartyTemplateFileCss))}
+    {include file="{$smartyTemplateFileCss}"}
+{/if}
+
+{if (isset($smartyTemplateFileJs))}
+    {include file="{$smartyTemplateFileJs}"}
+{/if}
 
 </body>
 </html>
