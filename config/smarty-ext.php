@@ -43,4 +43,6 @@ return [
             ],
         ],
     ],
+
+    'debugSmartyException' => false,
 ];

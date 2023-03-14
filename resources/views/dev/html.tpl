@@ -44,8 +44,8 @@
 </head>
 <body>
 
-{if (isset($smartyTemplateMainMenuFile))}
-    {include file="{$smartyTemplateMainMenuFile}"}
+{if (isset($smartyTemplateFileMainMenu))}
+    {include file="{$smartyTemplateFileMainMenu}"}
 {/if}
 
 {if (isset($defaultComposer.html.bodyTitle) || (isset($defaultComposer.pageCrumbs) && count($defaultComposer.html.pageCrumbs) > 0))}
