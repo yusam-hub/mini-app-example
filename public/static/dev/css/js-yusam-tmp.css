@@ -1,0 +1,59 @@
+.text-align-left .button, .text-align-center .button, .text-align-justify .button {
+    margin-right: 5px;
+}
+
+.text-align-right .button {
+    margin-left: 5px;
+}
+
+input[type="file"] {
+    border: 1px solid #d5d5d5;
+    border: initial;
+    padding: initial;
+    line-height: initial;
+    background: none;
+    width: 270px;
+}
+
+.img-app-logo {
+    width: 192px;
+    height: 48px;
+    content:url(images/app-logo.svg) !important;
+}
+
+.img-no-avatar {
+    content:url(images/no-avatar-200.svg) !important;
+}
+.img-no-avatar-200 {
+    width: 200px;
+    height: 200px;
+}
+
+.img-no-avatar-150 {
+    width: 150px;
+    height: 150px;
+}
+
+.img-no-avatar-100 {
+    width: 100px;
+    height: 100px;
+}
+
+.img-no-avatar-50 {
+    width: 50px;
+    height: 50px;
+}
+
+h1.title, h2.title, h3.title, h4.title, h5.title {
+    background: #111;
+    background: -moz-linear-gradient(#444, #111);
+    background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+    background: -webkit-linear-gradient(#444, #111);
+    background: -o-linear-gradient(#444, #111);
+    background: -ms-linear-gradient(#444, #111);
+    background: linear-gradient(#444, #111);
+    border-bottom: 4px solid #007DAB;
+    color: #FFF;
+    padding: 10px;
+}
+

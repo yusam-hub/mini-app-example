@@ -1,0 +1,58 @@
+.styled-table table {
+    width: 100%;
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #e0e0e0;
+}
+
+.styled-table th, .styled-table thead td, .styled-table .thead {
+    font-weight: bold;
+    padding: 10px 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+
+    background: #f9f9f9;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f0f0f0));
+    background: -moz-linear-gradient(top,  #f9f9f9,  #f0f0f0);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f0f0f0');
+}
+
+.styled-table .tfoot {
+    font-weight: bold;
+    padding: 4px 4px;
+
+    background: #f9f9f9;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f0f0f0));
+    background: -moz-linear-gradient(top,  #f9f9f9,  #f0f0f0);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f0f0f0');
+}
+
+.styled-table td {
+    padding: 4px 4px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.styled-table tr:hover td {
+    background: #f9f9f9;
+}
+
+.styled-table td a {
+    font-weight: bold;
+}
+
+.styled-table .tr0 {
+    background-color: #FFFFFF;
+}
+.styled-table .tr1 {
+    background-color: #F0F0F0;
+}
+
+.styled-table .calculation_odd0 {
+    background-color: #FFFFFF;
+}
+.styled-table .calculation_odd1 {
+    background-color: #fefef3;
+}

@@ -1,0 +1,42 @@
+.social-icon-button {
+    cursor: pointer;
+}
+.social-icon {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid #d4d7d9;
+    padding: 0;
+    min-width: 40px;
+    height: 40px;
+}
+.social-icon:after {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 24px;
+    height: 24px;
+    margin: 8px;
+    background-size: cover;
+}
+.social-icon-vk:after {
+    background-image: url(images/vk.svg);
+    background-position: 0 0;
+}
+.social-icon-ya:after {
+    background-image: url(images/ya.svg);
+    background-position: 0 0;
+}
+.social-icon-google:after {
+    background-image: url(images/google.svg);
+    background-position: 0 0;
+}
+.social-icon-esia:after {
+    background-image: url(images/esia.svg);
+    background-position: 0 0;
+}

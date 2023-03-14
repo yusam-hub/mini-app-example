@@ -1,0 +1,134 @@
+.TjsTable_container {
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.TjsTable_container SELECT {
+    cursor: pointer;
+}
+
+.TjsTable_container INPUT, .TjsTable_container SELECT  {
+    border: 1px solid #808080;
+}
+
+.TjsTable_container INPUT[type="button"], .TjsTable_container BUTTON, .TjsTable_container INPUT[type="checkbox"] {
+    border-left: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    cursor: pointer;
+}
+
+.TjsTable_container INPUT[type="text"]:read-only{
+    background-color: #FFFFCC;
+}
+
+.TjsTable_panel {
+    width: 100%;
+    border-spacing: 0 0;
+    border-collapse: collapse; /*collapse,separate,inherit*/
+    margin: 0;
+}
+.TjsTable_panel tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+.TjsTable_panel td{
+    border: 0 solid #fff;
+    background-color: #fff;
+    padding: 0 0;
+    text-align: left;
+}
+.TjsTable_panel td:nth-child(1) {
+    text-align: left;
+    width: 1%;
+    white-space: nowrap;
+}
+.TjsTable_panel td:nth-child(2) {
+    text-align: left;
+}
+.TjsTable_panel td:nth-child(3) {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}
+.TjsTable_panel INPUT[type="text"] {
+    height: 1.85em;
+    line-height: 0;
+    text-align: center;
+}
+.TjsTable_panel INPUT[type="button"] {
+    height: 2em;
+    line-height: 0;
+    padding: 4px;
+}
+.TjsTable_panel SELECT {
+    height: 2em;
+    line-height: 0;
+}
+
+.TjsTable_data {
+    width: 100%;
+    border-spacing: 0 0;
+    border-collapse: collapse; /*collapse,separate,inherit*/
+}
+
+.TjsTable_data tbody .selected {
+    color: #ffff00;
+    background-color: #333;
+}
+
+.TjsTable_data tbody tr:not(.selected):nth-child(odd) {
+    color: #000000;
+    background-color: #F3F3F3;
+}
+.TjsTable_data tbody tr:not(.selected):nth-child(even) {
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+.TjsTable_data tbody tr:not(.hover-disabled):hover td {
+    color: #FFFFFF;
+    background-color: #333;
+}
+
+.TjsTable_data td {
+    border: 1px solid #C0C0C0;
+    padding: .2em .2em;
+    text-align: left;
+}
+
+.TjsTable_data thead .filter INPUT {
+    width: 97%;
+    height: 1.6em;
+    padding-left: .1em;
+}
+
+.TjsTable_data thead .filter SELECT {
+    width: 99%;
+    height: 1.775em;
+}
+
+.TjsTable_data thead td {
+    border-left: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    color: #000000;
+    background-color: #d4d0c8;
+    vertical-align: top;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.TjsTable_data tfoot td {
+    border-left: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    color: #000000;
+    background-color: #d4d0c8;
+    vertical-align: top;
+    text-align: center;
+    font-weight: bold;
+}

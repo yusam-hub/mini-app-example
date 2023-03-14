@@ -1,0 +1,61 @@
+.jmsgForm {}
+
+.jmsgFormBackground {
+    position: fixed;
+    opacity: 0.6;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+.jmsgForm {
+    display: inline;
+    position: fixed;
+    width: 320px;
+    height: auto;
+    border-left: 1px solid #D4D0C8;
+    border-top: 1px solid #D4D0C8;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    background-color: #FFF;
+}
+
+.jmsgFormData {
+    border-left: 1px solid #FFFFFF;
+    border-top: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+.jmsgFormHeader {
+    background-color: #333;
+}
+
+.jmsgFormTitle {
+    background-color: #333;
+    color: #FFFFFF;
+    padding: 2px 5px;
+    cursor: move;
+}
+
+.jmsgFormClose {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 2px 0 2px;
+    border-left: 1px solid #FFFFFF;
+    border-top: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    color: #333;
+    background-color: #FFF;
+}
+
+.jmsgFormButtons {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.jmsgFormBody {
+    padding: 10px;
+}

@@ -1,0 +1,52 @@
+.msg-cropper-original-img-container, .msg-cropper-original-img-container-rounded {
+    max-width: 470px;
+}
+
+.msg-cropper-original-img {
+    border: 1px solid #808080;
+}
+
+.msg-cropper-original-img-container > .msg-cropper-original-img, .msg-cropper-original-img-container-rounded > .msg-cropper-original-img {
+    max-width: 100%;
+}
+
+.msg-cropper-preview-img-container, .msg-cropper-preview-img-container-rounded {
+    margin-top: 10px;
+}
+
+.msg-cropper-preview-img {
+    float: left;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.msg-cropper-preview-img > img {
+    max-width: 100%;
+}
+
+.msg-cropper-preview-150 {
+    height: 150px;
+    width: 150px;
+    border: 1px solid #808080;
+}
+
+.msg-cropper-preview-100 {
+    height: 100px;
+    width: 100px;
+    border: 1px solid #808080;
+}
+
+.msg-cropper-preview-50 {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #808080;
+}
+
+.rounded {
+    border-radius: 50%;
+}
+
+.msg-cropper-original-img-container-rounded .cropper-view-box, .msg-cropper-original-img-container-rounded .cropper-face {
+    border-radius: 50%;
+}
