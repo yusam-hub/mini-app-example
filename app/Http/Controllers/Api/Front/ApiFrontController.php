@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Front;
 
+use App\Http\Controllers\Api\ApiBaseHttpController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use YusamHub\AppExt\SymfonyExt\Http\Controllers\BaseHttpController;
 
-class ApiFrontController extends BaseHttpController
+
+class ApiFrontController extends ApiBaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {

@@ -1,0 +1,2 @@
+HOME INDEX {ts}
+{debug}

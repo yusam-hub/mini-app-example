@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Dev;
 
+use App\Http\Controllers\Web\WebInterface;
+use App\Http\Controllers\Web\WebBaseHttpController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use YusamHub\AppExt\SymfonyExt\Http\Controllers\BaseHttpController;
 
-class HomeController extends BaseHttpController
+class WebDefHomeController extends WebBaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
@@ -19,8 +20,6 @@ class HomeController extends BaseHttpController
      */
     public function actionHomeIndex(Request $request): string
     {
-        return app_ext_smarty_global()
-            ->smartyExt()
-            ->view('index');
+        return $this->view('index');
     }
 }
