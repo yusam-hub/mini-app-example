@@ -1,7 +1,5 @@
 let TjsToggles = function(selectors, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     this._init(selectors, options);
 };
 
@@ -60,4 +58,3 @@ TjsToggles.prototype = {
     },
 }
 
-export default TjsToggles;

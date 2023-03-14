@@ -1,7 +1,4 @@
 let TjsTabs = function(selectors, options = {}) {
-
-    this.jsYusam = window.jsYusam;
-
     this._init(selectors, options);
 };
 
@@ -78,4 +75,3 @@ TjsTabs.prototype = {
     },
 }
 
-export default TjsTabs;

@@ -58,6 +58,9 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPost.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsTabs.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsToggles.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}

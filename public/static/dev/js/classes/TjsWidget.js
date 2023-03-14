@@ -1,9 +1,5 @@
 let TjsWidget = function(tagId, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
-    this.jsPost = window.jsPost;
-
     let defOptions = {
         'uri': null,
         'data': null,
@@ -28,7 +24,7 @@ TjsWidget.prototype = {
     {
         let self = this;
 
-        jsPost.request(self.options.uri, params, function (statusCode, response, headers) {
+        window.jsPost.request(self.options.uri, params, function (statusCode, response, headers) {
             if (statusCode === 200) {
                 self.options.data = response.data;
                 if (typeof(self.options.onDataChanged) === "function") {
@@ -53,4 +49,3 @@ TjsWidget.prototype = {
     }
 }
 
-export default TjsWidget;

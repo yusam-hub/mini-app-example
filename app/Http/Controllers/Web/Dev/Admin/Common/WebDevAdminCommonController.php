@@ -11,6 +11,7 @@ class WebDevAdminCommonController extends WebBaseHttpController
     public static function routesRegister(RoutingConfigurator $routes): void
     {
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-base','actionExampleBase');
+        static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java','actionExampleJava');
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-styled-table','actionExampleJavaStyledTable');
         static::routesAdd($routes, ['OPTIONS', 'POST'], '/admin/common/example-java-styled-table/id-email-table','actionExampleJavaStyledTableIdEmailTable');
     }
@@ -23,6 +24,16 @@ class WebDevAdminCommonController extends WebBaseHttpController
     public function actionExampleBase(Request $request): string
     {
         return $this->view('/admin/common/example-base');
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @throws \SmartyException
+     */
+    public function actionExampleJava(Request $request): string
+    {
+        return $this->view('/admin/common/example-java');
     }
 
     /**
