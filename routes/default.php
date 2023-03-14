@@ -9,7 +9,7 @@ return function (RoutingConfigurator $routes) {
     if (app_ext_config('smarty-ext.default') === \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEF) {
         \App\Http\Controllers\Web\WebDefRoutes::routesRegister($routes);
     } else if (app_ext_config('smarty-ext.default') === \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV) {
-        \App\Http\Controllers\Web\WebDefRoutes::routesRegister($routes);
+        \App\Http\Controllers\Web\WebDevRoutes::routesRegister($routes);
     } else {
         \YusamHub\AppExt\SymfonyExt\Http\Controllers\HomeController::routesRegister($routes);
     }

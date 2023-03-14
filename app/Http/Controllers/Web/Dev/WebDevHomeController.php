@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\WebBaseHttpController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-class WebDefHomeController extends WebBaseHttpController
+class WebDevHomeController extends WebBaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
