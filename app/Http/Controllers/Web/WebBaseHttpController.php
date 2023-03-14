@@ -11,8 +11,16 @@ abstract class WebBaseHttpController extends BaseHttpController
         return app_ext_config('smarty-ext.default');
     }
 
+    /**
+     * @throws \SmartyException
+     */
     protected function view(string $template, array $params = []): string
     {
+        $params = array_merge($params, [
+            '_request' => [
+                'path' => $this->getRequest()->getPathInfo(),
+            ]
+        ]);
         return app_ext_smarty_global()
             ->smartyExt($this->getTemplateScheme())
             ->view($template, $params);

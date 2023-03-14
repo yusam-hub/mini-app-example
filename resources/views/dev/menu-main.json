@@ -1,34 +1,76 @@
 {
-  "groupDefault": "default",
-  "groups": {
-    "default": {
-      "title": "Главная",
-      "href": "/"
-    }
+  "pathDefault": "/",
+  "paths": {
+    "/": "Главная",
+    "/admin": "Админка",
+    "/cabinet": "Кабинет"
   },
-  "itemsByGroup": {
-    "default": [
+  "details": {
+    "/": [
       {
-        "title": "Модуль",
-        "href": "/",
-        "menu": []
-      },
-      {
-        "title": "Menu 1",
-        "href": "/menu_1",
+        "title": "Root 1",
+        "href": "/root_1",
         "menu": [
           {
-            "title": "Sub Menu 1 - 1",
-            "href": "/menu_1/menu1_1",
+            "title": "Sub Root 1 - 1",
+            "href": "/root_1/root_1_1",
             "menu": []
           },
           {
-            "title": "Sub Menu 1 - 2",
-            "href": "/menu_1/menu_1_2",
+            "title": "Sub Root 1 - 2",
+            "href": "/root_1/root_1_2",
             "menu": [
               {
-                "title": "Sub Menu 1 - 2 - 1",
-                "href": "/menu_1/menu_1_2/menu_1_2_1",
+                "title": "Sub Root 1 - 2 - 1",
+                "href": "/root_1/root_1_2/root_1_2_1",
+                "menu": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "/admin": [
+      {
+        "title": "Admin 1",
+        "href": "/admin_1",
+        "menu": [
+          {
+            "title": "Sub Admin 1 - 1",
+            "href": "/admin_1/admin_1_1",
+            "menu": []
+          },
+          {
+            "title": "Sub Admin 1 - 2",
+            "href": "/admin_1/admin_1_2",
+            "menu": [
+              {
+                "title": "Sub Admin 1 - 2 - 1",
+                "href": "/admin_1/admin_1_2/admin_1_2_1",
+                "menu": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "/cabinet": [
+      {
+        "title": "Cabinet 1",
+        "href": "/cabinet_1",
+        "menu": [
+          {
+            "title": "Sub Admin 1 - 1",
+            "href": "/cabinet_1/cabinet_1_1",
+            "menu": []
+          },
+          {
+            "title": "Sub Admin 1 - 2",
+            "href": "/cabinet_1/cabinet_1_2",
+            "menu": [
+              {
+                "title": "Sub Admin 1 - 2 - 1",
+                "href": "/cabinet_1/cabinet_1_2/admin_1_2_1",
                 "menu": []
               }
             ]
