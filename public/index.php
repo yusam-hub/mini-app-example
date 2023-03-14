@@ -2,9 +2,8 @@
 
 require __DIR__ . '/../global-inc.php';
 
-use Symfony\Component\HttpFoundation\Request;
 
-$symfonyRequest = Request::createFromGlobals();
+$symfonyRequest = \YusamHub\AppExt\SymfonyExt\JsonRequest::createFromGlobals();
 $symfonyRequest->attributes->add([
     '_files' => $_FILES,
 ]);
