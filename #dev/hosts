@@ -1,0 +1,9 @@
+#portproxy-8074
+127.0.80.74 localhost8074.loc
+127.0.80.74 mini-app-example-8074.loc
+127.0.80.74 mini-app-example-react-8074.loc
+
+#portproxy-8081
+127.0.80.81 localhost8081.loc
+127.0.80.81 mini-app-example-8081.loc
+127.0.80.81 mini-app-example-react-8081.loc

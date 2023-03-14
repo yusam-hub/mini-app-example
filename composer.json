@@ -1,6 +1,6 @@
 {
-  "name": "yusam-hub/mini-api-php-app",
-  "description": "yusam-hub/mini-api-php-app",
+  "name": "yusam-hub/mini-app-example",
+  "description": "yusam-hub/mini-app-example",
   "minimum-stability": "stable",
   "repositories": {
     "yusam-hub/php-compatibility": {

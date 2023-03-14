@@ -6,6 +6,6 @@ return [
         '*',
     ],
     'denyOrigins' => [
-        //'http://mini-api-php-app-8074.loc'
+        //'http://mini-app-example-8074.loc'
     ],
 ];
