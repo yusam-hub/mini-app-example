@@ -1,7 +1,5 @@
 let TjsRtcPeer = function(options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     let defOptions = {
         'debugging' : false,
         'onOutgoingMessage' : function(jsonMessage){},
@@ -20,7 +18,7 @@ let TjsRtcPeer = function(options = {}) {
     this.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
 
     this.rtcInstance = null;
-    this.rtcLocalPeerUuid = this.jsYusam.createUuid();
+    this.rtcLocalPeerUuid = js_generate_uuid();
     this.rtcRemotePeerUuid = null;
 
     this._init();
@@ -631,5 +629,3 @@ TjsRtcPeer.prototype = {
         self.destroy();
     }
 }
-
-export default TjsRtcPeer;

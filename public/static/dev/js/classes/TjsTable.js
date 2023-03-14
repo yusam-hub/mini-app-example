@@ -1,9 +1,5 @@
 let TjsTable = function(tagId, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
-    this.jsPost = window.jsPost;
-
     let defOptions = {
         'requestUri' : '/', //function(settings, query) {}
         'initLocationSearch': true,
@@ -52,7 +48,7 @@ let TjsTable = function(tagId, options = {}) {
         },
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this.el = document.getElementById(tagId);
 
@@ -73,10 +69,10 @@ let TjsTable = function(tagId, options = {}) {
         this.dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.dataRowsQuery.limit;
         this.dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
         this.dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
-        if (!(['asc','desc'].in_array(this.dataRowsQuery.sortDirection))) {
+        if (!(['asc','desc'].inArray(this.dataRowsQuery.sortDirection))) {
             this.dataRowsQuery.sortDirection = 'asc';
         }
-        if (!this.options.settings.limitList.in_array(this.dataRowsQuery.limit)) {
+        if (!this.options.settings.limitList.inArray(this.dataRowsQuery.limit)) {
             this.dataRowsQuery.limit = this.options.settings.limitList[0];
         }
         this.dataRowsQueryFilter = urlSearchParams.getObject('filter');
@@ -587,7 +583,7 @@ TjsTable.prototype = {
 
         let params = self.dataRowsQuery;
         params['filter'] = self.dataRowsQueryFilter;
-        self.jsPost.request(self.options.requestUri, params, function (statusCode, response, headers)
+        window.jsPost.request(self.options.requestUri, params, function (statusCode, response, headers)
         {
             if (statusCode === 200 && response.status === 'ok') {
                 self.setData(response.data.query, response.data.data);
@@ -692,4 +688,3 @@ TjsTable.prototype = {
     }
 }
 
-export default TjsTable;

@@ -49,6 +49,21 @@
             "title": "Example Java Styled Table",
             "href": "/admin/common/example-java-styled-table",
             "menu": []
+          },
+          {
+            "title": "Example Java Table",
+            "href": "/admin/common/example-java-table",
+            "menu": []
+          },
+          {
+            "title": "Example Java Ws",
+            "href": "/admin/common/example-java-ws",
+            "menu": []
+          },
+          {
+            "title": "Example Java Rtc Peer",
+            "href": "/admin/common/example-java-rtc-peer",
+            "menu": []
           }
         ]
       },

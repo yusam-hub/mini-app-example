@@ -1,7 +1,5 @@
 let TjsWs = function(options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     this.wsHostname = window.location.hostname;
     this.wsProtocol = 'ws';
     if (window.location.protocol.toLowerCase() === 'https:') {
@@ -23,7 +21,7 @@ let TjsWs = function(options = {}) {
         onError: function(){},
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this.wsAutoOpening = false;
     this.wsOpened = false;
@@ -252,4 +250,3 @@ TjsWs.prototype = {
     }
 }
 
-export default TjsWs;

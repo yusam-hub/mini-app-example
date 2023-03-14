@@ -1,7 +1,5 @@
 let TjsMedia = function(tagId, options = {}) {
 
-    this.jsYusam = window.jsYusam;
-
     let defOptions = {
         debugging: false,
         captureStartOnCreate: false,
@@ -50,7 +48,7 @@ let TjsMedia = function(tagId, options = {}) {
         onCaptureStopped: function(){},
     };
 
-    this.options = this.jsYusam.mergeDeep(defOptions, options);
+    this.options = js_object_merge_deep(defOptions, options);
 
     this.el = document.getElementById(tagId);
 
@@ -276,4 +274,3 @@ TjsMedia.prototype = {
     }
 }
 
-export default TjsMedia;

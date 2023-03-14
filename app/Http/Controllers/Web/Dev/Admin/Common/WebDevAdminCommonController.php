@@ -13,6 +13,10 @@ class WebDevAdminCommonController extends WebBaseHttpController
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-base','actionExampleBase');
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java','actionExampleJava');
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-styled-table','actionExampleJavaStyledTable');
+        static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-table','actionExampleJavaTable');
+        static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-ws','actionExampleJavaWs');
+        static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-rtc-peer','actionExampleJavaRtcPeer');
+
         static::routesAdd($routes, ['OPTIONS', 'POST'], '/admin/common/example-java-styled-table/id-email-table','actionExampleJavaStyledTableIdEmailTable');
     }
 
@@ -44,6 +48,36 @@ class WebDevAdminCommonController extends WebBaseHttpController
     public function actionExampleJavaStyledTable(Request $request): string
     {
         return $this->view('/admin/common/example-java-styled-table');
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @throws \SmartyException
+     */
+    public function actionExampleJavaTable(Request $request): string
+    {
+        return $this->view('/admin/common/example-java-table');
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @throws \SmartyException
+     */
+    public function actionExampleJavaWs(Request $request): string
+    {
+        return $this->view('/admin/common/example-java-ws');
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * @throws \SmartyException
+     */
+    public function actionExampleJavaRtcPeer(Request $request): string
+    {
+        return $this->view('/admin/common/example-java-rtc-peer');
     }
 
     /**
