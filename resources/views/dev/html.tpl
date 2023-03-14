@@ -47,12 +47,17 @@
         <script type="text/javascript" src="/public/static/dev/js/prototypes/any.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/functions/any.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/init.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/init_begin.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsWait.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsPost.js?rnd={ts}"></script>
+
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsGlob.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsCookie.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsWait.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWait.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/app.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPost.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}
 
 

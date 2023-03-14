@@ -1,7 +1,5 @@
-let TjsPost = function(jsYusam, jsWait) {
-    this.jsYusam = jsYusam;
-    this.jsWait = jsWait;
-    this.lang = window.jsLangFunc('TjsPost');
+let TjsPost = function() {
+    this.lang = js_lang_func('TjsPost');
 };
 
 TjsPost.prototype = {
@@ -21,17 +19,17 @@ TjsPost.prototype = {
         try {
 
             if (showJsWait) {
-                self.jsWait.show();
+                window.jsWait.show();
             }
             let multipartFormData = false;
             let requestDataIsFormData = false;
             let formData = new FormData();
 
-            if (typeof requestData === 'object' && requestData.constructor.name === 'FormData') {
+            if (js_is_object(requestData) && requestData.constructor.name === 'FormData') {
                 requestDataIsFormData = true;
-            } else {
+             } else {
                 for (const [key, value] of Object.entries(requestData)) {
-                    if (typeof value === 'object' && value.constructor.name === 'FileList') {
+                    if (js_is_object(value) && value.constructor.name === 'FileList') {
                         for (let i = 0; i < value.length; i++) {
                             formData.set(key + i, value[i]);
                             multipartFormData = true;
@@ -41,14 +39,17 @@ TjsPost.prototype = {
                         formData.set(key, value.toString());
                     }
                 }
+
             }
+            console.log(requestData);
+            console.log(formData);
 
             xhr.withCredentials = true;
             //xhr.timeout = 10000;
             xhr.responseType = 'json';
             xhr.open('POST', window.location.protocol + "//" + window.location.hostname + requestUri);
             xhr.setRequestHeader('Accept', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', self.jsYusam.headMetaContent('csrf-token'));
+            //xhr.setRequestHeader('X-CSRF-TOKEN', self.jsYusam.headMetaContent('csrf-token'));
 
             if (requestDataIsFormData === true) {
                 xhr.send(requestData);
@@ -56,7 +57,7 @@ TjsPost.prototype = {
                 if (multipartFormData === true) {
                     xhr.send(formData);
                 } else {
-                    xhr.setRequestHeader('Content-type', 'application/json');
+                    xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.send(JSON.stringify(requestData));
                 }
             }
@@ -121,7 +122,7 @@ TjsPost.prototype = {
                     } finally {
 
                         if (showJsWait) {
-                            self.jsWait.hide();
+                            window.jsWait.hide();
                         }
 
                     }
@@ -131,11 +132,9 @@ TjsPost.prototype = {
         } catch (e) {
 
             if (showJsWait) {
-                self.jsWait.hide();
+                window.jsWait.hide();
             }
 
         }
     }
 }
-
-export default TjsPost;

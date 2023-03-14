@@ -1,8 +1,5 @@
 let TjsWait = function() {
-    console.log(window.jsLang);
     this.lang = js_lang_func('TjsWait');
-    console.log(this.lang);
-
     this._waitInit();
 };
 
