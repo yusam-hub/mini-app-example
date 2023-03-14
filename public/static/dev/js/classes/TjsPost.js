@@ -70,7 +70,6 @@ TjsPost.prototype = {
                     percent = Math.round((e.loaded / e.total) * 100);
                     percentage = percent + '%';
                 }
-
                 console.log(percentage, percent);
                 console.log(e.loaded + ' / ' + e.total);
             };
