@@ -20,13 +20,6 @@ TjsWait.prototype = {
         self.waitReferenceCounterEl = self.jsYusam.newEl("div","js_wait_counter");
 
         this.jsYusam.domLoaded(function(){
-            /*let img = self.jsYusam.newEl('img');
-            img.src = self.jsYusam.baseUrlPath + '../css/images/js-wait.gif';
-            img.width = '0';
-            img.height = '0';
-            img.class = 'display-none';
-            self.jsYusam.body().appendChild(img);*/
-
             let js_wait_background = self.jsYusam.newEl("div", "js_wait_background");
             js_wait_background.style.display = 'none';
 

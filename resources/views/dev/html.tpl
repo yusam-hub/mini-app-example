@@ -40,6 +40,12 @@
         <link rel="stylesheet" href="/public/static/dev/css/js-yusam-styled-table.css?rnd={ts}">
         <link rel="stylesheet" href="/public/static/dev/css/js-yusam-tmp.css?rnd={ts}">
         <link rel="stylesheet" href="/public/static/dev/css/social-icons.css?rnd={ts}">
+        <script type="text/javascript" src="/public/static/dev/js/prototypes/string.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/prototypes/object.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/prototypes/number.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/prototypes/array.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/prototypes/any.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/functions/any.js?rnd={ts}"></script>
     {/str_replace}
 
 
