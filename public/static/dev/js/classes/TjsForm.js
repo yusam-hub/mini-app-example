@@ -1,13 +1,6 @@
 let TjsForm = function(formName, options = {}) {
 
-    this.jsMsg = window.jsMsg;
-
-    this.jsPost = window.jsPost;
-
     this._formElement = document.createElement('form');
-
-    this._submitButtons = [];
-    this._submitAButtons = [];
 
     this.defOptions = {
         'formName': formName,
@@ -410,7 +403,7 @@ TjsForm.prototype = {
         formFieldControl.setAttribute('name', options.fieldName);
         formFieldControl.classList.add('form-checkboxes');
 
-        let values = options.fieldValue.split(',');
+        let values = options.fieldValue.toString().split(',');
 
         for(let i = 0; i < options.fieldOptions.length; i++) {
             let label = document.createElement('label');
@@ -470,19 +463,19 @@ TjsForm.prototype = {
     },
     /**
      *
-     * @returns string
-     */
-    render: function()
-    {
-        return this._formElement.outerHTML;
-    },
-    /**
-     *
      * @returns {HTMLFormElement}
      */
     form: function()
     {
         return this._formElement;
+    },
+    /**
+     *
+     * @param selectors
+     */
+    appendForSelector: function(selectors)
+    {
+        document.querySelector(selectors).append(this._formElement);
     },
     /**
      *
@@ -563,7 +556,8 @@ TjsForm.prototype = {
              * Очищаем контрол с файлами, так как мы успешно загрузили
              * @type {NodeListOf<Element>}
              */
-            let formFieldControls = document.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');
+            let formFieldControls = self._formElement.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');
+            //let formFieldControls = document.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');//возможно нужно это!!!
             for (let i = 0; i < formFieldControls.length; i++) {
                 if (formFieldControls[i].nodeName === 'INPUT' && formFieldControls[i].type.toString() === 'file') {
                     formFieldControls[i].value = '';
@@ -576,121 +570,71 @@ TjsForm.prototype = {
         }
     },
     /**
-     *
      * @param fields
-     * @param afterRender
      */
-    fromArray: function(fields = {}, afterRender = true)
+    fromArray: function(fields = {})
     {
         let self = this, formFieldControls;
 
-        if (afterRender === true) {
-            formFieldControls = document.querySelectorAll('form#' + self.options.formId + ' > .form-element > .form-field > .form-field-control');
-        } else {
-            formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
-        }
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
             if (fields[formFieldControls[i].getAttribute('name')] !== undefined)
             {
                 if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
-                    if (afterRender) {
 
-                        formFieldControls[i].value = fields[formFieldControls[i].name].toString();
+                    formFieldControls[i].value = fields[formFieldControls[i].name].toString();
 
-                    } else {
-
-                        formFieldControls[i].defaultValue = fields[formFieldControls[i].name].toString();
-
-                    }
                 } else if (formFieldControls[i].nodeName === 'SELECT') {
 
                     if (formFieldControls[i].multiple) {
 
                         let values = fields[formFieldControls[i].name].toString().split(",");
 
-                        if (afterRender) {
-
-                            for (let o = 0; o < formFieldControls[i].options.length; o++) {
-                                if (values.includes(formFieldControls[i].options[o].value)) {
-                                    formFieldControls[i].options[o].selected = true;
-                                } else {
-                                    formFieldControls[i].options[o].selected = false;
-                                }
-                            }
-
-                        } else {
-
-                            for (let o = 0; o < formFieldControls[i].options.length; o++) {
-                                if (values.includes(formFieldControls[i].options[o].value)) {
-                                    formFieldControls[i].options[o].defaultSelected = true;
-                                } else {
-                                    formFieldControls[i].options[o].defaultSelected = false;
-                                }
+                        for (let o = 0; o < formFieldControls[i].options.length; o++) {
+                            if (values.includes(formFieldControls[i].options[o].value)) {
+                                formFieldControls[i].options[o].selected = true;
+                            } else {
+                                formFieldControls[i].options[o].selected = false;
                             }
                         }
 
                     } else {
 
                         let values = fields[formFieldControls[i].name].toString().split(",");
+                        formFieldControls[i].value = values[0];
 
-                        if (afterRender) {
-
-                            formFieldControls[i].value = values[0];
-
-                        } else {
-
-                            let item = formFieldControls[i].options.namedItem(formFieldControls[i].id + "_" + values[0]);
-
-                            if (item) {
-                                item.defaultSelected = true;
-                            }
-                        }
                     }
                 } else if (formFieldControls[i].classList.contains('form-radios')) {
 
                     let radioInputs = formFieldControls[i].querySelectorAll('label > input');
 
                     for(let r=0; r < radioInputs.length; r++) {
-                        if (afterRender) {
-                            radioInputs[r].checked = radioInputs[r].value.toString() === fields[formFieldControls[i].getAttribute('name')].toString();
-                        }  else {
-                            radioInputs[r].defaultChecked = radioInputs[r].defaultValue.toString() === fields[formFieldControls[i].getAttribute('name')].toString();
-                        }
+                        radioInputs[r].checked = radioInputs[r].value.toString() === fields[formFieldControls[i].getAttribute('name')].toString();
                     }
                 } else if (formFieldControls[i].classList.contains('form-checkboxes')) {
 
                     let checkboxInputs = formFieldControls[i].querySelectorAll('label > input');
-                    let values = fields[formFieldControls[i].getAttribute('name')].split(",");
+                    let values = fields[formFieldControls[i].getAttribute('name')].toString().split(",");
 
                     for(let r=0; r < checkboxInputs.length; r++) {
-                        if (afterRender) {
-                            checkboxInputs[r].checked = !!values.includes(checkboxInputs[r].value.toString());
-                        }  else {
-                            checkboxInputs[r].defaultChecked = !!values.includes(checkboxInputs[r].value.toString());
-                        }
+                        checkboxInputs[r].checked = !!values.includes(checkboxInputs[r].value.toString());
                     }
                 }
             }//end !undefined
         }//end for
     },
     /**
-     *
-     * @param afterRender
      * @returns {{}}
      */
-    toArray: function(afterRender = true)
+    toArray: function()
     {
         let self = this, formFieldControls;
 
         let out = {};
 
-        if (afterRender === true) {
-            formFieldControls = document.querySelectorAll('form#' + self.options.formId + ' > .form-element > .form-field > .form-field-control');
-        } else {
-            formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
-        }
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
@@ -708,20 +652,9 @@ TjsForm.prototype = {
 
                 out[formFieldControls[i].name] = '';
 
-                if (afterRender) {
-
-                    for (let o = 0; o < formFieldControls[i].options.length; o++) {
-                        if (formFieldControls[i].options[o].selected === true) {
-                            values[values.length] = formFieldControls[i].options[o].value;
-                        }
-                    }
-
-                } else {
-
-                    for (let o = 0; o < formFieldControls[i].options.length; o++) {
-                        if (formFieldControls[i].options[o].defaultSelected === true) {
-                            values[values.length] = formFieldControls[i].options[o].value;
-                        }
+                for (let o = 0; o < formFieldControls[i].options.length; o++) {
+                    if (formFieldControls[i].options[o].selected === true) {
+                        values[values.length] = formFieldControls[i].options[o].value;
                     }
                 }
                 if (values.length > 0) {
@@ -734,14 +667,8 @@ TjsForm.prototype = {
                 out[formFieldControls[i].getAttribute('name')] = '';
 
                 for(let r=0; r < radioInputs.length; r++) {
-                    if (afterRender) {
-                        if (radioInputs[r].checked) {
-                            out[formFieldControls[i].getAttribute('name')] = radioInputs[r].value.toString();
-                        }
-                    }  else {
-                        if (radioInputs[r].defaultChecked) {
-                            out[formFieldControls[i].getAttribute('name')] = radioInputs[r].defaultValue.toString();
-                        }
+                    if (radioInputs[r].checked) {
+                        out[formFieldControls[i].getAttribute('name')] = radioInputs[r].value.toString();
                     }
                 }
             } else if (formFieldControls[i].classList.contains('form-checkboxes')) {
@@ -751,14 +678,8 @@ TjsForm.prototype = {
                 out[formFieldControls[i].getAttribute('name')] = '';
 
                 for(let r=0; r < checkboxInputs.length; r++) {
-                    if (afterRender) {
-                        if (checkboxInputs[r].checked) {
-                            values[values.length] = checkboxInputs[r].value.toString();
-                        }
-                    }  else {
-                        if (checkboxInputs[r].defaultChecked) {
-                            values[values.length] = checkboxInputs[r].defaultValue.toString();
-                        }
+                    if (checkboxInputs[r].checked) {
+                        values[values.length] = checkboxInputs[r].value.toString();
                     }
                 }
                 if (values.length > 0) {
@@ -770,19 +691,13 @@ TjsForm.prototype = {
         return out;
     },
     /**
-     *
      * @param fields
-     * @param afterRender
      */
-    fromErrorArray: function(fields = {}, afterRender = true)
+    fromErrorArray: function(fields = {})
     {
         let self = this, formFieldControls, formFieldError, formElement, formFieldControlsName;
 
-        if (afterRender === true) {
-            formFieldControls = document.querySelectorAll('form#' + self.options.formId + ' > .form-element > .form-field > .form-field-control');
-        } else {
-            formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
-        }
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
@@ -821,20 +736,14 @@ TjsForm.prototype = {
         }
     },
     /**
-     *
      * @param fieldNames
      * @param value
-     * @param afterRender
      */
-    setReadOnly: function(fieldNames, value, afterRender = true)
+    setReadOnly: function(fieldNames, value)
     {
         let self = this, formFieldControls, formFieldControlsName, inputs;
 
-        if (afterRender === true) {
-            formFieldControls = document.querySelectorAll('form#' + self.options.formId + ' > .form-element > .form-field > .form-field-control');
-        } else {
-            formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
-        }
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
@@ -857,15 +766,7 @@ TjsForm.prototype = {
                     inputs = formFieldControls[i].querySelectorAll('label > input');
 
                     for(let r=0; r < inputs.length; r++) {
-                        if (afterRender) {
-                            inputs[r].disabled = value;
-                        }  else {
-                            if (value) {
-                                inputs[r].setAttribute('disabled', true);
-                            } else {
-                                inputs[r].removeAttribute('disabled');
-                            }
-                        }
+                        inputs[r].disabled = value;
                     }
                 }
             }

@@ -87,6 +87,10 @@
     <p><button class="button button-black" id="dialogConfirm">Confirm</button></p>
     <p><button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button></p>
 
+    <h3>TjsForm First</h3>
+    <div id="jsFormFirstPlacement">
+    </div>
+    <p><button class="button button-black" id="jsFormFirst_save">First Save</button></p>
     <div class="clear"></div>
 </div>
 
@@ -120,6 +124,107 @@
         document.querySelector("#dialogDeleteConfirm").addEventListener('click', function (e){
             window.jsMsg.dialogDeleteConfirm(this.innerHTML);
         });
+
+        let jsFormFirst = new TjsForm('jsFormFirst', {
+            'formActionUri' : window.location.pathname + '/first',
+            'onFormActionSave' : function (res) {
+                if (res.response['status'] === 'ok') {
+                    updateButtonsIfDisplayNone(res.response['data']['has']);
+                }
+            }
+        });
+
+        jsFormFirst.addFieldInputText('text1', {
+            'fieldLabel' : 'text1',
+            'readOnly' : false,
+        });
+        jsFormFirst.addFieldInputText('text2', {
+            'fieldLabel' : 'text2',
+            'readOnly' : true,
+        });
+        jsFormFirst.addFieldCheckboxes('check1', {
+            'fieldLabel' : 'check1',
+            'readOnly' : false,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+            'inline' : true,
+        });
+        jsFormFirst.addFieldCheckboxes('check2', {
+            'fieldLabel' : 'check2',
+            'readOnly' : true,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+            'inline' : false,
+        });
+        jsFormFirst.addFieldRadios('radio1', {
+            'fieldLabel' : 'radio1',
+            'readOnly' : false,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+            'inline' : true,
+        });
+        jsFormFirst.addFieldRadios('radio2', {
+            'fieldLabel' : 'radio2',
+            'readOnly' : true,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+            'inline' : false,
+        });
+        jsFormFirst.addFieldSelect('select1', {
+            'fieldLabel' : 'select1',
+            'readOnly' : false,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+        });
+        jsFormFirst.addFieldSelect('select2', {
+            'fieldLabel' : 'select2',
+            'readOnly' : true,
+            'fieldOptions' : [
+                {'value': '1', 'html' :' val 1'},
+                {'value': '2', 'html' :' val 2'},
+                {'value': '3', 'html' :' val 3'},
+            ],
+        });
+
+        jsFormFirst.fromArray({
+            'text1': 'value1',
+            'text2': 'value2',
+            'check1': 2,
+            'check2': 2,
+            'radio1': 2,
+            'radio2': 2,
+            'select1': 2,
+            'select2': 2,
+        });
+
+        jsFormFirst.fromErrorArray({
+            'text1': 'invalid value',
+            'text2': 'invalid value',
+        })
+
+        jsFormFirst.appendForSelector('#jsFormFirstPlacement');
+
+        document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
+            console.log(jsFormFirst.toArray());
+            jsFormFirst.fromErrorArray({});
+            jsFormFirst.setReadOnly(['text2','check2','radio2','select2'], false);
+        });
+
 
         /*const vertical_menu = document.getElementById('vertical_menu');
 
