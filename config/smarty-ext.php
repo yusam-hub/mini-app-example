@@ -12,7 +12,7 @@ return [
                 'cache_lifetime' => 120,
             ],
             'smartyDirs' => [
-                'pluginDir' => __DIR__ .'/../resources/smarty_plugins',
+                'pluginDir' => __DIR__ .'/../resources/views/smarty_plugins',
                 'templateDir' => __DIR__ .'/../resources/views/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
                 'configDir' => __DIR__ .'/../resources/views/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
                 'compileDir' => __DIR__ .'/../storage/smarty/compiles/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
