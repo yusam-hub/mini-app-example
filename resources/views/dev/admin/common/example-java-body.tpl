@@ -219,6 +219,8 @@
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
 
+        console.log("after_create_toArray", jsFormFirst.toArray());
+
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
             console.log(jsFormFirst.toArray());
             jsFormFirst.fromErrorArray({});
