@@ -58,7 +58,7 @@ TjsMsgCropper.prototype = {
 
             function saveFormData(formDataForSave)
             {
-                self.jsPost.request(uri, formDataForSave, function (statusCode, response, headers) {
+                window.jsPost.request(uri, formDataForSave, function (statusCode, response, headers) {
                     if (statusCode === 200 && response['status'] === 'ok') {
                         if (typeof onSuccessSavedCallback === 'function') {
                             onSuccessSavedCallback();

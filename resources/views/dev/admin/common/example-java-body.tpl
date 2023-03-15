@@ -80,12 +80,15 @@
     <p><button class="button button-black" id="button_js_wait">Show (5 sec)</button></p>
 
     <h3>TjsMsg</h3>
-    <p><button class="button button-black" id="dialogInfo">Info</button></p>
-    <p><button class="button button-black" id="dialogSuccess">Success</button></p>
-    <p><button class="button button-black" id="dialogError">Error</button></p>
-    <p><button class="button button-black" id="dialogWarning">Warning</button></p>
-    <p><button class="button button-black" id="dialogConfirm">Confirm</button></p>
-    <p><button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button></p>
+    <p>
+        <button class="button button-black" id="dialogInfo">Info</button>
+        <button class="button button-black" id="dialogSuccess">Success</button>
+        <button class="button button-black" id="dialogError">Error</button>
+        <button class="button button-black" id="dialogWarning">Warning</button>
+        <button class="button button-black" id="dialogConfirm">Confirm</button>
+        <button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button>
+        <button class="button button-black" id="dialogInputFormConfirm">Input Form Confirm</button>
+    </p>
 
     <h3>TjsForm First</h3>
     <div id="jsFormFirstPlacement">
@@ -124,12 +127,20 @@
         document.querySelector("#dialogDeleteConfirm").addEventListener('click', function (e){
             window.jsMsg.dialogDeleteConfirm(this.innerHTML);
         });
+        document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
+            let jsInputForm = new TjsForm('jsInputForm', {});
+            jsInputForm.addFieldInputText('text1', {
+                'fieldLabel' : 'text1',
+                'readOnly' : false,
+            });
+            window.jsMsg.dialogInputFormConfirm(jsInputForm);
+        });
 
         let jsFormFirst = new TjsForm('jsFormFirst', {
             'formActionUri' : window.location.pathname + '/first',
             'onFormActionSave' : function (res) {
                 if (res.response['status'] === 'ok') {
-                    updateButtonsIfDisplayNone(res.response['data']['has']);
+                    //updateButtonsIfDisplayNone(res.response['data']['has']);
                 }
             }
         });
@@ -218,8 +229,6 @@
         })
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
-
-        console.log("after_create_toArray", jsFormFirst.toArray());
 
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
             console.log(jsFormFirst.toArray());

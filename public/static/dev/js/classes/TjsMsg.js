@@ -456,7 +456,9 @@ TjsMsg.prototype = {
 
         self.formCustom({
             formTitle: options.formTitle,
-            formContent: jsForm.form().outerHTML,//todo: replace for object onFormContent(el)
+            onFormContent: function(el){
+                el.append(jsForm.form());
+            },
             formWidth: options.formWidth,
             buttons: options.buttons,
         });

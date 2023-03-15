@@ -491,7 +491,7 @@ TjsForm.prototype = {
         if (!(typeof self.options.formActionUri === 'string' && self.options.formActionUri.length > 0)) return false;
 
         function post() {
-            self.jsPost.request(self.options.formActionUri, Object.assign(self.toArray(), extraParams), function (statusCode, response, headers) {
+            window.jsPost.request(self.options.formActionUri, Object.assign(self.toArray(), extraParams), function (statusCode, response, headers) {
 
                 let res = {
                     'statusCode': statusCode,
@@ -514,11 +514,11 @@ TjsForm.prototype = {
             return true;
         }
 
-        self.jsMsg.dialogConfirm(self.options.formActionConfirmMessage, {
+        window.jsMsg.dialogConfirm(self.options.formActionConfirmMessage, {
             'buttons' : {
                 'yes': {
                     'onClick' : function (formIndex) {
-                        self.jsMsg.formClose(formIndex);
+                        window.jsMsg.formClose(formIndex);
                         post();
                     }
                 }
