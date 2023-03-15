@@ -4,23 +4,25 @@ let TjsGlob = function() {
 
 TjsGlob.prototype = {
 
-    domLoadedHandlers: [],
-    winReadyHandlers: [],
+    _domLoadedHandlers: [],
+    _winReadyHandlers: [],
+    _isDomLoaded: false,
+    _isWinReady: false,
 
     _init: function ()
     {
         let self = this;
 
         window.addEventListener("DOMContentLoaded", function(){
-
-            self.domLoadedHandlers.forEach(function(item, index, arr) {
+            self._isDomLoaded = true;
+            self._domLoadedHandlers.forEach(function(item, index, arr) {
                 item.call();
             });
         });
 
         window.addEventListener("load", function(){
-
-            self.winReadyHandlers.forEach(function(item, index, arr) {
+            self._isWinReady = true;
+            self._winReadyHandlers.forEach(function(item, index, arr) {
                 item.call();
             });
         });
@@ -31,7 +33,14 @@ TjsGlob.prototype = {
      */
     domLoaded: function(handler)
     {
-        this.domLoadedHandlers.push(handler);
+        this._domLoadedHandlers.push(handler);
+    },
+    /**
+     *
+     * @returns {boolean}
+     */
+    isDomLoaded: function(){
+        return this._isDomLoaded;
     },
     /**
      *
@@ -39,6 +48,13 @@ TjsGlob.prototype = {
      */
     winReady: function(handler)
     {
-        this.winReadyHandlers.push(handler);
-    }
+        this._winReadyHandlers.push(handler);
+    },
+    /**
+     *
+     * @returns {boolean}
+     */
+    isWinReady: function(){
+        return this._isWinReady;
+    },
 }

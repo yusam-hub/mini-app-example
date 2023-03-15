@@ -2,12 +2,13 @@ window.jsGlob = new TjsGlob();
 window.jsCookie = new TjsCookie();
 window.jsWait = new TjsWait();
 window.jsPost = new TjsPost();
-
+window.jsMsg = new TjsMsg();
 
 console.log("appLoaded");
 
 window.jsGlob.domLoaded(function(){
     console.log("domLoaded");
+    //window.jsMsg.dialogInfo('test');
 });
 
 window.jsGlob.winReady(function(){
@@ -16,4 +17,8 @@ window.jsGlob.winReady(function(){
         console.log(statusCode, response);
 
     });*/
+    window.jsMsg.dialogInfo('test');
 });
+
+
+

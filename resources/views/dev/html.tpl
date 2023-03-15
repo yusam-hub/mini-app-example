@@ -51,6 +51,7 @@
 
         <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsWait.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsPost.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsMsg.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsGlob.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsCookie.js?rnd={ts}"></script>
@@ -65,6 +66,7 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWs.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsRtcPeer.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsMsg.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}

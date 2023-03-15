@@ -41,6 +41,10 @@ TjsMsg.prototype = {
      */
     _showForm: function(formIndex, newOptions = {})
     {
+        if (!window.jsGlob.isDomLoaded()) {
+            console.log("Error: TjsMsg can not be execute while dom is not loaded");
+            return;
+        }
         let self = this;
 
         let defFormOptions = {
@@ -60,37 +64,50 @@ TjsMsg.prototype = {
 
         let options = js_object_merge_deep(defFormOptions, newOptions);
 
-        let backgroundEl = document.createElement('div');
+        let jmsgForm = js_create_el('div','jmsgForm' + formIndex, 'jmsgForm', function(el)
+        {
+            el.append(js_create_el('div','jmsgFormData' + formIndex, 'jmsgFormData', function(el)
+            {
+                el.append(js_create_el('table','jmsgFormTable' + formIndex,'jmsgFormTable', function(el){
+                    el.append(js_create_el('tr','jmsgFormHeader' + formIndex,'jmsgFormHeader', function(el){
+                        el.append(js_create_el('td','jmsgFormHeaderTd' + formIndex,'jmsgFormHeaderTd', function(el){
+                            el.append(js_create_el('div','jmsgFormTitle' + formIndex,'jmsgFormTitle', function(el){
+                                el.innerHTML = options.formTitle;
+                            }));
+                        }));
+                        el.append(js_create_el('td','jmsgFormHeaderTd' + formIndex,'jmsgFormHeaderTd', function(el){
+                            el.width = "1%";
+                            el.append(js_create_el('button','jmsgFormClose' + formIndex,'jmsgFormClose', function(el){
+                                el.innerHTML = '&#10006;';
+                                el.setAttribute("data-form-index", formIndex);
+                            }));
+                        }));
+                    }));
+                }));
+                el.append(js_create_el('div','jmsgFormBody' + formIndex,'jmsgFormBody', function(el){
+                    el.innerHTML = options.formContent;
+                }));
+                el.append(js_create_el('div','jmsgFormButtons' + formIndex,'jmsgFormButtons', function(el){
+
+                }));
+            }));
+        });
+
+        let backgroundEl = js_create_el('div', 'jmsgFormBackground' + formIndex, 'jmsgFormBackground');
+        //document.body
         document.body.append(backgroundEl);
-
-        backgroundEl.classList.add('jmsgFormBackground');
-        backgroundEl.id = 'jmsgFormBackground' + formIndex;
-
-        let formDataHTML = [
-            '<div class="jmsgFormData" id="jmsgFormData'+formIndex+'">',
-            '<table width="100%" cellspacing="0" cellpadding="0"><tr class="jmsgFormHeader"><td><div class="jmsgFormTitle" id="jmsgFormTitle'+formIndex+'">',
-            options.formTitle,
-            '</div></td><td width="1%"><button class="jmsgFormClose" id="jmsgFormClose'+formIndex+'" data-form-index="'+formIndex+'">&#10006;</button></td></tr></table>',
-            '<div class="jmsgFormBody" id="jmsgFormBody'+formIndex+'">', options.formContent, '</div>',
-            '<div class="jmsgFormButtons" id="jmsgFormButtons'+formIndex+'"></div></div>'
-        ].join('');
-
-        let formEl = document.createElement('div');
-        document.body.body().append(formEl);
-
-        formEl.classList.add('jmsgForm');
-        formEl.id = 'jmsgForm' + formIndex;
-        formEl.innerHTML = formDataHTML;
+        document.body.append(jmsgForm);
+        //document.body
 
         backgroundEl.style.zIndex = self._formZindexStart + formIndex;
-        formEl.style.zIndex = self._formZindexStart + formIndex + 1;
+        jmsgForm.style.zIndex = self._formZindexStart + formIndex + 1;
 
         if (self._isTouch === true) {
-            formEl.style.position = 'absolute';
+            jmsgForm.style.position = 'absolute';
         }
 
         if ((typeof(options.formWidth) == 'string') || (typeof(options.formWidth) == 'number')){
-            formEl.style.width = options.formWidth;
+            jmsgForm.style.width = options.formWidth;
         }
 
         let button;
@@ -532,5 +549,3 @@ TjsMsg.prototype = {
         });
     }
 }
-
-export default TjsMsg;

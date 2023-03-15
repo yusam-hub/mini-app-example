@@ -138,13 +138,24 @@ function js_lang_func(groupKey, dotKey = undefined) {
  *
  * @param tagName
  * @param tagId
+ * @param classes
+ * @param callback
  * @returns {*}
  */
-function js_create_el(tagName, tagId = "")
+function js_create_el(tagName, tagId = "", classes = "", callback = undefined)
 {
     let el = document.createElement(tagName);
     if (tagId !== "") {
         el.id = tagId;
+    }
+    if (classes !== "") {
+        let classArray = classes.split(' ');
+        classArray.forEach(function(value, index, array){
+            el.classList.add(value);
+        });
+    }
+    if (typeof callback === "function") {
+        callback(el);
     }
     return el;
 }
