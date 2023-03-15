@@ -1,5 +1,5 @@
 <div class="entry">
-    <h3>jsToggles</h3>
+    <h3>TjsToggles</h3>
 
     <div class="toggles jsToggles">
 
@@ -38,7 +38,7 @@
 
     <div class="h-sep-1"></div>
 
-    <h3>jsTabs</h3>
+    <h3>TjsTabs</h3>
 
     <div class="jsTabs">
 
@@ -74,38 +74,73 @@
 
     </div>
 
+    <div class="h-sep-1"></div>
+
+    <h3>TjsWait</h3>
+    <p><button class="button button-black" id="button_js_wait">Show (5 sec)</button></p>
+
+    <h3>TjsMsg</h3>
+    <p><button class="button button-black" id="dialogInfo">Info</button></p>
+    <p><button class="button button-black" id="dialogSuccess">Success</button></p>
+    <p><button class="button button-black" id="dialogError">Error</button></p>
+    <p><button class="button button-black" id="dialogWarning">Warning</button></p>
+    <p><button class="button button-black" id="dialogConfirm">Confirm</button></p>
+    <p><button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button></p>
+
     <div class="clear"></div>
 </div>
 
 {literal}
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        window.jsGlob.winReady(function(){
+    window.jsGlob.winReady(function(){
 
-            const vertical_menu = document.getElementById('vertical_menu');
+        new TjsTabs('.jsTabs');
 
-            if (vertical_menu) {
+        new TjsToggles('.jsToggles');
 
+        document.querySelector("#button_js_wait").addEventListener('click', function (e){
+            window.jsWait.show(5);
+        });
+        document.querySelector("#dialogInfo").addEventListener('click', function (e){
+            window.jsMsg.dialogInfo(this.innerHTML);
+        });
+        document.querySelector("#dialogSuccess").addEventListener('click', function (e){
+            window.jsMsg.dialogSuccess(this.innerHTML);
+        });
+        document.querySelector("#dialogError").addEventListener('click', function (e){
+            window.jsMsg.dialogError(this.innerHTML);
+        });
+        document.querySelector("#dialogWarning").addEventListener('click', function (e){
+            window.jsMsg.dialogWarning(this.innerHTML);
+        });
+        document.querySelector("#dialogConfirm").addEventListener('click', function (e){
+            window.jsMsg.dialogConfirm(this.innerHTML);
+        });
+        document.querySelector("#dialogDeleteConfirm").addEventListener('click', function (e){
+            window.jsMsg.dialogDeleteConfirm(this.innerHTML);
+        });
+
+        /*const vertical_menu = document.getElementById('vertical_menu');
+
+        if (vertical_menu) {
+
+            const verticalMenuActive = vertical_menu.querySelector('.vertical-menu-active');
+            if (verticalMenuActive) {
+                verticalMenuActive.scrollIntoView({block: "center", inline: "center"});
+            }
+
+            const resizeObserver = new ResizeObserver(() => {
                 const verticalMenuActive = vertical_menu.querySelector('.vertical-menu-active');
                 if (verticalMenuActive) {
                     verticalMenuActive.scrollIntoView({block: "center", inline: "center"});
                 }
+            });
 
-                const resizeObserver = new ResizeObserver(() => {
-                    const verticalMenuActive = vertical_menu.querySelector('.vertical-menu-active');
-                    if (verticalMenuActive) {
-                        verticalMenuActive.scrollIntoView({block: "center", inline: "center"});
-                    }
-                });
+            resizeObserver.observe(vertical_menu);
+        }*/
 
-                resizeObserver.observe(vertical_menu);
-            }
+    });
 
-
-            new TjsTabs('.jsTabs');
-
-            new TjsToggles('.jsToggles');
-        });
-
-    </script>
+</script>
 {/literal}

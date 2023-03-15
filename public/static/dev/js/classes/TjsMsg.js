@@ -51,6 +51,9 @@ TjsMsg.prototype = {
             formTitle: '&nbsp;',
             formContent: '&nbsp;',
             formWidth: 320,
+            onFormContent: function(el){
+                //console.log(el.id);
+            },
             onFormShow: function(formIndex){
                 //console.log(formIndex);
             },
@@ -64,8 +67,20 @@ TjsMsg.prototype = {
 
         let options = js_object_merge_deep(defFormOptions, newOptions);
 
-        let jmsgForm = js_create_el('div','jmsgForm' + formIndex, 'jmsgForm', function(el)
+        //document.body add background
+        document.body.append(js_create_el('div', 'jmsgFormBackground' + formIndex, 'jmsgFormBackground', function(el){
+            el.style.zIndex = self._formZindexStart + formIndex;
+        }));
+        //document.body add form
+        document.body.append(js_create_el('div','jmsgForm' + formIndex, 'jmsgForm', function(el)
         {
+            el.style.zIndex = self._formZindexStart + formIndex + 1;
+            if (self._isTouch === true) {
+                el.style.position = 'absolute';
+            }
+            if ((typeof(options.formWidth) == 'string') || (typeof(options.formWidth) == 'number')){
+                el.style.width = options.formWidth;
+            }
             el.append(js_create_el('div','jmsgFormData' + formIndex, 'jmsgFormData', function(el)
             {
                 el.append(js_create_el('table','jmsgFormTable' + formIndex,'jmsgFormTable', function(el){
@@ -86,33 +101,20 @@ TjsMsg.prototype = {
                 }));
                 el.append(js_create_el('div','jmsgFormBody' + formIndex,'jmsgFormBody', function(el){
                     el.innerHTML = options.formContent;
+                    if (typeof options.onFormContent === "function") {
+                        options.onFormContent(el);
+                    }
                 }));
                 el.append(js_create_el('div','jmsgFormButtons' + formIndex,'jmsgFormButtons', function(el){
 
                 }));
             }));
-        });
-
-        let backgroundEl = js_create_el('div', 'jmsgFormBackground' + formIndex, 'jmsgFormBackground');
-        //document.body
-        document.body.append(backgroundEl);
-        document.body.append(jmsgForm);
-        //document.body
-
-        backgroundEl.style.zIndex = self._formZindexStart + formIndex;
-        jmsgForm.style.zIndex = self._formZindexStart + formIndex + 1;
-
-        if (self._isTouch === true) {
-            jmsgForm.style.position = 'absolute';
-        }
-
-        if ((typeof(options.formWidth) == 'string') || (typeof(options.formWidth) == 'number')){
-            jmsgForm.style.width = options.formWidth;
-        }
+        }));
+        //document.body end
 
         let button;
 
-        let buttonsEl = document.getElementById('jmsgFormButtons' + formIndex);
+        let buttonsEl = document.querySelector('#jmsgFormButtons' + formIndex);
         for (const [key, item] of Object.entries(options.buttons)) {
             button = document.createElement('button');
             buttonsEl.append(button);
@@ -137,7 +139,7 @@ TjsMsg.prototype = {
 
         self.formResize(formIndex);
 
-        let formCloseEl = document.getElementById('jmsgFormClose' + formIndex);
+        let formCloseEl = document.querySelector('#jmsgFormClose' + formIndex);
 
         formCloseEl.addEventListener('click', function(){
 
