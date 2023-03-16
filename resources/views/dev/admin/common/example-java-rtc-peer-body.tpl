@@ -135,7 +135,7 @@
 
         let jsWs = new TjsWs({
             'debugging' : false,
-            'path' : '/ws/dev/',
+            'path' : '/ws',
             'onOpened': function(){
                 rtcConnection.jsRtcPeer.create();
             },
