@@ -7,14 +7,9 @@
 
         window.jsGlob.winReady(function(){
 
-            new WebSocket('ws://mini-app-example-8074.loc/ws/');
-            new WebSocket('ws://localhost:8074/ws/');
-            new WebSocket('ws://127.0.80.74/ws/');
-
-
-            /*let jsWs = new TjsWs({
+            let jsWs = new TjsWs({
                 'debugging' : true,
-                'path' : '/ws/',
+                'path' : '/ws',
                 'onOpened': function(){
 
                 },
@@ -24,7 +19,7 @@
                 'onClosed': function(){
 
                 },
-            });*/
+            });
 
         });
 
