@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45234593ef8e120a6f962d250cb2ab8f",
+    "content-hash": "191da0d038aaf843b576b48d60f6c967",
     "packages": [
         {
             "name": "bunny/bunny",
@@ -4063,7 +4063,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yusam-hub/app-ext.git",
-                "reference": "a439107493c7909ab2434da8ffbfa47ea937b68a"
+                "reference": "10181318eb00d648fa54cdf05d3acafcf1acb700"
             },
             "require": {
                 "bunny/bunny": "@dev",
@@ -4089,6 +4089,7 @@
                 "yusam-hub/daemon": "dev-master",
                 "yusam-hub/db-ext": "dev-master",
                 "yusam-hub/debug": "dev-master",
+                "yusam-hub/helpers": "dev-master",
                 "yusam-hub/json-ext": "dev-master",
                 "yusam-hub/php-compatibility": "dev-master",
                 "yusam-hub/redis-ext": "dev-master",
@@ -4118,7 +4119,7 @@
                 "files": []
             },
             "description": "yusam-hub/app-ext",
-            "time": "2023-03-16T07:52:48+00:00"
+            "time": "2023-03-16T15:04:19+00:00"
         },
         {
             "name": "yusam-hub/captcha",
@@ -4290,6 +4291,40 @@
             },
             "description": "yusam-hub/debug",
             "time": "2023-02-28T00:13:43+00:00"
+        },
+        {
+            "name": "yusam-hub/helpers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yusam-hub/helpers.git",
+                "reference": "aba0752693db79fbc6def70c17824c8320f70bfa"
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4|^8.0|^8.1|^8.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "YusamHub\\Helper\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "YusamHub\\Helper\\Tests\\": "tests/"
+                },
+                "files": []
+            },
+            "description": "yusam-hub/helpers",
+            "time": "2023-03-16T15:03:34+00:00"
         },
         {
             "name": "yusam-hub/json-ext",
@@ -6323,6 +6358,7 @@
         "yusam-hub/validator": 20,
         "yusam-hub/smarty-ext": 20,
         "yusam-hub/web-socket": 20,
+        "yusam-hub/helpers": 20,
         "yusam-hub/app-ext": 20
     },
     "prefer-stable": false,

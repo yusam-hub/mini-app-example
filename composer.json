@@ -47,6 +47,10 @@
       "type": "git",
       "url": "https://github.com/yusam-hub/web-socket.git"
     },
+    "yusam-hub/helpers": {
+      "type": "git",
+      "url": "https://github.com/yusam-hub/helpers.git"
+    },
     "yusam-hub/app-ext": {
       "type": "git",
       "url": "https://github.com/yusam-hub/app-ext.git"
@@ -71,6 +75,7 @@
     "yusam-hub/validator": "dev-master",
     "yusam-hub/smarty-ext": "dev-master",
     "yusam-hub/web-socket": "dev-master",
+    "yusam-hub/helpers": "dev-master",
     "yusam-hub/app-ext": "dev-master"
   },
   "require-dev": {

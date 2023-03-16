@@ -4,7 +4,8 @@ namespace App\WebSocket\IncomingMessages;
 
 
 use App\WebSocket\Ext\JsRtcPeerConnections;
-use YusamHub\AppExt\DotArray;
+
+use YusamHub\Helper\DotArray;
 use YusamHub\WebSocket\WsServer\IncomingMessages\BaseIncomingMessage;
 
 class JsRtcPeerIncomingMessage extends BaseIncomingMessage
@@ -12,6 +13,7 @@ class JsRtcPeerIncomingMessage extends BaseIncomingMessage
     protected ?JsRtcPeerConnections $jsRtcPeerConnections = null;
 
     protected DotArray $dotArrayMsg;
+
     public function setWebSocketMessage(string $msg, array $arrayMsg): void
     {
         parent::setWebSocketMessage($msg, $arrayMsg);

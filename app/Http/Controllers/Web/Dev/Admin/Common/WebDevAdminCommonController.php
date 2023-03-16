@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Web\Dev\Admin\Common;
 
 use App\Http\Controllers\Web\WebBaseHttpController;
+use App\Model\EmailJsTableRow;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use YusamHub\AppExt\JsTable\JsTableQuery;
 
 class WebDevAdminCommonController extends WebBaseHttpController
 {
@@ -82,25 +84,13 @@ class WebDevAdminCommonController extends WebBaseHttpController
 
     /**
      * @param Request $request
-     * @return array[]
+     * @return array
+     * @throws \ReflectionException
      */
     public function actionExampleJavaStyledTableIdEmailTable(Request $request): array
     {
-        return [
-            'query' => [
-                'page' => 1,
-                'limit' => 1,
-            ],
-            'data' => [
-                [
-                    'id' => 1,
-                    'email' => 'test1@test1.loc'
-                ],
-                [
-                    'id' => 2,
-                    'email' => 'test2@test2.loc'
-                ]
-            ]
-        ];
+        $jsTableQuery = new JsTableQuery($request->request->all());
+        $emailsJsTableResponse = EmailJsTableRow::getEmailsJsTableResponse($jsTableQuery);
+        return $emailsJsTableResponse->toArray();
     }
 }
