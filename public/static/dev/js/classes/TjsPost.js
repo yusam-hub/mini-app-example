@@ -103,14 +103,20 @@ TjsPost.prototype = {
                         } else {
 
                             let errorMessage = networkError;
+                            let errorData = {};
 
                             if (xhr.response.errorMessage !== undefined) {
                                 errorMessage = xhr.response.errorMessage;
                             }
 
+                            if (xhr.response.errorData !== undefined) {
+                                errorData = xhr.response.errorData;
+                            }
+
                             responseCallback(xhr.status, {
                                 'status' : 'error',
-                                'errorMessage': errorMessage
+                                'errorMessage': errorMessage,
+                                'errorData' : errorData,
                             }, responseHeaders);
 
                         }

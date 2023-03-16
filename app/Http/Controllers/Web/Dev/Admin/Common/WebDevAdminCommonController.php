@@ -6,14 +6,20 @@ use App\Http\Controllers\Web\WebBaseHttpController;
 use App\Model\EmailJsTableRow;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use YusamHub\AppExt\JsTable\JsTableQuery;
+use YusamHub\AppExt\Exceptions\HttpBadRequestAppExtRuntimeException;
+use YusamHub\AppExt\Models\JsTable\JsTableQuery;
+
 
 class WebDevAdminCommonController extends WebBaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-base','actionExampleBase');
+
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java','actionExampleJava');
+                static::routesAdd($routes, ['OPTIONS', 'POST'], '/admin/common/example-java/js-form-first-save','ajaxExampleJavaFormFirstSave');
+
+
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-styled-table','actionExampleJavaStyledTable');
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-table','actionExampleJavaTable');
         static::routesAdd($routes, ['OPTIONS', 'GET'], '/admin/common/example-java-ws','actionExampleJavaWs');
@@ -40,6 +46,19 @@ class WebDevAdminCommonController extends WebBaseHttpController
     public function actionExampleJava(Request $request): string
     {
         return $this->view('/admin/common/example-java');
+    }
+
+    public function ajaxExampleJavaFormFirstSave(Request $request): array
+    {
+        $dot = helper_dot_array($request->request->all());
+        if ($dot->has('savingMode') && $dot->get('savingMode') === 'ok') {
+            return [
+                'id' => 1,
+                'incomingParams' => $request->request->all(),
+            ];
+        } else {
+            throw new HttpBadRequestAppExtRuntimeException($dot->all(), 'Test Exception Message');
+        }
     }
 
     /**

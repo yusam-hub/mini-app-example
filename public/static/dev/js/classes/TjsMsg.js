@@ -488,15 +488,17 @@ TjsMsg.prototype = {
         }, newOptions);
 
         options.buttons.ok.onClick = function(formIndex) {
-
-            jsForm.save(function(res){
-
-                if (res['response']['status'] === 'ok') {
-                    self.formClose(res.callbackOptions.formIndex);
-                }
-
-            }, {},{'formIndex' : formIndex});
-
+            jsForm.save(
+                function(res){
+                    if (res['response']['status'] === 'ok') {
+                        self.formClose(res.callbackOptions.jsFormParentFormIndex);
+                    } else {
+                        jsForm.fromErrorArray();
+                    }
+                },
+                {},
+                {'jsFormParentFormIndex' : formIndex}
+            );
         };
 
         self.dialogInputForm(jsForm, options);

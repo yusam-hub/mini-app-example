@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use YusamHub\AppExt\JsTable\JsTableQuery;
-use YusamHub\AppExt\JsTable\JsTableResponse;
-use YusamHub\AppExt\JsTable\JsTableRow;
+use YusamHub\AppExt\Models\JsTable\JsTableQuery;
+use YusamHub\AppExt\Models\JsTable\JsTableResponse;
+use YusamHub\AppExt\Models\JsTable\JsTableRow;
 use YusamHub\Helper\Numeric;
 
 class EmailJsTableRow extends JsTableRow

@@ -491,22 +491,27 @@ TjsForm.prototype = {
         if (!(typeof self.options.formActionUri === 'string' && self.options.formActionUri.length > 0)) return false;
 
         function post() {
-            window.jsPost.request(self.options.formActionUri, Object.assign(self.toArray(), extraParams), function (statusCode, response, headers) {
+            window
+                .jsPost
+                .request(
+                self.options.formActionUri,
+                Object.assign(self.toArray(), extraParams),
+                function (statusCode, response, headers)
+                {
+                    let res = {
+                        'statusCode': statusCode,
+                        'response': response,
+                        'callbackOptions': callbackOptions,
+                        'formId' : self.options.formId,
+                        'formName' : self.options.formName,
+                    };
 
-                let res = {
-                    'statusCode': statusCode,
-                    'response': response,
-                    'callbackOptions': callbackOptions,
-                    'formId' : self.options.formId,
-                    'formName' : self.options.formName,
-                };
+                    self._doOnFormActionSave(res);
 
-                self._doOnFormActionSave(res);
-
-                if (typeof callback === 'function') {
-                    callback(res);
-                }
-            });
+                    if (typeof callback === 'function') {
+                        callback(res);
+                    }
+                });
         }
 
         if (!(typeof self.options.formActionConfirmMessage === 'string' && self.options.formActionConfirmMessage.length > 0)) {
@@ -534,20 +539,21 @@ TjsForm.prototype = {
      */
     _doOnFormActionSave: function(res)
     {
+        let self = this;
         /**
          * Убираем старые ошибки ошибки
          */
-        this.fromErrorArray([], true);
+        self.fromErrorArray([]);
 
         /**
          * Если статус ERROR
          */
         if (res['response']['status'] === 'error' && typeof res['response']['errorData'] === 'object') {
 
-            this.fromErrorArray(res['response']['errorData'], true);
+            self.fromErrorArray(res['response']['errorData']);
 
             if (typeof res['response']['errorMessage'] === 'string') {
-                this.jsMsg.dialogError(res['response']['errorMessage']);
+                window.jsMsg.dialogError(res['response']['errorMessage']);
             }
 
         } else if (res['response']['status'] === 'ok' && res['formId'] !== undefined) {
@@ -565,8 +571,8 @@ TjsForm.prototype = {
             }
         }
 
-        if (typeof this.options.onFormActionSave === "function") {
-            this.options.onFormActionSave(res);
+        if (typeof self.options.onFormActionSave === "function") {
+            self.options.onFormActionSave(res);
         }
     },
     /**

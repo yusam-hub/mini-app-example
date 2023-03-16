@@ -137,11 +137,12 @@
         });
 
         let jsFormFirst = new TjsForm('jsFormFirst', {
-            'formActionUri' : window.location.pathname + '/first',
+            'formActionUri' : window.location.pathname + '/js-form-first-save',
             'onFormActionSave' : function (res) {
-                if (res.response['status'] === 'ok') {
-                    //updateButtonsIfDisplayNone(res.response['data']['has']);
-                }
+                console.log('onFormActionSave', res);
+                /*if (res.response['status'] === 'ok') {
+                    jsFormFirst.fromErrorArray({});
+                }*/
             }
         });
 
@@ -212,7 +213,15 @@
             ],
         });
 
-        jsFormFirst.fromArray({
+        jsFormFirst.addFieldSelect('savingMode', {
+            'fieldLabel' : 'savingMode',
+            'fieldOptions' : [
+                {'value': 'ok', 'html' : 'Saving OK'},
+                {'value': 'error', 'html' : 'Saving Error'},
+            ],
+        });
+
+        /*jsFormFirst.fromArray({
             'text1': 'value1',
             'text2': 'value2',
             'check1': 2,
@@ -226,14 +235,17 @@
         jsFormFirst.fromErrorArray({
             'text1': 'invalid value',
             'text2': 'invalid value',
-        })
+        })*/
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
 
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
-            console.log(jsFormFirst.toArray());
-            jsFormFirst.fromErrorArray({});
-            jsFormFirst.setReadOnly(['text2','check2','radio2','select2'], false);
+            jsFormFirst.save(function(res){
+                console.log("onButtonClickSaveCallback", res);
+            });
+            //console.log(jsFormFirst.toArray());
+            //jsFormFirst.fromErrorArray({});
+            //jsFormFirst.setReadOnly(['text2','check2','radio2','select2'], false);
         });
 
 
