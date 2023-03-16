@@ -83,8 +83,11 @@ TjsMedia.prototype = {
     {
         let self = this;
 
-        if (window.location.protocol.toLowerCase() !== 'https:') {
-            throw new Error('Require https protocol of connection!');
+        if (typeof navigator.mediaDevices === "undefined") {
+            console.error("Undefined [navigator.mediaDevices]");
+            if (window.location.protocol.toLowerCase() !== 'https:') {
+                throw new Error('Require https protocol of connection!');
+            }
         }
 
         if (self.options.captureStartOnCreate === true) {
