@@ -7,7 +7,10 @@
 
         window.jsGlob.winReady(function(){
 
-            let ws = new WebSocket('ws://127.0.0.1:8074/ws/');
+            new WebSocket('ws://mini-app-example-8074.loc/ws/');
+            new WebSocket('ws://localhost:8074/ws/');
+            new WebSocket('ws://127.0.80.74/ws/');
+
 
             /*let jsWs = new TjsWs({
                 'debugging' : true,
