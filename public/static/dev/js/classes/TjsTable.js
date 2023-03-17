@@ -1,4 +1,4 @@
-let TjsTable = function(tagId, options = {}) {
+let TjsTable = function(tagIdOrEl, options = {}) {
 
     let defOptions = {
         'requestUri' : '/', //function(params) {}
@@ -45,12 +45,20 @@ let TjsTable = function(tagId, options = {}) {
             'sortDirectionDescArrow': '&uarr;',
             'hoverEnabled' : true,
             'selectedRowEnabled': true,
+            'renderPanelTable': true,
         },
     };
 
     this.options = js_object_merge_deep(defOptions, options);
 
-    this.el = document.getElementById(tagId);
+    if (typeof tagIdOrEl === "string") {
+        this.el = document.getElementById(tagIdOrEl);
+    } else {
+        this.el = tagIdOrEl;
+    }
+    if (this.el === null) {
+        throw Error("Element is undefined");
+    }
 
     this.tableData = undefined;
     this.selectedRowIndex = -1;
@@ -174,7 +182,9 @@ TjsTable.prototype = {
     _renderPanelTable: function()
     {
         let self = this;
-        let table, tr, td;
+        if (self.options.settings.renderPanelTable !== true) return;
+
+        let table, tr;
 
         table = document.createElement('table');
         table.classList.add('TjsTable_panel');
@@ -478,9 +488,11 @@ TjsTable.prototype = {
             self._selectRowIndex(-1);
         }
 
-        self.el.querySelector('.TjsTable_panel_left > input[type="text"]').value = self.dataRowsQuery.page;
-        self.el.querySelector('.TjsTable_panel_right > input').value = self.dataRows.length;
-        self.el.querySelector('.TjsTable_panel_right > select').value = self.dataRowsQuery.limit;
+        if (self.options.settings.renderPanelTable === true) {
+            self.el.querySelector('.TjsTable_panel_left > input[type="text"]').value = self.dataRowsQuery.page;
+            self.el.querySelector('.TjsTable_panel_right > input').value = self.dataRows.length;
+            self.el.querySelector('.TjsTable_panel_right > select').value = self.dataRowsQuery.limit;
+        }
 
         self._changeHeaderSortRender(self.dataRowsQuery.sortFieldName, self.dataRowsQuery.sortDirection);
     },

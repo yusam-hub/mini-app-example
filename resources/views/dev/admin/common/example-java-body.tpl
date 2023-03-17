@@ -253,6 +253,7 @@
                 {'value': '3', 'html' :' val 3'},
             ],
         });
+        jsFormFirst.addFieldInputHidden('tableId', 12345);
         jsFormFirst.addFieldSelect('select2', {
             'fieldLabel' : 'select2',
             'readOnly' : true,
@@ -271,6 +272,87 @@
             ],
         });
 
+        let jsTableDiv = js_create_el('div','jsTable');
+        jsFormFirst.addFieldExtraFormFieldElement('searchId', jsTableDiv, {
+            'fieldLabel' : 'searchId',
+        });
+        let jsTable = new TjsTable(jsTableDiv, {
+            'initLocationSearch': false,
+            'replaceHistorySearch': false,
+            'settings' : {
+                'renderPanelTable': false,
+            },
+            'requestUri' : function(params) {
+                //console.log(params);
+
+                let data = [];
+
+                for(let i=1; i <= 20; i++) {
+                    data[data.length] = {
+                        'id': i,
+                        'email': 'email'+i+'@domain.zone',
+                    };
+                }
+
+                return js_json_ok({
+                    'query' : params,
+                    'data' :  data,
+                });
+            },
+            'fields' : [
+                {
+                    'width' : '20%',
+                    'fieldName' : 'id',
+                    'fieldLabel' : 'ID',
+                    'filter': {
+                        'type': 'select',
+                        'options': [
+                            {'value': '', 'innerHTML' : ''},
+                            {'value': '1', 'innerHTML' : 'ID 1'},
+                            {'value': '2', 'innerHTML' : 'ID 2'},
+                        ],
+                    },
+                    'onDrawDataCell': function(td, row){},
+                    'onDrawFooterCell': function(td, rows){},
+                },
+                {
+                    'fieldName' : 'email',
+                    'fieldLabel' : 'E-mail',
+                    'filter': {
+                        'type': 'text',
+                    },
+                    'onDrawDataCell': function(td, row){},
+                    'onDrawFooterCell': function(td, rows){},
+                },
+                {
+                    'width' : '1%',
+                    'fieldName' : '',
+                    'fieldLabel' : '&nbsp;',
+                    'onDrawDataCell': function(td, row){
+                        td.innerHTML = '';
+                        let a = document.createElement('a');
+                        a.classList.add('button');
+                        a.classList.add('button-black');
+                        a.innerHTML = '...';
+                        a.href="#";
+                        a.addEventListener('click', function (){
+                            alert('test');
+                        });
+                        td.append(a);
+                    },
+                    'onDrawFooterCell': function(td, rows){},
+                }
+            ],
+            'onRowSelected': function(row){
+                if (row !== undefined) {
+                    jsFormFirst.setFieldValue('searchId', row['id']);
+                } else {
+                    jsFormFirst.setFieldValue('searchId', '');
+                }
+            },
+        });
+        jsTable.open();
+
         /*jsFormFirst.fromArray({
             'text1': 'value1',
             'text2': 'value2',
@@ -280,12 +362,11 @@
             'radio2': 2,
             'select1': 2,
             'select2': 2,
-        });
+        });*/
 
         jsFormFirst.fromErrorArray({
-            'text1': 'invalid value',
-            'text2': 'invalid value',
-        })*/
+            'searchId': 'invalid value',
+        })
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
 
@@ -296,7 +377,7 @@
 
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
             jsFormFirst.save(function(res){
-                //console.log("onButtonClickSaveCallback", res);
+                console.log("onButtonClickSaveCallback", res);
 
             });
             //console.log(jsFormFirst.toArray());

@@ -39,13 +39,14 @@ TjsForm.prototype = {
     },
     /**
      *
+     * @param formFieldControl
      * @param fieldName
      * @param newOptions
-     * @param formFieldControl
-     * @returns {HTMLDivElement}
+     * @param extraEl
+     * @returns {*}
      * @private
      */
-    _addField: function(formFieldControl, fieldName, newOptions = {})
+    _addField: function(formFieldControl, fieldName, newOptions = {}, extraEl = undefined)
     {
         let self = this;
 
@@ -107,6 +108,9 @@ TjsForm.prototype = {
         formElement.append(label);
         formElement.append(formField);
         formField.append(formFieldControl);
+        if (extraEl !== undefined){
+            formField.append(extraEl);
+        }
         formField.append(formFieldError);
         formElement.append(formClear);
         self._formElement.append(formElement);
@@ -137,6 +141,39 @@ TjsForm.prototype = {
                 self.addFieldCheckboxes(fieldName, options);
             }
         }
+    },
+    /**
+     *
+     * @param fieldName
+     * @param extraEl
+     * @param newOptions
+     * @returns {HTMLDivElement}
+     */
+    addFieldExtraFormFieldElement: function(fieldName, extraEl = undefined, newOptions = {})
+    {
+        let self = this;
+
+        let options = js_object_merge_deep({
+            'fieldValue' : '',
+            'fieldId' : fieldName,
+            'fieldName' : fieldName,
+            'fieldLabel' : fieldName,
+            'fieldError' : false,
+            'fieldDesc' : '',
+            'fieldType' : 'input-text',
+            'class': '',
+            'required': true,
+            'readOnly' : false
+        }, newOptions);
+
+        let formFieldControl = document.createElement('input');
+        formFieldControl.type = 'hidden';
+        formFieldControl.name = fieldName;
+        formFieldControl.id = fieldName;
+        formFieldControl.classList.add('form-field-control');
+        formFieldControl.defaultValue = options.fieldValue;
+
+        return self._addField(formFieldControl, fieldName, options, extraEl);
     },
     /**
      *
@@ -723,7 +760,7 @@ TjsForm.prototype = {
 
             formFieldControlsName = formFieldControls[i].getAttribute('name');
             formElement = formFieldControls[i].parentElement.parentElement;
-            formFieldError = formFieldControls[i].nextSibling;
+            formFieldError = formElement.querySelector('.form-error-div');
 
             if (formElement && formFieldError) {
 
@@ -754,6 +791,37 @@ TjsForm.prototype = {
 
             }
         }
+    },
+    /**
+     *
+     * @param fieldName
+     * @param defValue
+     * @returns {undefined|*}
+     */
+    getFieldValue: function(fieldName, defValue = undefined)
+    {
+        let self = this;
+
+        let fieldValues = self.toArray();
+
+
+        if (fieldValues[fieldName] !== undefined) {
+            return fieldValues[fieldName];
+        }
+
+        return defValue;
+    },
+    /**
+     *
+     * @param fieldName
+     * @param fieldValue
+     */
+    setFieldValue: function(fieldName, fieldValue)
+    {
+        let self = this;
+        let fieldValues = {};
+        fieldValues[fieldName] = fieldValue;
+        self.fromArray(fieldValues);
     },
     /**
      *
