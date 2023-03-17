@@ -1,7 +1,7 @@
 let TjsTable = function(tagId, options = {}) {
 
     let defOptions = {
-        'requestUri' : '/', //function(settings, query) {}
+        'requestUri' : '/', //function(params) {}
         'initLocationSearch': true,
         'replaceHistorySearch': true,
         'onDrawPanelCenter': function(td){},
@@ -63,21 +63,6 @@ let TjsTable = function(tagId, options = {}) {
 
     this.dataRowsQueryFilter = {};
 
-    if (this.options.initLocationSearch === true) {
-        let urlSearchParams = new URLSearchParams(window.location.search);
-        this.dataRowsQuery.page = parseInt(urlSearchParams.get('page')) || this.dataRowsQuery.page;
-        this.dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.dataRowsQuery.limit;
-        this.dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
-        this.dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
-        if (!(['asc','desc'].inArray(this.dataRowsQuery.sortDirection))) {
-            this.dataRowsQuery.sortDirection = 'asc';
-        }
-        if (!this.options.settings.limitList.inArray(this.dataRowsQuery.limit)) {
-            this.dataRowsQuery.limit = this.options.settings.limitList[0];
-        }
-        this.dataRowsQueryFilter = urlSearchParams.getObject('filter');
-    }
-
     this.dataRows= [
         /*{
             'id': 1,
@@ -104,7 +89,56 @@ TjsTable.prototype = {
 
         self.el.classList.add('TjsTable_container');
 
+        if (this.options.initLocationSearch === true) {
+            let urlSearchParams = new URLSearchParams(window.location.search);
+            this.dataRowsQuery.page = parseInt(urlSearchParams.get('page')) || this.dataRowsQuery.page;
+            this.dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.dataRowsQuery.limit;
+            this.dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
+            this.dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
+            if (!(['asc','desc'].inArray(this.dataRowsQuery.sortDirection))) {
+                this.dataRowsQuery.sortDirection = 'asc';
+            }
+            if (!this.options.settings.limitList.inArray(this.dataRowsQuery.limit)) {
+                this.dataRowsQuery.limit = this.options.settings.limitList[0];
+            }
+            this.dataRowsQueryFilter = urlSearchParams.getObject('filter');
+        }
+
         self._reRender(true);
+    },
+    /**
+     *
+     * @returns {number}
+     * @private
+     */
+    _getSelectedRowIndexFromUrlSearch: function(defValue = -1)
+    {
+        if (this.options.initLocationSearch === true) {
+            let urlSearchParams = new URLSearchParams(window.location.search);
+            return parseInt(urlSearchParams.get('selectedRowIndex')) || defValue;
+        }
+        return defValue;
+    },
+    /**
+     *
+     * @private
+     */
+    _doReplaceHistorySearch: function()
+    {
+        let self = this;
+
+        if (self.options.replaceHistorySearch === true) {
+            let urlSearchParams = new URLSearchParams(window.location.search);
+            urlSearchParams.set('page', self.dataRowsQuery.page);
+            urlSearchParams.set('limit', self.dataRowsQuery.limit);
+            urlSearchParams.set('sortFieldName', self.dataRowsQuery.sortFieldName);
+            urlSearchParams.set('sortDirection', self.dataRowsQuery.sortDirection);
+            urlSearchParams.set('selectedRowIndex', ''+self.getSelectedRowIndex());
+            for (const [key, value] of Object.entries(self.dataRowsQueryFilter)) {
+                urlSearchParams.set('filter['+key+']', value);
+            }
+            window.history.replaceState(null, null, '?'+urlSearchParams.toString());
+        }
     },
     /**
      *
@@ -416,7 +450,7 @@ TjsTable.prototype = {
                 tr.append(td);
             }
             tr.addEventListener('click', function (){
-                self._selectRowIndex(parseInt(this.getAttribute('data-index')) || 0);
+                self._selectRowIndex(parseInt(this.getAttribute('data-index')) || -1);
             });
 
             tbody.append(tr);
@@ -432,7 +466,11 @@ TjsTable.prototype = {
             }
         }
 
-        self._selectRowIndex(0);
+        if (self.dataRows.length > 0) {
+            self._selectRowIndex(self._getSelectedRowIndexFromUrlSearch(0));
+        } else {
+            self._selectRowIndex(-1);
+        }
 
         self.el.querySelector('.TjsTable_panel_left > input[type="text"]').value = self.dataRowsQuery.page;
         self.el.querySelector('.TjsTable_panel_right > input').value = self.dataRows.length;
@@ -486,6 +524,9 @@ TjsTable.prototype = {
                 self.options.onRowSelected(undefined);
             }
         }
+
+        self._doReplaceHistorySearch();
+
         let tbody = self.tableData.getElementsByTagName('tbody')[0];
         let trs = tbody.getElementsByTagName('tr');
         for(let i=0; i < trs.length; i++) {
@@ -577,12 +618,22 @@ TjsTable.prototype = {
         let self = this;
 
         if (typeof self.options.requestUri === "function") {
-            self.options.requestUri(self.dataRowsQuery, self.dataRowsQueryFilter);
+
+            let params = self.dataRowsQuery;
+            params['filter'] = self.dataRowsQueryFilter;
+
+            let response = self.options.requestUri(params);
+            if (response.status === 'ok') {
+                self.setData(response.data.query, response.data.data);
+            } else {
+                self.setData({},[]);
+            }
             return;
         }
 
         let params = self.dataRowsQuery;
         params['filter'] = self.dataRowsQueryFilter;
+
         window.jsPost.request(self.options.requestUri, params, function (statusCode, response, headers)
         {
             if (statusCode === 200 && response.status === 'ok') {
@@ -600,6 +651,7 @@ TjsTable.prototype = {
     setData: function(query = {}, rows = [])
     {
         let self = this;
+
         self.dataRowsQuery = js_object_merge_deep(self.dataRowsQuery, {
             'page' : parseInt(query.page) || 1,
             'limit': parseInt(query.limit) || 1,
@@ -607,18 +659,6 @@ TjsTable.prototype = {
             'sortDirection': query.sortDirection,
         });
         self.dataRowsQueryFilter = js_object_merge_deep(self.dataRowsQueryFilter, query.filter);
-
-        if (self.options.replaceHistorySearch === true) {
-            let urlSearchParams = new URLSearchParams(window.location.search);
-            urlSearchParams.set('page', self.dataRowsQuery.page);
-            urlSearchParams.set('limit', self.dataRowsQuery.limit);
-            urlSearchParams.set('sortFieldName', self.dataRowsQuery.sortFieldName);
-            urlSearchParams.set('sortDirection', self.dataRowsQuery.sortDirection);
-            for (const [key, value] of Object.entries(self.dataRowsQueryFilter)) {
-                urlSearchParams.set('filter['+key+']', value);
-            }
-            window.history.replaceState(null, null, '?'+urlSearchParams.toString());
-        }
 
         self._changeRows(rows);
     },
@@ -681,10 +721,23 @@ TjsTable.prototype = {
      */
     getSelectedRow: function()
     {
-        if (this.dataRows.length > this.selectedRowIndex && this.selectedRowIndex >= 0) {
-            return this.dataRows[this.selectedRowIndex];
+        let selectRowIndex = this.getSelectedRowIndex();
+        if (selectRowIndex >= 0) {
+            return this.dataRows[selectRowIndex];
         }
         return undefined;
+    },
+    /**
+     *
+     * @returns {number}
+     */
+    getSelectedRowIndex: function(defIndex = -1)
+    {
+        if (this.dataRows.length > this.selectedRowIndex && this.selectedRowIndex >= 0) {
+            return Number.parseInt(this.selectedRowIndex);
+        }
+        return defIndex;
     }
+
 }
 

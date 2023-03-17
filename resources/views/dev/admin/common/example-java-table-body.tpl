@@ -9,25 +9,32 @@
 {literal}
     <script type="text/javascript">
         window.jsGlob.winReady(function(){
-
+            let globalEmailData = [];
+            for(let i=1; i <= 100; i++) {
+                globalEmailData[globalEmailData.length] = {
+                    'id': i,
+                    'email': 'email'+i+'@domain.zone',
+                };
+            }
             let jsTable = new TjsTable('jsTable', {
-                'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
-                /*'requestUri' : function(settings, query) {
-                    jsTable.setData(settings, query, [
-                        {
-                            'id': 1,
-                            'title': 'Title 1',
-                        },
-                        {
-                            'id': 2,
-                            'title': 'Title 2',
-                        },
-                        {
-                            'id': 3,
-                            'title': 'Title 3',
-                        },
-                    ]);
-                },*/
+                //'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
+                'requestUri' : function(params) {
+                    console.log(params);
+
+                    let data = [];
+
+                    for(let i=1; i <= 2; i++) {
+                        data[data.length] = {
+                            'id': i,
+                            'email': 'email'+i+'@domain.zone',
+                        };
+                    }
+
+                    return js_json_ok({
+                        'query' : params,
+                        'data' :  data,
+                    });
+                 },
                 'onDrawPanelCenter': function(td){
                     let button = document.createElement('a');
                     button.classList.add('button');
@@ -83,7 +90,7 @@
                     }
                 ],
                 'onRowSelected': function(row){
-                    //console.log(row);
+                    console.log(row);
                 },
             });
 

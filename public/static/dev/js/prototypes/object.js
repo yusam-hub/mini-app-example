@@ -51,3 +51,17 @@ Object.prototype.merge = function(obj)
 {
     return Object.assign(this, obj);
 }
+
+/**
+ *
+ * @param size
+ * @returns {*[]}
+ */
+Object.prototype.chunk = function(size)
+{
+    let obj = this;
+    let ret = [];
+    for (let i = 0; i < obj.length; i += size)
+        ret.push(obj.slice(i, i + size));
+    return ret;
+};
