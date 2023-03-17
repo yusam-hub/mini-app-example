@@ -141,12 +141,12 @@
         document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
             let jsInputForm = new TjsForm('jsInputForm', {
                 'formActionUri' : function(fieldValues) {
-                    return {
-                        'status' : 'error',
-                        'errorMessage' : 'Invalid values',
-                        'errorData' : {
-                            'text1' : 'some error',
-                        }
+                    if (fieldValues['text1'] === 'error') {
+                        return js_json_error('Invalid values', {
+                            'text1': 'some error',
+                        })
+                    } else {
+                        return js_json_ok(fieldValues)
                     }
                 },
                 'onFormActionSave' : function (res) {
@@ -156,6 +156,7 @@
             jsInputForm.addFieldInputText('text1', {
                 'fieldLabel' : 'text1',
                 'readOnly' : false,
+                'fieldValue' : 'error',
             });
             window.jsMsg.dialogInputFormConfirm(jsInputForm);
         });

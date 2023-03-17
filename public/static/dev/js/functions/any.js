@@ -9,6 +9,34 @@ function js_log(...data)
 
 /**
  *
+ * @param data
+ * @returns {{data: {}, status: string}}
+ */
+function js_json_ok(data = {})
+{
+    return {
+        'status': 'ok',
+        'data' : data
+    };
+}
+
+/**
+ *
+ * @param errorMessage
+ * @param errorData
+ * @returns {{errorMessage, errorData: {}, status: string}}
+ */
+function js_json_error(errorMessage, errorData = {})
+{
+    return {
+        'status': 'error',
+        'errorMessage' : errorMessage,
+        'errorData' : errorData
+    };
+}
+
+/**
+ *
  * @param ms number
  */
 function js_sleep_ms(ms)

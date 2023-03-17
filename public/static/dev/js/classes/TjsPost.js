@@ -96,7 +96,7 @@ TjsPost.prototype = {
 
                             } else {
 
-                                console.log("responseCallback is not function");
+                                throw Error("responseCallback is not function");
 
                             }
 
@@ -113,11 +113,11 @@ TjsPost.prototype = {
                                 errorData = xhr.response.errorData;
                             }
 
-                            responseCallback(xhr.status, {
-                                'status' : 'error',
-                                'errorMessage': errorMessage,
-                                'errorData' : errorData,
-                            }, responseHeaders);
+                            responseCallback(
+                                xhr.status,
+                                js_json_error(errorMessage, errorData),
+                                responseHeaders
+                            );
 
                         }
 
