@@ -89,6 +89,9 @@
         <button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button>
         <button class="button button-black" id="dialogInputForm">Input Form</button>
         <button class="button button-black" id="dialogInputFormConfirm">Input Form Confirm</button>
+        <button class="button button-black" id="dialogInputFormConfirmAdd">Input Form Confirm Add</button>
+        <button class="button button-black" id="dialogInputFormConfirmSave">Input Form Confirm Save</button>
+        <button class="button button-black" id="dialogInputFormConfirmDel">Input Form Confirm Del</button>
     </p>
 
     <h3>TjsForm First</h3>
@@ -138,7 +141,8 @@
             window.jsMsg.dialogInputForm(jsInputForm);
         });
 
-        document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
+        function dialogInputFormConfirm(typ = 'def')
+        {
             let jsInputForm = new TjsForm('jsInputForm', {
                 'formActionUri' : function(fieldValues) {
                     if (fieldValues['text1'] === 'error') {
@@ -158,7 +162,31 @@
                 'readOnly' : false,
                 'fieldValue' : 'error',
             });
-            window.jsMsg.dialogInputFormConfirm(jsInputForm);
+            if (typ === 'add') {
+                window.jsMsg.dialogInputFormConfirmAdd(jsInputForm);
+            } else if (typ === 'save') {
+                window.jsMsg.dialogInputFormConfirmSave(jsInputForm);
+            } else if (typ === 'del') {
+                window.jsMsg.dialogInputFormConfirmDelete(jsInputForm);
+            } else {
+                window.jsMsg.dialogInputFormConfirm(jsInputForm);
+            }
+        }
+
+        document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
+            dialogInputFormConfirm('def');
+        });
+
+        document.querySelector("#dialogInputFormConfirmAdd").addEventListener('click', function (e){
+            dialogInputFormConfirm('add');
+        });
+
+        document.querySelector("#dialogInputFormConfirmSave").addEventListener('click', function (e){
+            dialogInputFormConfirm('save');
+        });
+
+        document.querySelector("#dialogInputFormConfirmDel").addEventListener('click', function (e){
+            dialogInputFormConfirm('del');
         });
 
         let jsFormFirst = new TjsForm('jsFormFirst', {
