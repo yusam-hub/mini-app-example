@@ -1,19 +1,20 @@
 /**
  *
- * @param name
+ * @param extractKey
  * @returns {{}}
  */
-URLSearchParams.prototype.getObject = function(name)
+URLSearchParams.prototype.getObject = function(extractKey)
 {
     let obj = {};
-
     this.forEach((value, key) => {
         let decodedKey = decodeURIComponent(key);
         let decodedValue = decodeURIComponent(value);
+
         if (decodedKey.endsWith(']')) {
+            console.log(decodedKey, decodedValue);
             let key = decodedKey.separateLeft('[');
-            if (name === key) {
-                let subKey = decodedKey.separateLeft('[').rtrim('\\]');
+            if (extractKey === key) {
+                let subKey = decodedKey.separateRight('[').rtrim('\\]');
                 obj[subKey] = decodedValue;
             }
         }

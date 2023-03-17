@@ -101,6 +101,7 @@ TjsTable.prototype = {
             if (!this.options.settings.limitList.inArray(this.dataRowsQuery.limit)) {
                 this.dataRowsQuery.limit = this.options.settings.limitList[0];
             }
+
             this.dataRowsQueryFilter = urlSearchParams.getObject('filter');
         }
 
