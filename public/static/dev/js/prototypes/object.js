@@ -35,6 +35,15 @@ Object.prototype.concatToString = function()
 
 /**
  *
+ * @returns {string[]}
+ */
+Object.prototype.arrayKeys = function ()
+{
+    return Object.keys(this);
+}
+
+/**
+ *
  * @param obj
  * @returns {any}
  */

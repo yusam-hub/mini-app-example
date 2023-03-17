@@ -139,10 +139,7 @@
         let jsFormFirst = new TjsForm('jsFormFirst', {
             'formActionUri' : window.location.pathname + '/js-form-first-save',
             'onFormActionSave' : function (res) {
-                console.log('onFormActionSave', res);
-                /*if (res.response['status'] === 'ok') {
-                    jsFormFirst.fromErrorArray({});
-                }*/
+                //console.log('onFormActionSave', res);
             }
         });
 
@@ -239,9 +236,15 @@
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
 
+        let saveReadOnlyFields = jsFormFirst.getReadOnlyFields();
+        jsFormFirst.setReadOnly();
+        jsFormFirst.setReadOnlyFields(saveReadOnlyFields);
+
+
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
             jsFormFirst.save(function(res){
-                console.log("onButtonClickSaveCallback", res);
+                //console.log("onButtonClickSaveCallback", res);
+
             });
             //console.log(jsFormFirst.toArray());
             //jsFormFirst.fromErrorArray({});

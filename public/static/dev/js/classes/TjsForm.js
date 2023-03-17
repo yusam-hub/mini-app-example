@@ -742,30 +742,118 @@ TjsForm.prototype = {
         }
     },
     /**
-     * @param fieldNames
-     * @param value
+     *
+     * @returns {*[]}
      */
-    setReadOnly: function(fieldNames, value)
+    getFieldNames: function()
     {
-        let self = this, formFieldControls, formFieldControlsName, inputs;
+        let self = this, formFieldControls, out = [];
+
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+
+        for (let i = 0; i < formFieldControls.length; i++) {
+            out[out.length] = formFieldControls[i].getAttribute('name');
+        }
+        return out;
+    },
+    /**
+     *
+     * @returns {{}}
+     */
+    getReadOnlyFields: function()
+    {
+        let self = this, formFieldControls, formFieldControlsName, inputs, out = {};
 
         formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
 
-            if (fieldNames.includes(formFieldControlsName)) {
+            if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
+
+                out[formFieldControlsName] = formFieldControls[i].readOnly;
+
+            } else if (formFieldControls[i].nodeName === 'SELECT') {
+
+                out[formFieldControlsName] = formFieldControls[i].disabled;
+
+            } else if (formFieldControls[i].classList.contains('form-radios') || formFieldControls[i].classList.contains('form-checkboxes')) {
+
+                inputs = formFieldControls[i].querySelectorAll('label > input');
+                out[formFieldControlsName] = false;
+                for(let r=0; r < inputs.length; r++) {
+                    if (inputs[r].disabled !== false) {
+                        out[formFieldControlsName] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return out;
+    },
+    /**
+     *
+     * @param fieldValues
+     */
+    setReadOnlyFields: function(fieldValues)
+    {
+        let self = this, formFieldControls, formFieldControlsName, fieldNames, inputs;
+
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        fieldNames = fieldValues.arrayKeys();
+
+        for (let i = 0; i < formFieldControls.length; i++) {
+            formFieldControlsName = formFieldControls[i].getAttribute('name');
+
+            if (fieldNames.inArray(formFieldControlsName)) {
+                if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
+
+                    formFieldControls[i].readOnly = fieldValues[formFieldControlsName];
+
+                } else if (formFieldControls[i].nodeName === 'SELECT') {
+
+                    formFieldControls[i].disabled = fieldValues[formFieldControlsName];
+
+                } else if (formFieldControls[i].classList.contains('form-radios') || formFieldControls[i].classList.contains('form-checkboxes')) {
+
+                    inputs = formFieldControls[i].querySelectorAll('label > input');
+
+                    for(let r=0; r < inputs.length; r++) {
+                        inputs[r].disabled = fieldValues[formFieldControlsName];
+                    }
+                }
+            }
+        }
+    },
+    /**
+     * @param fieldNames string|array
+     * @param value boolean
+     */
+    setReadOnly: function(fieldNames = '*', value = true)
+    {
+        let self = this, formFieldControls, formFieldControlsName, inputs;
+
+        if (typeof fieldNames === "string") {
+            if (fieldNames === '*') {
+                fieldNames = self.getFieldNames();
+            } else {
+                fieldNames = [];
+            }
+        }
+
+        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+
+        for (let i = 0; i < formFieldControls.length; i++) {
+            formFieldControlsName = formFieldControls[i].getAttribute('name');
+
+            if (fieldNames.inArray(formFieldControlsName)) {
                 if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
 
                     formFieldControls[i].readOnly = value;
 
                 } else if (formFieldControls[i].nodeName === 'SELECT') {
 
-                    if (value) {
-                        formFieldControls[i].setAttribute('disabled', true);
-                    } else {
-                        formFieldControls[i].removeAttribute('disabled');
-                    }
+                    formFieldControls[i].disabled = value;
 
                 } else if (formFieldControls[i].classList.contains('form-radios') || formFieldControls[i].classList.contains('form-checkboxes')) {
 
