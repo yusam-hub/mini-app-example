@@ -87,6 +87,7 @@
         <button class="button button-black" id="dialogWarning">Warning</button>
         <button class="button button-black" id="dialogConfirm">Confirm</button>
         <button class="button button-black" id="dialogDeleteConfirm">Delete Confirm</button>
+        <button class="button button-black" id="dialogInputForm">Input Form</button>
         <button class="button button-black" id="dialogInputFormConfirm">Input Form Confirm</button>
     </p>
 
@@ -127,8 +128,31 @@
         document.querySelector("#dialogDeleteConfirm").addEventListener('click', function (e){
             window.jsMsg.dialogDeleteConfirm(this.innerHTML);
         });
-        document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
+
+        document.querySelector("#dialogInputForm").addEventListener('click', function (e){
             let jsInputForm = new TjsForm('jsInputForm', {});
+            jsInputForm.addFieldInputText('text1', {
+                'fieldLabel' : 'text1',
+                'readOnly' : false,
+            });
+            window.jsMsg.dialogInputForm(jsInputForm);
+        });
+
+        document.querySelector("#dialogInputFormConfirm").addEventListener('click', function (e){
+            let jsInputForm = new TjsForm('jsInputForm', {
+                'formActionUri' : function(fieldValues) {
+                    return {
+                        'status' : 'error',
+                        'errorMessage' : 'Invalid values',
+                        'errorData' : {
+                            'text1' : 'some error',
+                        }
+                    }
+                },
+                'onFormActionSave' : function (res) {
+                    console.log('onFormActionSave', res);
+                }
+            });
             jsInputForm.addFieldInputText('text1', {
                 'fieldLabel' : 'text1',
                 'readOnly' : false,

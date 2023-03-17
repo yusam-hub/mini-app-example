@@ -492,8 +492,6 @@ TjsMsg.prototype = {
                 function(res){
                     if (res['response']['status'] === 'ok') {
                         self.formClose(res.callbackOptions.jsFormParentFormIndex);
-                    } else {
-                        jsForm.fromErrorArray();
                     }
                 },
                 {},

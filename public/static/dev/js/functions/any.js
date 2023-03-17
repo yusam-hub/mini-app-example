@@ -1,5 +1,14 @@
 /**
  *
+ * @param data
+ */
+function js_log(...data)
+{
+    console.log(data);
+}
+
+/**
+ *
  * @param ms number
  */
 function js_sleep_ms(ms)

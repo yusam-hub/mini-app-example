@@ -7,7 +7,7 @@ let TjsForm = function(formName, options = {}) {
         'formId': formName,
         'formAction': '#',
         'formMethod': 'post',
-        'formActionUri' : window.location.pathname + window.location.search.toString(),
+        'formActionUri' : window.location.pathname + window.location.search.toString(),//function(fieldValue) return {}
         'formActionConfirmMessage' : js_lang_func('TjsMsg','content.messagePerform'),
         'onFormActionSave' : function(res){
             //console.log("jsForm.onFormActionSave", response);
@@ -488,35 +488,49 @@ TjsForm.prototype = {
     {
         let self = this;
 
-        if (!(typeof self.options.formActionUri === 'string' && self.options.formActionUri.length > 0)) return false;
-
         function post() {
-            window
-                .jsPost
-                .request(
-                self.options.formActionUri,
-                Object.assign(self.toArray(), extraParams),
-                function (statusCode, response, headers)
-                {
-                    let res = {
-                        'statusCode': statusCode,
-                        'response': response,
-                        'callbackOptions': callbackOptions,
-                        'formId' : self.options.formId,
-                        'formName' : self.options.formName,
-                    };
 
-                    self._doOnFormActionSave(res);
+            if (typeof self.options.formActionUri === 'string' && self.options.formActionUri.length > 0) {
+                window
+                    .jsPost
+                    .request(
+                        self.options.formActionUri,
+                        Object.assign(self.toArray(), extraParams),
+                        function (statusCode, response, headers)
+                        {
+                            let res = {
+                                'statusCode': statusCode,
+                                'response': response,
+                                'callbackOptions': callbackOptions,
+                                'formId' : self.options.formId,
+                                'formName' : self.options.formName,
+                            };
 
-                    if (typeof callback === 'function') {
-                        callback(res);
-                    }
-                });
-        }
+                            self._doOnFormActionSave(res);
 
-        if (!(typeof self.options.formActionConfirmMessage === 'string' && self.options.formActionConfirmMessage.length > 0)) {
-            post();
-            return true;
+                            if (typeof callback === 'function') {
+                                callback(res);
+                            }
+                        });
+            } else if (typeof self.options.formActionUri === 'function') {
+
+                let response = self.options.formActionUri(Object.assign(self.toArray(), extraParams));
+
+                let res = {
+                    'statusCode': 0,
+                    'response': response,
+                    'callbackOptions': callbackOptions,
+                    'formId' : self.options.formId,
+                    'formName' : self.options.formName,
+                };
+
+                self._doOnFormActionSave(res);
+
+                if (typeof callback === 'function') {
+                    callback(res);
+                }
+            }
+
         }
 
         window.jsMsg.dialogConfirm(self.options.formActionConfirmMessage, {
@@ -543,7 +557,7 @@ TjsForm.prototype = {
         /**
          * Убираем старые ошибки ошибки
          */
-        self.fromErrorArray([]);
+        self.fromErrorArray();
 
         /**
          * Если статус ERROR
