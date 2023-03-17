@@ -826,7 +826,7 @@ TjsForm.prototype = {
         }
     },
     /**
-     * @param fieldNames string|array
+     * @param fieldNames string|array - '*' | 'key1,key2' | ['key1','key2']
      * @param value boolean
      */
     setReadOnly: function(fieldNames = '*', value = true)
@@ -837,7 +837,7 @@ TjsForm.prototype = {
             if (fieldNames === '*') {
                 fieldNames = self.getFieldNames();
             } else {
-                fieldNames = [];
+                fieldNames = fieldNames.split(',');
             }
         }
 

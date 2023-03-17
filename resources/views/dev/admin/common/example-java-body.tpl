@@ -236,9 +236,9 @@
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
 
-        let saveReadOnlyFields = jsFormFirst.getReadOnlyFields();
+        /*let saveReadOnlyFields = jsFormFirst.getReadOnlyFields();
         jsFormFirst.setReadOnly();
-        jsFormFirst.setReadOnlyFields(saveReadOnlyFields);
+        jsFormFirst.setReadOnlyFields(saveReadOnlyFields);*/
 
 
         document.querySelector("#jsFormFirst_save").addEventListener('click', function (e){
