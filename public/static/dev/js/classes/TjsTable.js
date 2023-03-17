@@ -451,7 +451,7 @@ TjsTable.prototype = {
                 tr.append(td);
             }
             tr.addEventListener('click', function (){
-                self._selectRowIndex(parseInt(this.getAttribute('data-index')) || -1);
+                self._selectRowIndex(parseInt(this.getAttribute('data-index')) || 0);
             });
 
             tbody.append(tr);
@@ -468,7 +468,12 @@ TjsTable.prototype = {
         }
 
         if (self.dataRows.length > 0) {
-            self._selectRowIndex(self._getSelectedRowIndexFromUrlSearch(0));
+            let indexFromUrl = self._getSelectedRowIndexFromUrlSearch();
+            if (indexFromUrl >= 0) {
+                self._selectRowIndex(indexFromUrl);
+            } else {
+                self._selectRowIndex(0);
+            }
         } else {
             self._selectRowIndex(-1);
         }
