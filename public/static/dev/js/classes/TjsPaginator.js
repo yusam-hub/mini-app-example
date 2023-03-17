@@ -28,7 +28,7 @@ let TjsPaginator = function(tagId, options = {}) {
         let urlSearchParams = new URLSearchParams(window.location.search);
         this.options.page = parseInt(urlSearchParams.get('page')) || this.options.page;
         this.options.limit = parseInt(urlSearchParams.get('limit')) || this.options.limit;
-        if (!this.options.limitList.inArray(this.options.limit)) {
+        if (!this.options.limitList.jsInArray(this.options.limit)) {
             this.options.limit = this.options.limitList[0];
         }
     }

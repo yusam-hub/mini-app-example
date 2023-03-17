@@ -82,7 +82,7 @@ TjsWs.prototype = {
         if (typeof pathQuery === 'object') {
             queryString = (new URLSearchParams(self.options.pathQuery)).toString();
         }
-        let wsUrl = self.wsProtocol + '://' + self.wsHostname + '/' + self.options.path.ltrim('/') + ((queryString !== '') ? "?" + queryString : '');
+        let wsUrl = self.wsProtocol + '://' + self.wsHostname + '/' + self.options.path.jsLtrim('/') + ((queryString !== '') ? "?" + queryString : '');
 
         self.wsInstance = new WebSocket(wsUrl);
 

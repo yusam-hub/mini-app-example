@@ -11,9 +11,9 @@ URLSearchParams.prototype.getObject = function(extractKey)
         let decodedValue = decodeURIComponent(value);
 
         if (decodedKey.endsWith(']')) {
-            let key = decodedKey.separateLeft('[');
+            let key = decodedKey.jsSeparateLeft('[');
             if (extractKey === key) {
-                let subKey = decodedKey.separateRight('[').rtrim('\\]');
+                let subKey = decodedKey.jsSeparateRight('[').jsRtrim('\\]');
                 obj[subKey] = decodedValue;
             }
         }

@@ -4,7 +4,7 @@
  * @param thousands_sep
  * @returns {string}
  */
-Number.prototype.numberFormat = function(decimals = 2, thousands_sep = ' ')
+Number.prototype.jsNumberFormat = function(decimals = 2, thousands_sep = ' ')
 {
     let number = this;
 
@@ -31,7 +31,7 @@ Number.prototype.numberFormat = function(decimals = 2, thousands_sep = ' ')
  *
  * @returns number
  */
-Number.prototype.odd = function()
+Number.prototype.jsOdd = function()
 {
     let newIndex = parseInt(this) || 0;
 

@@ -1,10 +1,8 @@
-
-
 /**
  *
  * @returns {{}}
  */
-Object.prototype.kSort = function()
+Object.prototype.jsSortByKey = function()
 {
     let obj = this;
     return Object.keys(obj).sort().reduce(function (result, key) {
@@ -16,7 +14,7 @@ Object.prototype.kSort = function()
  *
  * @returns {string}
  */
-Object.prototype.concatToString = function()
+/*Object.prototype.concatToString = function(onlyValues = false)
 {
     let obj = this.kSort();
     let keys = Object.keys(obj);
@@ -24,20 +22,28 @@ Object.prototype.concatToString = function()
     for (let i = 0; i < keys.length; i++) {
         if (obj[keys[i]] !== null) {
             if (typeof (obj[keys[i]]) === 'object') {
-                result += obj[keys[i]].concatToString();
+                if (onlyValues) {
+                    result += obj[keys[i]].concatToString(onlyValues);
+                } else {
+                    result += keys[i]+obj[keys[i]].concatToString(onlyValues);
+                }
             } else {
-                result += obj[keys[i]];
+                if (onlyValues) {
+                    result += obj[keys[i]];
+                } else {
+                    result += keys[i]+obj[keys[i]];
+                }
             }
         }
     }
     return result;
-}
+}*/
 
 /**
  *
  * @returns {string[]}
  */
-Object.prototype.arrayKeys = function ()
+Object.prototype.jsArrayKeys = function ()
 {
     return Object.keys(this);
 }
@@ -47,7 +53,7 @@ Object.prototype.arrayKeys = function ()
  * @param obj
  * @returns {any}
  */
-Object.prototype.merge = function(obj)
+Object.prototype.jsMerge = function(obj)
 {
     return Object.assign(this, obj);
 }
@@ -57,7 +63,7 @@ Object.prototype.merge = function(obj)
  * @param size
  * @returns {*[]}
  */
-Object.prototype.chunk = function(size)
+Object.prototype.jsChunk = function(size)
 {
     let obj = this;
     let ret = [];

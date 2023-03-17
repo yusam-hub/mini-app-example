@@ -814,12 +814,12 @@ TjsForm.prototype = {
         let self = this, formFieldControls, formFieldControlsName, fieldNames, inputs;
 
         formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
-        fieldNames = fieldValues.arrayKeys();
+        fieldNames = fieldValues.jsArrayKeys();
 
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
 
-            if (fieldNames.inArray(formFieldControlsName)) {
+            if (fieldNames.jsInArray(formFieldControlsName)) {
                 if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
 
                     formFieldControls[i].readOnly = fieldValues[formFieldControlsName];
@@ -860,7 +860,7 @@ TjsForm.prototype = {
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
 
-            if (fieldNames.inArray(formFieldControlsName)) {
+            if (fieldNames.jsInArray(formFieldControlsName)) {
                 if (formFieldControls[i].nodeName === 'INPUT' || formFieldControls[i].nodeName === 'TEXTAREA') {
 
                     formFieldControls[i].readOnly = value;

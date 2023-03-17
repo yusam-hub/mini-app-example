@@ -95,10 +95,10 @@ TjsTable.prototype = {
             this.dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.dataRowsQuery.limit;
             this.dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
             this.dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
-            if (!(['asc','desc'].inArray(this.dataRowsQuery.sortDirection))) {
+            if (!(['asc','desc'].jsInArray(this.dataRowsQuery.sortDirection))) {
                 this.dataRowsQuery.sortDirection = 'asc';
             }
-            if (!this.options.settings.limitList.inArray(this.dataRowsQuery.limit)) {
+            if (!this.options.settings.limitList.jsInArray(this.dataRowsQuery.limit)) {
                 this.dataRowsQuery.limit = this.options.settings.limitList[0];
             }
 
