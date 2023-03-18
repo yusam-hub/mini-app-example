@@ -69,6 +69,10 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsMsg.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsForm.js?rnd={ts}"></script>
 
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDataSource.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDataTable.js?rnd={ts}"></script>
+
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}
 

@@ -404,7 +404,6 @@
 
             resizeObserver.observe(vertical_menu);
         }*/
-
     });
 
 </script>
