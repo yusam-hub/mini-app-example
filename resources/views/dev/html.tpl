@@ -70,9 +70,9 @@
 
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsForm.js?rnd={ts}"></script>
 
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsMsgBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsMsg.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsMsg.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsDialogMsg.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDialogMsg.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>

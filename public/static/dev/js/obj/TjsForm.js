@@ -4,8 +4,11 @@ class TjsForm extends TjsBase
 {
     #formName;
     #formElement;
+    #jsMsg;
+    #jsPost;
 
-    constructor(formName, options = {}) {
+    constructor(formName, options = {}, jsMsg = undefined, jsPost = undefined)
+    {
         let defOptions = {
             'formName': formName,
             'formId': formName,
@@ -20,6 +23,15 @@ class TjsForm extends TjsBase
         }
 
         super(js_object_merge_deep(defOptions, options));
+
+        this.#jsMsg = jsMsg;
+        if (this.#jsMsg === undefined) {
+            this.#jsMsg = window.jsMsg;
+        }
+        this.#jsPost = jsPost;
+        if (this.#jsPost === undefined) {
+            this.#jsPost = window.jsPost;
+        }
 
         this.#formName = formName;
 
@@ -532,8 +544,7 @@ class TjsForm extends TjsBase
         function post() {
 
             if (typeof self.options.formActionUri === 'string' && self.options.formActionUri.length > 0) {
-                window
-                    .jsPost
+                self.#jsPost
                     .request(
                         self.options.formActionUri,
                         Object.assign(self.toArray(), extraParams),
@@ -574,11 +585,11 @@ class TjsForm extends TjsBase
 
         }
 
-        window.jsMsg.dialogConfirm(self.options.formActionConfirmMessage, {
+        self.#jsMsg.dialogConfirm(self.options.formActionConfirmMessage, {
             'buttons' : {
                 'yes': {
                     'onClick' : function (formIndex) {
-                        window.jsMsg.formClose(formIndex);
+                        self.#jsMsg.formClose(formIndex);
                         post();
                     }
                 }
@@ -608,7 +619,7 @@ class TjsForm extends TjsBase
             self.fromErrorArray(res['response']['errorData']);
 
             if (typeof res['response']['errorMessage'] === 'string') {
-                window.jsMsg.dialogError(res['response']['errorMessage']);
+                self.#jsMsg.dialogError(res['response']['errorMessage']);
             }
 
         } else if (res['response']['status'] === 'ok' && res['formId'] !== undefined) {
@@ -952,4 +963,5 @@ class TjsForm extends TjsBase
             }
         }
     }
+
 }
