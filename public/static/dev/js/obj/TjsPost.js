@@ -2,6 +2,12 @@
 class TjsPost extends TjsBase
 {
     #jsWait;
+
+    /**
+     *
+     * @param jsWait TjsWait
+     * @param options object
+     */
     constructor(jsWait, options = {}) {
         if (!(jsWait instanceof TjsWait)) {
             throw Error("jsWait is not instance of TjsWait");

@@ -7,6 +7,12 @@ class TjsWait extends TjsBase
     #waitIntervalId = null;
     #waitReferenceCounter = 0;
     #waitReferenceCounterEl = null;
+
+    /**
+     *
+     * @param jsGlob TjsGlob
+     * @param options object
+     */
     constructor(jsGlob, options = {}) {
         if (!(jsGlob instanceof TjsGlob)) {
             throw Error("jsGlob is not instance of TjsGlob");
@@ -67,46 +73,5 @@ class TjsWait extends TjsBase
             document.getElementById('js_wait_background').style.display = 'none';
             clearInterval(this.#waitIntervalId);
         }
-    }
-    /**
-     *
-     * @param countdownSeconds : number
-     * @param finishHandler : caller
-     * @param tickHandler : caller|null
-     * @param calcTimerHandler : caller|null
-     */
-    waitCountdownEventHandler(countdownSeconds, finishHandler, tickHandler = null, calcTimerHandler = null)
-    {
-        function calcTimer(dist)
-        {
-            let hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((dist % (1000 * 60)) / 1000);
-            return hours.toString().padStart(2,'0') + ":" + minutes.toString().padStart(2,'0') + ":" + seconds.toString().padStart(2,'0');
-        }
-
-        let timeEnd = Math.ceil((new Date()).getTime() / 1000) * 1000 + countdownSeconds * 1000;
-
-        if (typeof(tickHandler) === 'function') {
-            if (typeof calcTimerHandler === "function") {
-
-            } else {
-                tickHandler(calcTimer(countdownSeconds * 1000));
-            }
-        }
-
-        let countdownIntervalId = setInterval(function(){
-            if ((new Date()).getTime() >= timeEnd) {
-                clearInterval(countdownIntervalId);
-                if (typeof(finishHandler) === 'function') {
-                    finishHandler();
-                }
-            } else {
-                if (typeof(tickHandler) === 'function') {
-                    tickHandler(calcTimer(timeEnd - (new Date()).getTime()));
-                }
-            }
-        }, 1000);
-
     }
 }

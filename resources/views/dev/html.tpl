@@ -66,6 +66,8 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsForm.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsInterval.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsCountdown.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsGlob.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsCookie.js?rnd={ts}"></script>
 

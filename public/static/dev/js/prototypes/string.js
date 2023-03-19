@@ -10,6 +10,36 @@ String.prototype.jsRtrim = function(s) {
     return this.replace(new RegExp("[" + s + "]*$"), '');
 };
 
+
+/**
+ *
+ * @returns {string}
+ */
+String.prototype.jsSprintf = function sprintf(...args) {
+    let format = this;
+    let i = 0;
+    return format.replace(/%s/g, function() {
+        let s = args[i];
+        i++;
+        return s;
+    });
+}
+
+/**
+ *
+ * @param keyValuePairs object
+ * @returns {string}
+ */
+String.prototype.jsStrTr = function sprintf(keyValuePairs) {
+    let formatString = this;
+    for (const [key, value] of Object.entries(keyValuePairs)) {
+        if (typeof value === "string") {
+            formatString = formatString.replace(new RegExp(key + '','g'), value);
+        }
+    }
+    return formatString;
+}
+
 /**
  *
  * @param s

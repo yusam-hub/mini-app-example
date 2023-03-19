@@ -4,11 +4,20 @@ class TjsBase
 {
     #lang;
     #options;
+
+    /**
+     *
+     * @param options object
+     */
     constructor(options = {}) {
         this.#options = options;
         this.#lang = js_lang_func(this.class);
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     get lang()
     {
         return this.#lang;
@@ -23,6 +32,10 @@ class TjsBase
         return this.constructor.name;
     }
 
+    /**
+     *
+     * @returns {string[]}
+     */
     getExtendClasses()
     {
         let out = [];
