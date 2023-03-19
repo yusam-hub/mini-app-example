@@ -53,8 +53,7 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsTabs.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsToggles.js?rnd={ts}"></script>
+
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsMedia.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWs.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsRtcPeer.js?rnd={ts}"></script>
@@ -70,6 +69,8 @@
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsCountdown.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsGlob.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsCookie.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsTabs.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsToggles.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsWait.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsWait.js?rnd={ts}"></script>
