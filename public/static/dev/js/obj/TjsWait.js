@@ -1,13 +1,18 @@
 "use strict";
 class TjsWait extends TjsBase
 {
+    #jsGlob;
     #waitIntervalStart = 0;
     #waitAutoHideSeconds = 0;
     #waitIntervalId = null;
     #waitReferenceCounter = 0;
     #waitReferenceCounterEl = null;
-    constructor(options = {}) {
+    constructor(jsGlob, options = {}) {
+        if (!(jsGlob instanceof TjsGlob)) {
+            throw Error("jsGlob is not instance of TjsGlob");
+        }
         super(options);
+        this.#jsGlob = jsGlob;
         this.#init();
     }
 
@@ -17,7 +22,7 @@ class TjsWait extends TjsBase
 
         self.#waitReferenceCounterEl = js_create_el("div","js_wait_counter");
 
-        window.jsGlob.domLoaded(function(){
+        self.#jsGlob.domLoaded(function(){
             let js_wait_background = js_create_el("div", "js_wait_background");
             js_wait_background.style.display = 'none';
 
