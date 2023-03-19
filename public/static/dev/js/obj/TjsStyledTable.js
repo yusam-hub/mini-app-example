@@ -1,69 +1,75 @@
-let TjsStyledTable = function(tagId, options = {}) {
+"use strict";
 
-    let defOptions = {
-        'header': {
-            /*'id' : {
-                'onHeaderRender' : function(key, th){},
-                'onRowRender' : function(key, td, index, row){},
+class TjsStyledTable extends TjsBase
+{
+    #el;
+    constructor(selectorOrEl, options = {})
+    {
+        let defOptions = {
+            'header': {
+                /*'id' : {
+                    'onHeaderRender' (key, th){},
+                    'onRowRender' (key, td, index, row){},
+                },
+                'title' : {
+                    'onHeaderRender' (key, th){},
+                    'onRowRender' (key, td, index, row){},
+                },*/
             },
-            'title' : {
-                'onHeaderRender' : function(key, th){},
-                'onRowRender' : function(key, td, index, row){},
-            },*/
-        },
-        'rows' : [
+            'rows' : [
 
-        ],
-        'onHeaderRender': function(trH, rows){
-            //console.log(trH, rows);
-        },
-        'onFooterRender': function(table, headers, rows){
-            //console.log(table, headers, rows);
-        },
-        'onRowsChanged': function(rows, isCreating){
-            //console.log(rows);
+            ],
+            'onHeaderRender': function(trH, rows){
+                //console.log(trH, rows);
+            },
+            'onFooterRender': function(table, headers, rows){
+                //console.log(table, headers, rows);
+            },
+            'onRowsChanged': function(rows, isCreating){
+                //console.log(rows);
+            }
+        };
+        super(js_object_merge_deep(defOptions, options));
+
+        if (typeof selectorOrEl === "string") {
+            this.#el = document.querySelector(selectorOrEl);
+        } else {
+            this.#el = selectorOrEl;
         }
-    };
 
-    this.options = js_object_merge_deep(defOptions, options);
+        this.#init();
+    }
 
-    this.el = document.getElementById(tagId);
-
-    this._init();
-};
-
-TjsStyledTable.prototype = {
-
-    _init: function()
+    #init()
     {
         let self = this;
 
-        self.el.classList.add('styled-table');
-        self._reRender(true);
-    },
+        self.#el.classList.add('styled-table');
+        self.#reRender(true);
+    }
     /**
      *
      * @private
      */
-    _reRender: function(isCreating = false)
+    #reRender(isCreating = false)
     {
         let self = this;
 
-        while (self.el.firstChild) {
-            self.el.removeChild(self.el.lastChild);
+        while (self.#el.firstChild) {
+            self.#el.removeChild(self.#el.lastChild);
         }
 
-        self._createElements();
+        self.#createElements();
 
         if (typeof(self.options.onRowsChanged) === "function" && self.options.rows.length > 0) {
             self.options.onRowsChanged(self.options.rows, isCreating);
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _createElements: function()
+    #createElements()
     {
         let self = this,
             table;
@@ -71,18 +77,18 @@ TjsStyledTable.prototype = {
         table = document.createElement('table');
         table.classList.add('width-100-percent');
 
-        self._renderHeaders(table);
+        self.#renderHeaders(table);
 
-        self._renderRows(table);
+        self.#renderRows(table);
 
-        self.el.append(table);
-    },
+        self.#el.append(table);
+    }
     /**
      *
      * @param table
      * @private
      */
-    _renderHeaders: function(table)
+    #renderHeaders(table)
     {
         let self = this, th;
 
@@ -106,13 +112,13 @@ TjsStyledTable.prototype = {
         }
 
         table.append(trH);
-    },
+    }
     /**
      *
      * @param table
      * @private
      */
-    _renderRows: function(table)
+    #renderRows(table)
     {
         let self = this, trRow, td;
 
@@ -130,14 +136,14 @@ TjsStyledTable.prototype = {
             }
             table.append(trRow);
         }
-    },
+    }
     /**
      *
      */
-    changeRows: function(rows)
+    changeRows(rows)
     {
         let self = this;
         self.options.rows = rows;
-        self._reRender();
-    },
+        self.#reRender();
+    }
 }

@@ -74,10 +74,9 @@
         <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsMsg.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsMsg.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsPaginator.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsStyledTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsTable.js?rnd={ts}"></script>
 
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>

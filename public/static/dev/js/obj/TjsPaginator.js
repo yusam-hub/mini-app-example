@@ -1,60 +1,67 @@
-let TjsPaginator = function(tagId, options = {}) {
+"use strict";
 
-    let defOptions = {
-        'requestUri': false,//or '/'
-        'requestOnCreate': false,
-        'initLocationSearch': true,
-        'replaceHistorySearch': true,
-        'page': 1,
-        'limit': 1,
-        'limitList': [1,5,15,30,60],
-        'settings' : {
-            'limitClassButton' : 'button-black',
-            'limitSelectedClassButton' : 'button-orange',
-            'pageClassButton' : 'button-black',
-            'pageSelectedClassButton' : 'button-orange',
-            'pageFirstButtonTitle' : '&#9668;&#9668;',
-            'pagePrevButtonTitle' : '&#9668;',
-            'pageNextButtonTitle' : '&#9658;',
-        },
-        'onPaginatorChanged': function(page, limit, rows){
-            console.log(page, limit, rows);
+class TjsPaginator extends TjsBase
+{
+    #el;
+    constructor(selectorOrEl, options = {})
+    {
+        let defOptions = {
+            'requestUri': false,//or '/'
+            'requestOnCreate': false,
+            'initLocationSearch': true,
+            'replaceHistorySearch': true,
+            'page': 1,
+            'limit': 1,
+            'limitList': [1,5,15,30,60],
+            'settings' : {
+                'limitClassButton' : 'button-black',
+                'limitSelectedClassButton' : 'button-orange',
+                'pageClassButton' : 'button-black',
+                'pageSelectedClassButton' : 'button-orange',
+                'pageFirstButtonTitle' : '&#9668;&#9668;',
+                'pagePrevButtonTitle' : '&#9668;',
+                'pageNextButtonTitle' : '&#9658;',
+            },
+            'onPaginatorChanged': function(page, limit, rows){
+                console.log(page, limit, rows);
+            }
+        };
+
+        super(js_object_merge_deep(defOptions, options));
+
+        if (this.options.initLocationSearch === true) {
+            let urlSearchParams = new URLSearchParams(window.location.search);
+            this.options.page = parseInt(urlSearchParams.get('page')) || this.options.page;
+            this.options.limit = parseInt(urlSearchParams.get('limit')) || this.options.limit;
+            if (!this.options.limitList.jsInArray(this.options.limit)) {
+                this.options.limit = this.options.limitList[0];
+            }
         }
-    };
 
-    this.options = js_object_merge_deep(defOptions, options);
-
-    if (this.options.initLocationSearch === true) {
-        let urlSearchParams = new URLSearchParams(window.location.search);
-        this.options.page = parseInt(urlSearchParams.get('page')) || this.options.page;
-        this.options.limit = parseInt(urlSearchParams.get('limit')) || this.options.limit;
-        if (!this.options.limitList.jsInArray(this.options.limit)) {
-            this.options.limit = this.options.limitList[0];
+        if (typeof selectorOrEl === "string") {
+            this.#el = document.querySelector(selectorOrEl);
+        } else {
+            this.#el = selectorOrEl;
         }
+
+        this.#init();
     }
 
-    this.el = document.getElementById(tagId);
-
-    this._init();
-};
-
-TjsPaginator.prototype = {
-
-    _init: function()
+    #init()
     {
         let self = this;
 
-        self._reRender(true);
+        self.#reRender(true);
 
         if (self.options.requestOnCreate === true) {
             self.change();
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _convertParamsIfInvalid: function()
+    #convertParamsIfInvalid()
     {
         let self = this;
 
@@ -66,22 +73,22 @@ TjsPaginator.prototype = {
             self.options.limit = 1;
         }
 
-    },
+    }
     /**
      *
      * @private
      */
-    _reRender: function(isCreating, rows = [])
+    #reRender(isCreating, rows = [])
     {
         let self = this;
 
-        while (self.el.firstChild) {
-            self.el.removeChild(self.el.lastChild);
+        while (self.#el.firstChild) {
+            self.#el.removeChild(self.#el.lastChild);
         }
 
-        self._convertParamsIfInvalid();
+        self.#convertParamsIfInvalid();
 
-        self._createElements();
+        self.#createElements();
 
         if (typeof (self.options.onPaginatorChanged) === "function" && isCreating !== true) {
             self.options.onPaginatorChanged(
@@ -90,12 +97,12 @@ TjsPaginator.prototype = {
                 rows
             );
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _createElements: function()
+    #createElements()
     {
         let self = this,
             table, tr, tdL, tdR;
@@ -107,26 +114,26 @@ TjsPaginator.prototype = {
         tdL.classList.add('width-50-percent');
         tdL.classList.add('text-align-left');
 
-        self._createLimitButtons(tdL);
+        self.#createLimitButtons(tdL);
 
         tdR = document.createElement('td');
         tdR.classList.add('width-50-percent');
         tdR.classList.add('text-align-right');
 
-        self._createPageButtons(tdR);
+        self.#createPageButtons(tdR);
 
         tr = document.createElement('tr');
         tr.append(tdL);
         tr.append(tdR);
         table.append(tr);
-        self.el.append(table);
-    },
+        self.#el.append(table);
+    }
     /**
      *
      * @param parent
      * @private
      */
-    _createLimitButtons: function (parent)
+    #createLimitButtons(parent)
     {
         let self = this, a, min, max;
 
@@ -166,17 +173,17 @@ TjsPaginator.prototype = {
 
                 let selfEl = this;
 
-                self._changeLimit(selfEl.getAttribute('data-limit'));
+                self.#changeLimit(selfEl.getAttribute('data-limit'));
 
             }, false);
         }
-    },
+    }
     /**
      *
      * @param parent
      * @private
      */
-    _createPageButtons: function (parent)
+    #createPageButtons(parent)
     {
         let self = this, a, aFirst, aPrev, aNext;
 
@@ -241,34 +248,34 @@ TjsPaginator.prototype = {
 
                 let selfEl = this;
 
-                self._changePage(selfEl.getAttribute('data-page'));
+                self.#changePage(selfEl.getAttribute('data-page'));
 
             }, false);
         }
-    },
+    }
     /**
      *
      * @param page
      * @private
      */
-    _changePage: function(page){
+    #changePage(page){
         let self = this;
         self.options.page = parseInt(page) || 1;
         self.change();
-    },
+    }
     /**
      *
      * @param limit
      * @private
      */
-    _changeLimit: function(limit){
+    #changeLimit(limit){
         let self = this;
         self.options.limit = parseInt(limit) || 1;
         self.change();
-    },
+    }
     /**
      */
-    change: function()
+    change()
     {
         let self = this;
 
@@ -280,7 +287,7 @@ TjsPaginator.prototype = {
         }
 
         if (typeof self.options.requestUri !== 'string') {
-            self._reRender(false, []);
+            self.#reRender(false, []);
             return;
         }
 
@@ -294,12 +301,12 @@ TjsPaginator.prototype = {
             if (statusCode === 200 && response.status === 'ok') {
                 self.options.page = parseInt(response.data.query.page) || 1;
                 self.options.limit = parseInt(response.data.query.limit) || 1;
-                self._reRender(false, response.data.data);
+                self.#reRender(false, response.data.data);
             } else {
                 self.options.page = 1;
                 self.options.limit = 1;
-                self._reRender(false, []);
+                self.#reRender(false, []);
             }
         });
-    },
+    }
 }

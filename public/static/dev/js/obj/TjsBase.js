@@ -65,6 +65,15 @@ class TjsBase
 
     /**
      *
+     * @param value
+     */
+    /*set options(value)
+    {
+        this.#options = value;
+    }*/
+
+    /**
+     *
      * @returns {*}
      */
     toObject()

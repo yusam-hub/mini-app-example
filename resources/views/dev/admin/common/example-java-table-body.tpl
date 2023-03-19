@@ -16,7 +16,9 @@
                     'email': 'email'+i+'@domain.zone',
                 };
             }
-            let jsTable = new TjsTable('jsTable', {
+            let jsTable = new TjsTable(
+                '#jsTable',
+                {
                 'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
                 /*'requestUri' : function(params) {
                     console.log(params);

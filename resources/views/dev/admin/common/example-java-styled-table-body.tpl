@@ -16,7 +16,9 @@
     <script type="text/javascript">
         window.jsGlob.winReady(function(){
 
-            let jsStyledTable = new TjsStyledTable('jsStyledTable',{
+            let jsStyledTable = new TjsStyledTable(
+                '#jsStyledTable',
+                {
                 'header': {
                     'id' : {
                         'onHeaderRender' : function(key, th){
@@ -37,11 +39,11 @@
                 },
             });
 
-            let jsPaginator = new TjsPaginator('jsPaginator',{
+            let jsPaginator = new TjsPaginator('#jsPaginator',{
                 'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
                 'requestOnCreate': true,
                 'onPaginatorChanged': function(page, limit, rows) {
-                    console.log('onPaginatorChanged', page, limit, rows);
+                    //console.log('onPaginatorChanged', page, limit, rows);
                     jsStyledTable.changeRows(rows);
                 }
             });

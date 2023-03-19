@@ -16,7 +16,7 @@ class TjsForm extends TjsBase
             'formMethod': 'post',
             'formActionUri': window.location.pathname + window.location.search.toString(),//function(fieldValue) return {}
             'formActionConfirmMessage': js_lang_func('TjsMsg', 'content.messagePerform'),
-            'onFormActionSave': function (res) {
+            'onFormActionSave': function(res) {
                 //console.log("jsForm.onFormActionSave", response);
             },
             'formFieldDefs': {},

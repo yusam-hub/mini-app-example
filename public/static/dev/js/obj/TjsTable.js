@@ -1,97 +1,102 @@
-let TjsTable = function(tagIdOrEl, options = {}) {
+"use strict";
 
-    let defOptions = {
-        'requestUri' : '/', //function(params) {}
-        'initLocationSearch': true,
-        'replaceHistorySearch': true,
-        'onDrawPanelCenter': function(td){},
-        'fields' : [
+class TjsTable extends TjsBase
+{
+    #el;
+    #tableData;
+    #selectedRowIndex;
+    #dataRowsQuery;
+    #dataRowsQueryFilter;
+    #dataRows;
+    constructor(selectorOrEl, options = {})
+    {
+        let defOptions = {
+            'requestUri' : '/', //function(params) {}
+            'initLocationSearch': true,
+            'replaceHistorySearch': true,
+            'onDrawPanelCenter': function(td){},
+            'fields' : [
+                /*{
+                    'width' : '20%',
+                    'fieldName' : 'id',
+                    'fieldLabel' : 'ID',
+                    'filter': {
+                        'type': 'text',
+                    },
+                    'onDrawDataCell': function(td, row){},
+                    'onDrawFooterCell': function(td, rows){},
+                },
+                {
+                    'fieldName' : 'title',
+                    'fieldLabel' : 'Title',
+                    'filter': {
+                        'type': 'select',
+                        'options': [
+                            {'value': '', 'innerHTML' : ''},
+                            {'value': '1', 'innerHTML' : 'label 1'},
+                            {'value': '2', 'innerHTML' : 'label 2'},
+                        ],
+                    },
+                    'onDrawDataCell': function(td, row){},
+                    'onDrawFooterCell': function(td, rows){},
+                },
+                {
+                    'width' : '1%',
+                    'fieldName' : '',
+                    'fieldLabel' : '&nbsp;',
+                    'onDrawDataCell': function(td, row){},
+                    'onDrawFooterCell': function(td, rows){},
+                }*/
+            ],
+            'onRowSelected': function(row){},
+            'settings' : {
+                'limitList': [1,5,15,30,60],
+                'sortDirectionAscArrow': '&darr;',
+                'sortDirectionDescArrow': '&uarr;',
+                'hoverEnabled' : true,
+                'selectedRowEnabled': true,
+                'renderPanelTable': true,
+            },
+        };
+
+        super(js_object_merge_deep(defOptions, options));
+
+        if (typeof selectorOrEl === "string") {
+            this.el = document.querySelector(selectorOrEl);
+        } else {
+            this.el = selectorOrEl;
+        }
+
+        this.#tableData = undefined;
+        this.#selectedRowIndex = -1;
+        this.#dataRowsQuery = {
+            'page': 1,
+            'limit': 15,
+            'sortFieldName': '',
+            'sortDirection': 'asc',
+        };
+
+        this.#dataRowsQueryFilter = {};
+
+        this.#dataRows= [
             /*{
-                'width' : '20%',
-                'fieldName' : 'id',
-                'fieldLabel' : 'ID',
-                'filter': {
-                    'type': 'text',
-                },
-                'onDrawDataCell': function(td, row){},
-                'onDrawFooterCell': function(td, rows){},
+                'id': 1,
+                'title': 'Title 1',
             },
             {
-                'fieldName' : 'title',
-                'fieldLabel' : 'Title',
-                'filter': {
-                    'type': 'select',
-                    'options': [
-                        {'value': '', 'innerHTML' : ''},
-                        {'value': '1', 'innerHTML' : 'label 1'},
-                        {'value': '2', 'innerHTML' : 'label 2'},
-                    ],
-                },
-                'onDrawDataCell': function(td, row){},
-                'onDrawFooterCell': function(td, rows){},
+                'id': 2,
+                'title': 'Title 2',
             },
             {
-                'width' : '1%',
-                'fieldName' : '',
-                'fieldLabel' : '&nbsp;',
-                'onDrawDataCell': function(td, row){},
-                'onDrawFooterCell': function(td, rows){},
-            }*/
-        ],
-        'onRowSelected': function(row){},
-        'settings' : {
-            'limitList': [1,5,15,30,60],
-            'sortDirectionAscArrow': '&darr;',
-            'sortDirectionDescArrow': '&uarr;',
-            'hoverEnabled' : true,
-            'selectedRowEnabled': true,
-            'renderPanelTable': true,
-        },
+                'id': 3,
+                'title': 'Title 3',
+            },*/
+        ];
+
+        this.#init();
     };
 
-    this.options = js_object_merge_deep(defOptions, options);
-
-    if (typeof tagIdOrEl === "string") {
-        this.el = document.getElementById(tagIdOrEl);
-    } else {
-        this.el = tagIdOrEl;
-    }
-    if (this.el === null) {
-        throw Error("Element is undefined");
-    }
-
-    this.tableData = undefined;
-    this.selectedRowIndex = -1;
-    this.dataRowsQuery = {
-        'page': 1,
-        'limit': 15,
-        'sortFieldName': '',
-        'sortDirection': 'asc',
-    };
-
-    this.dataRowsQueryFilter = {};
-
-    this.dataRows= [
-        /*{
-            'id': 1,
-            'title': 'Title 1',
-        },
-        {
-            'id': 2,
-            'title': 'Title 2',
-        },
-        {
-            'id': 3,
-            'title': 'Title 3',
-        },*/
-    ];
-
-    this._init();
-};
-
-TjsTable.prototype = {
-
-    _init: function()
+    #init()
     {
         let self = this;
 
@@ -99,61 +104,61 @@ TjsTable.prototype = {
 
         if (this.options.initLocationSearch === true) {
             let urlSearchParams = new URLSearchParams(window.location.search);
-            this.dataRowsQuery.page = parseInt(urlSearchParams.get('page')) || this.dataRowsQuery.page;
-            this.dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.dataRowsQuery.limit;
-            this.dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
-            this.dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
-            if (!(['asc','desc'].jsInArray(this.dataRowsQuery.sortDirection))) {
-                this.dataRowsQuery.sortDirection = 'asc';
+            this.#dataRowsQuery.page = parseInt(urlSearchParams.get('page')) || this.#dataRowsQuery.page;
+            this.#dataRowsQuery.limit = parseInt(urlSearchParams.get('limit')) || this.#dataRowsQuery.limit;
+            this.#dataRowsQuery.sortFieldName = urlSearchParams.get('sortFieldName') || '';
+            this.#dataRowsQuery.sortDirection = urlSearchParams.get('sortDirection') || 'asc';
+            if (!(['asc','desc'].jsInArray(this.#dataRowsQuery.sortDirection))) {
+                this.#dataRowsQuery.sortDirection = 'asc';
             }
-            if (!this.options.settings.limitList.jsInArray(this.dataRowsQuery.limit)) {
-                this.dataRowsQuery.limit = this.options.settings.limitList[0];
+            if (!this.options.settings.limitList.jsInArray(this.#dataRowsQuery.limit)) {
+                this.#dataRowsQuery.limit = this.options.settings.limitList[0];
             }
 
-            this.dataRowsQueryFilter = urlSearchParams.getObject('filter');
+            this.#dataRowsQueryFilter = urlSearchParams.getObject('filter');
         }
 
-        self._reRender(true);
-    },
+        self.#reRender(true);
+    }
     /**
      *
      * @returns {number}
      * @private
      */
-    _getSelectedRowIndexFromUrlSearch: function(defValue = -1)
+    #getSelectedRowIndexFromUrlSearch(defValue = -1)
     {
         if (this.options.initLocationSearch === true) {
             let urlSearchParams = new URLSearchParams(window.location.search);
             return parseInt(urlSearchParams.get('selectedRowIndex')) || defValue;
         }
         return defValue;
-    },
+    }
     /**
      *
      * @private
      */
-    _doReplaceHistorySearch: function()
+    #doReplaceHistorySearch()
     {
         let self = this;
 
         if (self.options.replaceHistorySearch === true) {
             let urlSearchParams = new URLSearchParams(window.location.search);
-            urlSearchParams.set('page', self.dataRowsQuery.page);
-            urlSearchParams.set('limit', self.dataRowsQuery.limit);
-            urlSearchParams.set('sortFieldName', self.dataRowsQuery.sortFieldName);
-            urlSearchParams.set('sortDirection', self.dataRowsQuery.sortDirection);
+            urlSearchParams.set('page', self.#dataRowsQuery.page);
+            urlSearchParams.set('limit', self.#dataRowsQuery.limit);
+            urlSearchParams.set('sortFieldName', self.#dataRowsQuery.sortFieldName);
+            urlSearchParams.set('sortDirection', self.#dataRowsQuery.sortDirection);
             urlSearchParams.set('selectedRowIndex', ''+self.getSelectedRowIndex());
-            for (const [key, value] of Object.entries(self.dataRowsQueryFilter)) {
+            for (const [key, value] of Object.entries(self.#dataRowsQueryFilter)) {
                 urlSearchParams.set('filter['+key+']', value);
             }
             window.history.replaceState(null, null, '?'+urlSearchParams.toString());
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _reRender: function(isCreating = false)
+    #reRender(isCreating = false)
     {
         let self = this;
 
@@ -161,25 +166,25 @@ TjsTable.prototype = {
             self.el.removeChild(self.el.lastChild);
         }
 
-        self._createElements();
-    },
+        self.#createElements();
+    }
     /**
      *
      * @private
      */
-    _createElements: function()
+    #createElements()
     {
         let self = this;
 
-        self._renderPanelTable();
+        self.#renderPanelTable();
 
-        self._renderDataTable();
-    },
+        self.#renderDataTable();
+    }
     /**
      *
      * @private
      */
-    _renderPanelTable: function()
+    #renderPanelTable()
     {
         let self = this;
         if (self.options.settings.renderPanelTable !== true) return;
@@ -190,32 +195,32 @@ TjsTable.prototype = {
         table.classList.add('TjsTable_panel');
         tr = document.createElement('tr');
 
-        self._renderPanelTableLeft(tr);
-        self._renderPanelTableCenter(tr);
-        self._renderPanelTableRight(tr);
+        self.#renderPanelTableLeft(tr);
+        self.#renderPanelTableCenter(tr);
+        self.#renderPanelTableRight(tr);
 
         table.append(tr);
         self.el.append(table);
-    },
+    }
     /**
      *
      * @private
      */
-    _clearDataTableSortDirections: function()
+    #clearDataTableSortDirections()
     {
         let self = this;
-        let headerTds = self.tableData.querySelectorAll('thead > .header > td');
+        let headerTds = self.#tableData.querySelectorAll('thead > .header > td');
         for(let i=0; i < headerTds.length; i++) {
             headerTds[i].innerHTML = headerTds[i].getAttribute('data-field-label');
             headerTds[i].setAttribute('data-sort-direction', '');
         }
-    },
+    }
     /**
      *
      * @param tr
      * @private
      */
-    _renderPanelTableLeft: function(tr)
+    #renderPanelTableLeft(tr)
     {
         let self = this;
 
@@ -234,18 +239,18 @@ TjsTable.prototype = {
         prevButton.type = 'button';
         prevButton.value = '<';
         prevButton.addEventListener('click', function(ev){
-            self._changeDataRowsQuery('page', self.dataRowsQuery.page - 1);
+            self.#changeDataRowsQuery('page', self.#dataRowsQuery.page - 1);
         });
         td.append(prevButton);
 
         let pageInput = document.createElement('input');
         pageInput.type = 'text';
         pageInput.size = 5;
-        pageInput.value = self.dataRowsQuery.page;
+        pageInput.value = self.#dataRowsQuery.page;
         pageInput.addEventListener('keydown', function (ev) {
             if ((ev.key === 'Enter')/* || (ev.key === 'Escape') || (ev.key === 'Tab')*/)
             {
-                self._changeDataRowsQuery('page', parseInt(this.value) || 1);
+                self.#changeDataRowsQuery('page', parseInt(this.value) || 1);
             }
         })
         td.append(pageInput);
@@ -254,18 +259,18 @@ TjsTable.prototype = {
         nextButton.type = 'button';
         nextButton.value = '>';
         nextButton.addEventListener('click', function(ev){
-            self._changeDataRowsQuery('page', self.dataRowsQuery.page + 1);
+            self.#changeDataRowsQuery('page', self.#dataRowsQuery.page + 1);
         });
         td.append(nextButton);
 
         tr.append(td);
-    },
+    }
     /**
      *
      * @param tr
      * @private
      */
-    _renderPanelTableCenter: function(tr)
+    #renderPanelTableCenter(tr)
     {
         let self = this;
 
@@ -278,13 +283,13 @@ TjsTable.prototype = {
         if (typeof self.options.onDrawPanelCenter === 'function') {
             typeof self.options.onDrawPanelCenter(td);
         }
-    },
+    }
     /**
      *
      * @param tr
      * @private
      */
-    _renderPanelTableRight: function(tr)
+    #renderPanelTableRight(tr)
     {
         let self = this;
 
@@ -294,7 +299,7 @@ TjsTable.prototype = {
         let rowsOnPage = document.createElement('input');
         rowsOnPage.type = 'text';
         rowsOnPage.readOnly = true;
-        rowsOnPage.value = self.dataRows.length;
+        rowsOnPage.value = self.#dataRows.length;
         rowsOnPage.size = 5;
         td.append(rowsOnPage);
 
@@ -304,45 +309,45 @@ TjsTable.prototype = {
             let option = document.createElement('option');
             option.value = self.options.settings.limitList[i];
             option.innerHTML = self.options.settings.limitList[i];
-            option.selected = self.options.settings.limitList[i] === self.dataRowsQuery.limit;
+            option.selected = self.options.settings.limitList[i] === self.#dataRowsQuery.limit;
             pageLimit.options.add(option);
         }
         pageLimit.addEventListener('change', function (){
-            self._changeDataRowsQuery('limit', parseInt(this.value) || 1);
+            self.#changeDataRowsQuery('limit', parseInt(this.value) || 1);
         });
 
         td.append(pageLimit);
 
         tr.append(td);
-    },
+    }
     /**
      *
      * @private
      */
-    _renderDataTable: function()
+    #renderDataTable()
     {
         let self = this;
 
-        self.tableData = document.createElement('table');
-        self.tableData.classList.add('TjsTable_data');
+        self.#tableData = document.createElement('table');
+        self.#tableData.classList.add('TjsTable_data');
 
-        self._renderDataTableHeaders(self.tableData);
+        self.#renderDataTableHeaders(self.#tableData);
 
         let tbody = document.createElement('tbody');
-        self.tableData.append(tbody);
+        self.#tableData.append(tbody);
 
-        //self._renderDataTableRows();
+        //self.#renderDataTableRows();
 
-        self._renderDataTableFooters(self.tableData);
+        self.#renderDataTableFooters(self.#tableData);
 
-        self.el.append(self.tableData);
-    },
+        self.el.append(self.#tableData);
+    }
     /**
      *
      * @param table
      * @private
      */
-    _renderDataTableHeaders: function(table)
+    #renderDataTableHeaders(table)
     {
         let self = this;
         let thead = document.createElement('thead');
@@ -367,7 +372,7 @@ TjsTable.prototype = {
                         this.setAttribute('data-sort-direction','desc');
                     }
 
-                    self._changeDataRowsQueries({
+                    self.#changeDataRowsQueries({
                         'sortFieldName': this.getAttribute('data-field-name'),
                         'sortDirection': this.getAttribute('data-sort-direction'),
                     });
@@ -387,13 +392,13 @@ TjsTable.prototype = {
                 if (self.options.fields[i].filter.type === 'text') {
                     let filterInput = document.createElement('input');
                     filterInput.type = 'text';
-                    if (typeof self.dataRowsQueryFilter[self.options.fields[i].fieldName] !== 'undefined') {
-                        filterInput.value = self.dataRowsQueryFilter[self.options.fields[i].fieldName];
+                    if (typeof self.#dataRowsQueryFilter[self.options.fields[i].fieldName] !== 'undefined') {
+                        filterInput.value = self.#dataRowsQueryFilter[self.options.fields[i].fieldName];
                     }
                     filterInput.setAttribute('data-field-name', self.options.fields[i].fieldName);
                     filterInput.addEventListener("keydown", function (ev){
                         if (ev.key === 'Enter') {
-                            self._changeQuery(this.getAttribute('data-field-name'), this.value);
+                            self.#changeQuery(this.getAttribute('data-field-name'), this.value);
                         }
                     });
                     td.append(filterInput);
@@ -408,11 +413,11 @@ TjsTable.prototype = {
                         option.innerHTML = self.options.fields[i].filter.options[o].innerHTML;
                         filterSelect.options.add(option);
                     }
-                    if (typeof self.dataRowsQueryFilter[self.options.fields[i].fieldName] !== 'undefined') {
-                        filterSelect.value = self.dataRowsQueryFilter[self.options.fields[i].fieldName];
+                    if (typeof self.#dataRowsQueryFilter[self.options.fields[i].fieldName] !== 'undefined') {
+                        filterSelect.value = self.#dataRowsQueryFilter[self.options.fields[i].fieldName];
                     }
                     filterSelect.addEventListener('change', function (){
-                        self._changeQuery(this.getAttribute('data-field-name'), this.value);
+                        self.#changeQuery(this.getAttribute('data-field-name'), this.value);
                     });
                     td.append(filterSelect);
                 }
@@ -424,23 +429,23 @@ TjsTable.prototype = {
         thead.append(tr);
 
         table.append(thead);
-    },
+    }
     /**
      *
      * @private
      */
-    _renderDataTableRows: function()
+    #renderDataTableRows()
     {
         let self = this;
 
-        let tbody = self.tableData.getElementsByTagName('tbody')[0];
+        let tbody = self.#tableData.getElementsByTagName('tbody')[0];
 
         while (tbody.firstChild) {
             tbody.removeChild(tbody.lastChild);
         }
 
         let tr, td;
-        for(let r=0; r < self.dataRows.length; r++)
+        for(let r=0; r < self.#dataRows.length; r++)
         {
             tr = document.createElement('tr');
             tr.setAttribute('data-index', r);
@@ -451,65 +456,65 @@ TjsTable.prototype = {
             {
                 td = document.createElement('td');
                 if (self.options.fields[i].fieldName !== '') {
-                    td.innerHTML = self.dataRows[r][self.options.fields[i].fieldName];
+                    td.innerHTML = self.#dataRows[r][self.options.fields[i].fieldName];
                 } else {
                     td.innerHTML = '&nbsp;';
                 }
                 if (typeof self.options.fields[i].onDrawDataCell === 'function') {
-                    typeof self.options.fields[i].onDrawDataCell(td, self.dataRows[r]);
+                    typeof self.options.fields[i].onDrawDataCell(td, self.#dataRows[r]);
                 }
                 tr.append(td);
             }
             tr.addEventListener('click', function (){
-                self._selectRowIndex(parseInt(this.getAttribute('data-index')) || 0);
+                self.#selectRowIndex(parseInt(this.getAttribute('data-index')) || 0);
             });
 
             tbody.append(tr);
         }
 
-        let tfoot = self.tableData.getElementsByTagName('tfoot')[0];
+        let tfoot = self.#tableData.getElementsByTagName('tfoot')[0];
         let tds = tfoot.querySelectorAll('tr > td');
         if (tds.length === self.options.fields.length) {
             for (let i = 0; i < self.options.fields.length; i++) {
                 if (typeof self.options.fields[i].onDrawFooterCell === 'function') {
-                    typeof self.options.fields[i].onDrawFooterCell(tds[i], self.dataRows);
+                    typeof self.options.fields[i].onDrawFooterCell(tds[i], self.#dataRows);
                 }
             }
         }
 
-        if (self.dataRows.length > 0) {
-            let indexFromUrl = self._getSelectedRowIndexFromUrlSearch();
+        if (self.#dataRows.length > 0) {
+            let indexFromUrl = self.#getSelectedRowIndexFromUrlSearch();
             if (indexFromUrl >= 0) {
-                self._selectRowIndex(indexFromUrl);
+                self.#selectRowIndex(indexFromUrl);
             } else {
-                self._selectRowIndex(0);
+                self.#selectRowIndex(0);
             }
         } else {
-            self._selectRowIndex(-1);
+            self.#selectRowIndex(-1);
         }
 
         if (self.options.settings.renderPanelTable === true) {
-            self.el.querySelector('.TjsTable_panel_left > input[type="text"]').value = self.dataRowsQuery.page;
-            self.el.querySelector('.TjsTable_panel_right > input').value = self.dataRows.length;
-            self.el.querySelector('.TjsTable_panel_right > select').value = self.dataRowsQuery.limit;
+            self.el.querySelector('.TjsTable_panel_left > input[type="text"]').value = self.#dataRowsQuery.page;
+            self.el.querySelector('.TjsTable_panel_right > input').value = self.#dataRows.length;
+            self.el.querySelector('.TjsTable_panel_right > select').value = self.#dataRowsQuery.limit;
         }
 
-        self._changeHeaderSortRender(self.dataRowsQuery.sortFieldName, self.dataRowsQuery.sortDirection);
-    },
+        self.#changeHeaderSortRender(self.#dataRowsQuery.sortFieldName, self.#dataRowsQuery.sortDirection);
+    }
     /**
      *
      * @param fieldName
      * @param sortDirection
      * @private
      */
-    _changeHeaderSortRender: function(fieldName, sortDirection)
+    #changeHeaderSortRender(fieldName, sortDirection)
     {
         let self = this;
-        self._clearDataTableSortDirections();
+        self.#clearDataTableSortDirections();
 
         if (fieldName !== '') {
 
-            let headerTds = self.tableData.querySelectorAll('thead > .header > td');
+            let headerTds = self.#tableData.querySelectorAll('thead > .header > td');
             for(let i=0; i < headerTds.length; i++) {
                 if (headerTds[i].getAttribute('data-field-name') === fieldName) {
                     if (sortDirection === 'desc') {
@@ -522,49 +527,49 @@ TjsTable.prototype = {
             }
 
         }
-    },
+    }
     /**
      *
      * @param index
      * @private
      */
-    _selectRowIndex: function(index)
+    #selectRowIndex(index)
     {
         let self = this;
 
-        let oldSelectedRowIndex = self.selectedRowIndex;
+        let oldSelectedRowIndex = self.#selectedRowIndex;
 
-        self.selectedRowIndex = -1;
-        if (self.dataRows.length > index && index >= 0) {
-            self.selectedRowIndex = index;
+        self.#selectedRowIndex = -1;
+        if (self.#dataRows.length > index && index >= 0) {
+            self.#selectedRowIndex = index;
         } else {
             if (typeof self.options.onRowSelected === 'function') {
                 self.options.onRowSelected(undefined);
             }
         }
 
-        self._doReplaceHistorySearch();
+        self.#doReplaceHistorySearch();
 
-        let tbody = self.tableData.getElementsByTagName('tbody')[0];
+        let tbody = self.#tableData.getElementsByTagName('tbody')[0];
         let trs = tbody.getElementsByTagName('tr');
         for(let i=0; i < trs.length; i++) {
             trs[i].classList.remove('selected');
-            if (self.selectedRowIndex === i && self.options.settings.selectedRowEnabled === true) {
+            if (self.#selectedRowIndex === i && self.options.settings.selectedRowEnabled === true) {
                 trs[i].classList.add('selected');
-                if (oldSelectedRowIndex !== self.selectedRowIndex) {
+                if (oldSelectedRowIndex !== self.#selectedRowIndex) {
                     if (typeof self.options.onRowSelected === 'function') {
-                        self.options.onRowSelected(self.dataRows[self.selectedRowIndex]);
+                        self.options.onRowSelected(self.#dataRows[self.#selectedRowIndex]);
                     }
                 }
             }
         }
-    },
+    }
     /**
      *
      * @param table
      * @private
      */
-    _renderDataTableFooters: function(table)
+    #renderDataTableFooters(table)
     {
         let self = this;
         let tfoot = document.createElement('tfoot');
@@ -577,68 +582,68 @@ TjsTable.prototype = {
         }
         tfoot.append(tr);
         table.append(tfoot);
-    },
+    }
     /**
      *
      * @param fieldName
      * @param fieldValue
      * @private
      */
-    _changeDataRowsQuery: function(fieldName, fieldValue)
+    #changeDataRowsQuery(fieldName, fieldValue)
     {
         let self = this;
-        self.selectedRowIndex = -1;
-        self.dataRowsQuery[fieldName] = fieldValue;
-        self._doPost();
-    },
+        self.#selectedRowIndex = -1;
+        self.#dataRowsQuery[fieldName] = fieldValue;
+        self.#doPost();
+    }
     /**
      *
      * @param values
      * @private
      */
-    _changeDataRowsQueries: function(values = {})
+    #changeDataRowsQueries(values = {})
     {
         let self = this;
-        self.selectedRowIndex = -1;
-        self.dataRowsQuery = js_object_merge_deep(self.dataRowsQuery, values);
-        self._doPost();
-    },
+        self.#selectedRowIndex = -1;
+        self.#dataRowsQuery = js_object_merge_deep(self.#dataRowsQuery, values);
+        self.#doPost();
+    }
     /**
      *
      * @param fieldName
      * @param fieldValue
      * @private
      */
-    _changeQuery: function(fieldName, fieldValue)
+    #changeQuery(fieldName, fieldValue)
     {
         let self = this;
-        self.selectedRowIndex = -1;
-        self.dataRowsQueryFilter[fieldName] = fieldValue;
-        self._doPost();
-    },
+        self.#selectedRowIndex = -1;
+        self.#dataRowsQueryFilter[fieldName] = fieldValue;
+        self.#doPost();
+    }
     /**
      *
      * @param rows
      */
-    _changeRows: function(rows = [])
+    #changeRows(rows = [])
     {
         let self = this;
-        self.selectedRowIndex = -1;
-        self.dataRows = rows;
-        self._renderDataTableRows();
-    },
+        self.#selectedRowIndex = -1;
+        self.#dataRows = rows;
+        self.#renderDataTableRows();
+    }
     /**
      *
      * @private
      */
-    _doPost: function()
+    #doPost()
     {
         let self = this;
 
         if (typeof self.options.requestUri === "function") {
 
-            let params = self.dataRowsQuery;
-            params['filter'] = self.dataRowsQueryFilter;
+            let params = self.#dataRowsQuery;
+            params['filter'] = self.#dataRowsQueryFilter;
 
             let response = self.options.requestUri(params);
             if (response.status === 'ok') {
@@ -649,8 +654,8 @@ TjsTable.prototype = {
             return;
         }
 
-        let params = self.dataRowsQuery;
-        params['filter'] = self.dataRowsQueryFilter;
+        let params = self.#dataRowsQuery;
+        params['filter'] = self.#dataRowsQueryFilter;
 
         window.jsPost.request(self.options.requestUri, params, function (statusCode, response, headers)
         {
@@ -660,99 +665,99 @@ TjsTable.prototype = {
                 self.setData({},[]);
             }
         });
-    },
+    }
     /**
      *
      * @param query
      * @param rows
      */
-    setData: function(query = {}, rows = [])
+    setData(query = {}, rows = [])
     {
         let self = this;
 
-        self.dataRowsQuery = js_object_merge_deep(self.dataRowsQuery, {
+        self.#dataRowsQuery = js_object_merge_deep(self.#dataRowsQuery, {
             'page' : parseInt(query.page) || 1,
             'limit': parseInt(query.limit) || 1,
             'sortFieldName': query.sortFieldName,
             'sortDirection': query.sortDirection,
         });
-        self.dataRowsQueryFilter = js_object_merge_deep(self.dataRowsQueryFilter, query.filter);
+        self.#dataRowsQueryFilter = js_object_merge_deep(self.#dataRowsQueryFilter, query.filter);
 
-        self._changeRows(rows);
-    },
+        self.#changeRows(rows);
+    }
     /**
      *
      * @param query
      */
-    open: function(query = {})
+    open(query = {})
     {
         let self = this;
-        self.dataRowsQueryFilter = js_object_merge_deep(self.dataRowsQueryFilter, query);
-        self._doPost();
-    },
+        self.#dataRowsQueryFilter = js_object_merge_deep(self.#dataRowsQueryFilter, query);
+        self.#doPost();
+    }
     /**
      *
      */
-    reset: function()
+    reset()
     {
         let self = this;
 
-        self._clearDataTableSortDirections();
+        self.#clearDataTableSortDirections();
 
-        let inputs = self.tableData.querySelectorAll('thead > .filter > td > input[type="text"]');
+        let inputs = self.#tableData.querySelectorAll('thead > .filter > td > input[type="text"]');
         for(let i=0; i < inputs.length; i++) {
             inputs[i].value = '';
-            self.dataRowsQueryFilter[inputs[i].getAttribute('data-field-name')] = '';
+            self.#dataRowsQueryFilter[inputs[i].getAttribute('data-field-name')] = '';
         }
 
-        let selects = self.tableData.querySelectorAll('thead > .filter > td > select');
+        let selects = self.#tableData.querySelectorAll('thead > .filter > td > select');
         for(let i=0; i < selects.length; i++) {
             selects[i].value = '';
-            self.dataRowsQueryFilter[selects[i].getAttribute('data-field-name')] = '';
+            self.#dataRowsQueryFilter[selects[i].getAttribute('data-field-name')] = '';
         }
 
-        self._changeDataRowsQueries({
+        self.#changeDataRowsQueries({
             'page': 1,
             'sortFieldName' : '',
             'sortDirection' : 'asc',
         });
-    },
+    }
     /**
      *
      * @returns {*|{}}
      */
-    getDataRowsQueryFilter: function()
+    getDataRowsQueryFilter()
     {
-        return this.dataRowsQueryFilter;
-    },
+        return this.#dataRowsQueryFilter;
+    }
     /**
      *
      * @returns {[]|*[]|*}
      */
-    getDataRows: function()
+    getDataRows()
     {
-        return this.dataRows;
-    },
+        return this.#dataRows;
+    }
     /**
      *
      * @returns {undefined|object}
      */
-    getSelectedRow: function()
+    getSelectedRow()
     {
         let selectRowIndex = this.getSelectedRowIndex();
         if (selectRowIndex >= 0) {
-            return this.dataRows[selectRowIndex];
+            return this.#dataRows[selectRowIndex];
         }
         return undefined;
-    },
+    }
     /**
      *
      * @returns {number}
      */
-    getSelectedRowIndex: function(defIndex = -1)
+    getSelectedRowIndex(defIndex = -1)
     {
-        if (this.dataRows.length > this.selectedRowIndex && this.selectedRowIndex >= 0) {
-            return Number.parseInt(this.selectedRowIndex);
+        if (this.#dataRows.length > this.#selectedRowIndex && this.#selectedRowIndex >= 0) {
+            return Number.parseInt(this.#selectedRowIndex);
         }
         return defIndex;
     }
