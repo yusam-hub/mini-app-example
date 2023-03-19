@@ -41,6 +41,32 @@ Object.prototype.jsSortByKey = function()
 
 /**
  *
+ * @param dotKey string
+ * @returns {*}
+ */
+Object.prototype.jsPropertyByDotKey = function(dotKey) {
+    if (typeof dotKey === 'string') {
+        let keys = dotKey.split(".");
+
+        let o = this;
+        let keyCounter = 0;
+
+        keys.forEach(function (value){
+            if (o[value] !== undefined) {
+                o = o[value];
+                keyCounter++;
+            }
+        });
+
+        if (keys.length === keyCounter) {
+            return o;
+        }
+    }
+    return undefined;
+}
+
+/**
+ *
  * @returns {string[]}
  */
 Object.prototype.jsArrayKeys = function ()

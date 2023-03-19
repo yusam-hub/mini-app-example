@@ -1,25 +1,25 @@
-let TjsPost = function() {
-    this.lang = js_lang_func('TjsPost');
-};
+"use strict";
+class TjsPost extends TjsBase
+{
+    #jsWait;
+    constructor(jsWait, options = {}) {
+        if (!(jsWait instanceof TjsWait)) {
+            throw Error("jsWait is not instance of TjsWait");
+        }
+        super(options);
+        this.#jsWait = jsWait;
+    }
 
-TjsPost.prototype = {
-    /**
-     *
-     * @param requestUri : string
-     * @param requestData : object
-     * @param responseCallback : function (statusCode, response, headers){}
-     * @param showJsWait : boolean
-     */
     request(requestUri, requestData, responseCallback, showJsWait = true)
     {
         let self = this;
         let xhr = new XMLHttpRequest();
-        let networkError = self.lang.networkError;
+        let networkError = self.lang.jsPropertyByDotKey('networkError');
 
         try {
 
             if (showJsWait) {
-                window.jsWait.show();
+                self.#jsWait.show();
             }
             let multipartFormData = false;
             let requestDataIsFormData = false;
@@ -27,7 +27,7 @@ TjsPost.prototype = {
 
             if (js_is_object(requestData) && requestData.constructor.name === 'FormData') {
                 requestDataIsFormData = true;
-             } else {
+            } else {
                 for (const [key, value] of Object.entries(requestData)) {
                     if (js_is_object(value) && value.constructor.name === 'FileList') {
                         for (let i = 0; i < value.length; i++) {
@@ -124,7 +124,7 @@ TjsPost.prototype = {
                     } finally {
 
                         if (showJsWait) {
-                            window.jsWait.hide();
+                            self.#jsWait.hide();
                         }
 
                     }
@@ -134,7 +134,7 @@ TjsPost.prototype = {
         } catch (e) {
 
             if (showJsWait) {
-                window.jsWait.hide();
+                self.#jsWait.hide();
             }
 
         }

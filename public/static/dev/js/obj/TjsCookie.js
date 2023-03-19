@@ -1,25 +1,18 @@
-let TjsCookie = function() {
+"use strict";
 
-};
+class TjsCookie extends TjsBase
+{
+    constructor(options = {}) {
+        super(options);
+    }
 
-TjsCookie.prototype = {
-
-    /**
-     *
-     * @returns {boolean}
-     */
-    isCookieEnabled: function()
+    isEnabled()
     {
         return navigator.cookieEnabled;
-    },
+    }
 
-    /**
-     *
-     * @param name
-     * @param value
-     * @param days
-     */
-    setCookie: function(name, value, days = 365) {
+    set(name, value, days = 365)
+    {
         let expires = "";
         if (days) {
             let date = new Date();
@@ -27,14 +20,9 @@ TjsCookie.prototype = {
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-    },
-    /**
-     *
-     * @param name
-     * @param value
-     * @param options
-     */
-    setCookieWithOptions: function(name, value, options = {})
+    }
+
+    setWithOptions(name, value, options = {})
     {
         options = {
             'path' : '/',
@@ -56,25 +44,44 @@ TjsCookie.prototype = {
         }
 
         document.cookie = updatedCookie;
-    },
-    /**
-     *
-     * @param name
-     * @returns {string|undefined}
-     */
-    getCookie: function(name) {
+    }
+
+    get(name) {
         let matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
         ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
-    },
-    /**
-     *
-     * @param name
-     */
-    unsetCookie: function(name) {
-        this.setCookieWithOptions(name, "", {
+    }
+
+    unset(name) {
+        this.setWithOptions(name, "", {
             'max-age' : -1,
         });
+    }
+
+    keys()
+    {
+        return Object.keys(this.all());
+    }
+
+    all()
+    {
+        let pairs = document.cookie.split(";");
+        let cookies = {};
+        for (let i=0; i<pairs.length; i++){
+            let pair = pairs[i].split("=");
+            cookies[(pair[0]+'').trim()] = decodeURIComponent(pair.slice(1).join('='));
+        }
+        return cookies;
+    }
+
+    toObject()
+    {
+        let o = super.toObject();
+        o = {
+            ...o,
+            ...this.all()
+        };
+        return o;
     }
 }

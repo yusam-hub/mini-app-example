@@ -49,14 +49,7 @@
 
         <script type="text/javascript" src="/public/static/dev/js/init_begin.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsWait.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsPost.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/lang/TjsMsg.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsGlob.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsCookie.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsWait.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPost.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
@@ -66,12 +59,21 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWs.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsRtcPeer.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsMsg.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsMsg.js?rnd={ts}"></script>
+
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsForm.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsBase.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDataSource.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDataTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsGlob.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsCookie.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsWait.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsWait.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsPost.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsPost.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
     {/str_replace}

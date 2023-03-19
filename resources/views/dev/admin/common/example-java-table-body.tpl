@@ -17,8 +17,8 @@
                 };
             }
             let jsTable = new TjsTable('jsTable', {
-                //'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
-                'requestUri' : function(params) {
+                'requestUri' : '/admin/common/example-java-styled-table/id-email-table',
+                /*'requestUri' : function(params) {
                     console.log(params);
 
                     let data = [];
@@ -34,7 +34,7 @@
                         'query' : params,
                         'data' :  data,
                     });
-                 },
+                 },*/
                 'onDrawPanelCenter': function(td){
                     let button = document.createElement('a');
                     button.classList.add('button');
