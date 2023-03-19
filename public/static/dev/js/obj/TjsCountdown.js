@@ -59,7 +59,7 @@ class TjsCountdown extends TjsInterval
      * @param formatString string - '%h:%m:%s'
      * @returns {string}
      */
-    formatDateTime(formatString = '%h:%m:%s')
+    formatTime(formatString = '%h:%m:%s')
     {
         let val = this.timeLeft;
         let hours = Math.floor((val % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

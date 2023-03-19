@@ -87,7 +87,12 @@ String.prototype.jsMd5 = function(){
  * @returns {string}
  */
 String.prototype.jsEscape = function(nullStringReplace = '') {
-    return String(this).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/null/g, nullStringReplace);
+    return String(this)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/null/g, nullStringReplace);
 };
 
 /**

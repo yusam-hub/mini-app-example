@@ -4,7 +4,7 @@ class TjsInterval extends TjsBase
     #timeout;
     #handler;
     #callOnStart;
-    #intervalId;
+    #intervalId = undefined;
     #tickCounter = 0;
     constructor(timeout, handler = undefined, callOnStart = false, options = {}) {
         super(options);
@@ -20,6 +20,9 @@ class TjsInterval extends TjsBase
 
     start()
     {
+        if (this.#intervalId !== undefined) {
+            return;
+        }
         let self = this;
         self.#tickCounter = 0;
         if (self.#callOnStart) {
@@ -42,7 +45,11 @@ class TjsInterval extends TjsBase
 
     stop()
     {
+        if (this.#intervalId === undefined) {
+            return;
+        }
         clearInterval(this.#intervalId);
+        this.#intervalId = undefined;
     }
 
 
