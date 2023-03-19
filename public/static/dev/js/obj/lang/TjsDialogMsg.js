@@ -1,5 +1,5 @@
 window.jsLang = Object.assign(window.jsLang, {
-    'TjsMsg': {
+    'TjsDialogMsg': {
         'en': {
             'dialog' : {
                 'infoTitle' : 'Information',

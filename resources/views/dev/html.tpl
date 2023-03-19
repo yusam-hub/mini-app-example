@@ -40,6 +40,7 @@
         <link rel="stylesheet" href="/public/static/dev/css/js-yusam-styled-table.css?rnd={ts}">
         <link rel="stylesheet" href="/public/static/dev/css/js-yusam-tmp.css?rnd={ts}">
         <link rel="stylesheet" href="/public/static/dev/css/social-icons.css?rnd={ts}">
+
         <script type="text/javascript" src="/public/static/dev/js/prototypes/string.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/prototypes/object.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/prototypes/number.js?rnd={ts}"></script>
@@ -48,18 +49,6 @@
         <script type="text/javascript" src="/public/static/dev/js/functions/any.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_begin.js?rnd={ts}"></script>
-
-
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
-
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
-
-        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsMsg.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsMsg.js?rnd={ts}"></script>
-
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsForm.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsBase.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsInterval.js?rnd={ts}"></script>
@@ -78,6 +67,17 @@
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsWs.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsMedia.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsRtcPeer.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsForm.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsMsg.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsDialogMsg.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsDialogMsg.js?rnd={ts}"></script>
+
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsPaginator.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
 
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>

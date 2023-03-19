@@ -1,42 +1,46 @@
-let TjsForm = function(formName, options = {}) {
+"use strict";
 
-    this._formElement = document.createElement('form');
+class TjsForm extends TjsBase
+{
+    #formName;
+    #formElement;
 
-    this.defOptions = {
-        'formName': formName,
-        'formId': formName,
-        'formAction': '#',
-        'formMethod': 'post',
-        'formActionUri' : window.location.pathname + window.location.search.toString(),//function(fieldValue) return {}
-        'formActionConfirmMessage' : js_lang_func('TjsMsg','content.messagePerform'),
-        'onFormActionSave' : function(res){
-            //console.log("jsForm.onFormActionSave", response);
-        },
-        'formFieldDefs': {},
+    constructor(formName, options = {}) {
+        let defOptions = {
+            'formName': formName,
+            'formId': formName,
+            'formAction': '#',
+            'formMethod': 'post',
+            'formActionUri': window.location.pathname + window.location.search.toString(),//function(fieldValue) return {}
+            'formActionConfirmMessage': js_lang_func('TjsMsg', 'content.messagePerform'),
+            'onFormActionSave': function (res) {
+                //console.log("jsForm.onFormActionSave", response);
+            },
+            'formFieldDefs': {},
+        }
+
+        super(js_object_merge_deep(defOptions, options));
+
+        this.#formName = formName;
+
+        this.#init();
     }
 
-    this.options = js_object_merge_deep(this.defOptions, options);
-
-    this._init();
-
-};
-
-TjsForm.prototype = {
-
-    _init: function()
+    #init()
     {
         let self = this;
 
-        self._formElement.classList.add('form');
-        self._formElement.classList.add('form-block');
-        self._formElement.classList.add('form-fullwidth');
-        self._formElement.method = self.options.formMethod;
-        self._formElement.action = self.options.formAction;
-        self._formElement.name = self.options.formName;
-        self._formElement.id = self.options.formId;
+        self.#formElement = document.createElement('form');
+        self.#formElement.classList.add('form');
+        self.#formElement.classList.add('form-block');
+        self.#formElement.classList.add('form-fullwidth');
+        self.#formElement.method = self.options.formMethod;
+        self.#formElement.action = self.options.formAction;
+        self.#formElement.name = self.options.formName;
+        self.#formElement.id = self.options.formId;
 
         self.addFields(self.options.formFieldDefs);
-    },
+    }
     /**
      *
      * @param formFieldControl
@@ -46,7 +50,7 @@ TjsForm.prototype = {
      * @returns {*}
      * @private
      */
-    _addField: function(formFieldControl, fieldName, newOptions = {}, extraEl = undefined)
+    _addField(formFieldControl, fieldName, newOptions = {}, extraEl = undefined)
     {
         let self = this;
 
@@ -113,15 +117,15 @@ TjsForm.prototype = {
         }
         formField.append(formFieldError);
         formElement.append(formClear);
-        self._formElement.append(formElement);
+        self.#formElement.append(formElement);
 
         return formFieldControl;
-    },
+    }
     /**
      *
      * @param fieldDefs
      */
-    addFields: function (fieldDefs = {}) {
+    addFields(fieldDefs = {}) {
         let self = this;
 
         for (const [fieldName, options] of Object.entries(fieldDefs)) {
@@ -141,7 +145,7 @@ TjsForm.prototype = {
                 self.addFieldCheckboxes(fieldName, options);
             }
         }
-    },
+    }
     /**
      *
      * @param fieldName
@@ -149,7 +153,7 @@ TjsForm.prototype = {
      * @param newOptions
      * @returns {HTMLDivElement}
      */
-    addFieldExtraFormFieldElement: function(fieldName, extraEl = undefined, newOptions = {})
+    addFieldExtraFormFieldElement(fieldName, extraEl = undefined, newOptions = {})
     {
         let self = this;
 
@@ -174,14 +178,14 @@ TjsForm.prototype = {
         formFieldControl.defaultValue = options.fieldValue;
 
         return self._addField(formFieldControl, fieldName, options, extraEl);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldInputText: function(fieldName, newOptions = {})
+    addFieldInputText(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -213,14 +217,14 @@ TjsForm.prototype = {
         formFieldControl.autocomplete = options.autocomplete;
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldInputFile: function(fieldName, newOptions = {})
+    addFieldInputFile(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -255,14 +259,14 @@ TjsForm.prototype = {
         }
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldTextArea: function(fieldName, newOptions = {})
+    addFieldTextArea(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -294,14 +298,14 @@ TjsForm.prototype = {
         formFieldControl.defaultValue = options.fieldValue;
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldSelect: function(fieldName, newOptions = {})
+    addFieldSelect(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -348,14 +352,14 @@ TjsForm.prototype = {
         }
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldRadios: function(fieldName, newOptions = {})
+    addFieldRadios(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -408,14 +412,14 @@ TjsForm.prototype = {
         }
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param newOptions object
      * @returns {HTMLInputElement}
      */
-    addFieldCheckboxes: function(fieldName, newOptions = {})
+    addFieldCheckboxes(fieldName, newOptions = {})
     {
         let self = this;
 
@@ -468,14 +472,14 @@ TjsForm.prototype = {
         }
 
         return self._addField(formFieldControl, fieldName, options);
-    },
+    }
     /**
      *
      * @param fieldName string
      * @param fieldValue string
      * @returns {HTMLInputElement}
      */
-    addFieldInputHidden: function(fieldName, fieldValue)
+    addFieldInputHidden(fieldName, fieldValue)
     {
         let self = this;
 
@@ -494,26 +498,26 @@ TjsForm.prototype = {
 
         formElement.append(formField);
         formField.append(formFieldControl);
-        self._formElement.append(formElement);
+        self.#formElement.append(formElement);
 
         return formFieldControl;
-    },
+    }
     /**
      *
      * @returns {HTMLFormElement}
      */
-    form: function()
+    form()
     {
-        return this._formElement;
-    },
+        return this.#formElement;
+    }
     /**
      *
-     * @param selectors
+     * @param selector
      */
-    appendForSelector: function(selectors)
+    appendForSelector(selector)
     {
-        document.querySelector(selectors).append(this._formElement);
-    },
+        document.querySelector(selector).append(this.#formElement);
+    }
     /**
      *
      * @param callback undefined|function - function(jsForm, callbackOptions){}
@@ -521,7 +525,7 @@ TjsForm.prototype = {
      * @param callbackOptions object
      * @returns {boolean}
      */
-    save: function(callback = undefined, extraParams = {}, callbackOptions = {})
+    save(callback = undefined, extraParams = {}, callbackOptions = {})
     {
         let self = this;
 
@@ -582,13 +586,13 @@ TjsForm.prototype = {
         });
 
         return true;
-    },
+    }
     /**
      *
      * @param res
      * @private
      */
-    _doOnFormActionSave: function(res)
+    _doOnFormActionSave(res)
     {
         let self = this;
         /**
@@ -613,7 +617,7 @@ TjsForm.prototype = {
              * Очищаем контрол с файлами, так как мы успешно загрузили
              * @type {NodeListOf<Element>}
              */
-            let formFieldControls = self._formElement.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');
+            let formFieldControls = self.#formElement.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');
             //let formFieldControls = document.querySelectorAll('form#' + res['formId'] + ' > .form-element > .form-field > .form-field-control');//возможно нужно это!!!
             for (let i = 0; i < formFieldControls.length; i++) {
                 if (formFieldControls[i].nodeName === 'INPUT' && formFieldControls[i].type.toString() === 'file') {
@@ -625,15 +629,15 @@ TjsForm.prototype = {
         if (typeof self.options.onFormActionSave === "function") {
             self.options.onFormActionSave(res);
         }
-    },
+    }
     /**
      * @param fields
      */
-    fromArray: function(fields = {})
+    fromArray(fields = {})
     {
         let self = this, formFieldControls;
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
@@ -681,17 +685,17 @@ TjsForm.prototype = {
                 }
             }//end !undefined
         }//end for
-    },
+    }
     /**
      * @returns {{}}
      */
-    toArray: function()
+    toArray()
     {
         let self = this, formFieldControls;
 
         let out = {};
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
@@ -746,15 +750,15 @@ TjsForm.prototype = {
         }//end for
 
         return out;
-    },
+    }
     /**
      * @param fields
      */
-    fromErrorArray: function(fields = {})
+    fromErrorArray(fields = {})
     {
         let self = this, formFieldControls, formFieldError, formElement, formFieldControlsName;
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
 
@@ -791,14 +795,14 @@ TjsForm.prototype = {
 
             }
         }
-    },
+    }
     /**
      *
      * @param fieldName
      * @param defValue
      * @returns {undefined|*}
      */
-    getFieldValue: function(fieldName, defValue = undefined)
+    getFieldValue(fieldName, defValue = undefined)
     {
         let self = this;
 
@@ -810,43 +814,43 @@ TjsForm.prototype = {
         }
 
         return defValue;
-    },
+    }
     /**
      *
      * @param fieldName
      * @param fieldValue
      */
-    setFieldValue: function(fieldName, fieldValue)
+    setFieldValue(fieldName, fieldValue)
     {
         let self = this;
         let fieldValues = {};
         fieldValues[fieldName] = fieldValue;
         self.fromArray(fieldValues);
-    },
+    }
     /**
      *
      * @returns {*[]}
      */
-    getFieldNames: function()
+    getFieldNames()
     {
         let self = this, formFieldControls, out = [];
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
             out[out.length] = formFieldControls[i].getAttribute('name');
         }
         return out;
-    },
+    }
     /**
      *
      * @returns {{}}
      */
-    getReadOnlyFields: function()
+    getReadOnlyFields()
     {
         let self = this, formFieldControls, formFieldControlsName, inputs, out = {};
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
@@ -872,16 +876,16 @@ TjsForm.prototype = {
             }
         }
         return out;
-    },
+    }
     /**
      *
      * @param fieldValues
      */
-    setReadOnlyFields: function(fieldValues)
+    setReadOnlyFields(fieldValues)
     {
         let self = this, formFieldControls, formFieldControlsName, fieldNames, inputs;
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
         fieldNames = fieldValues.jsArrayKeys();
 
         for (let i = 0; i < formFieldControls.length; i++) {
@@ -906,12 +910,12 @@ TjsForm.prototype = {
                 }
             }
         }
-    },
+    }
     /**
      * @param fieldNames string|array - '*' | 'key1,key2' | ['key1','key2']
      * @param value boolean
      */
-    setReadOnly: function(fieldNames = '*', value = true)
+    setReadOnly(fieldNames = '*', value = true)
     {
         let self = this, formFieldControls, formFieldControlsName, inputs;
 
@@ -923,7 +927,7 @@ TjsForm.prototype = {
             }
         }
 
-        formFieldControls = self._formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
+        formFieldControls = self.#formElement.querySelectorAll('.form-element > .form-field > .form-field-control');
 
         for (let i = 0; i < formFieldControls.length; i++) {
             formFieldControlsName = formFieldControls[i].getAttribute('name');
