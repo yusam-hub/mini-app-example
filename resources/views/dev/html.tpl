@@ -54,8 +54,6 @@
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsStyledTable.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsWidget.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsMedia.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/dev/js/classes/TjsRtcPeer.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/classes/TjsTable.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/lang/TjsMsg.js?rnd={ts}"></script>
@@ -78,6 +76,8 @@
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsPost.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/obj/TjsWs.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsMedia.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/obj/TjsRtcPeer.js?rnd={ts}"></script>
 
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>

@@ -1,79 +1,88 @@
-let TjsRtcPeer = function(options = {}) {
+"use strict";
 
-    let defOptions = {
-        'debugging' : false,
-        'onOutgoingMessage' : function(jsonMessage){},
-        'onLocalGetStream' : function(){},
-        'onLocalGetPromiseMediaStream' : function(){},
-        'onRemoteSetStream' : function(stream){},
-        'onRemoteClearStream' : function(){},
-        'onRegisteredPeerUuids' : function(uuids){},
-        'rtcConfig': {},
+class TjsRtcPeer extends TjsBase
+{
+    #RTCPeerConnection;
+    #RTCSessionDescription;
+    #RTCIceCandidate;
+    #rtcInstance;
+    #rtcLocalPeerUuid;
+    #rtcRemotePeerUuid;
+
+    constructor(options = {}) {
+
+        let defOptions = {
+            'debugging' : false,
+            'onOutgoingMessage' (jsonMessage){},
+            'onLocalGetStream' (){},
+            'onLocalGetPromiseMediaStream' (){},
+            'onRemoteSetStream' (stream){},
+            'onRemoteClearStream' (){},
+            'onRegisteredPeerUuids' (uuids){},
+            'rtcConfig': {},
+        };
+        super(js_object_merge_deep(defOptions, options));
+
+        this.#RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        this.#RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
+        this.#RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
+
+        this.#rtcInstance = null;
+        this.#rtcLocalPeerUuid = js_generate_uuid();
+        this.#rtcRemotePeerUuid = null;
+
+        this.#init();
     };
 
-    this.options = js_object_merge_deep(defOptions, options);
-
-    this.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-    this.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
-    this.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
-
-    this.rtcInstance = null;
-    this.rtcLocalPeerUuid = js_generate_uuid();
-    this.rtcRemotePeerUuid = null;
-
-    this._init();
-};
-
-TjsRtcPeer.prototype = {
     /**
      *
      * @param message
      * @param data
      * @private
      */
-    _doDebug: function(message, data = undefined)
+    #doDebug(message, data = undefined)
     {
         let self = this;
 
         if (self.options.debugging !== true) return;
         if (data !== undefined) {
-            console.log("TjsRtcPeer("+self.rtcLocalPeerUuid+") - " + message, data);
+            console.log("TjsRtcPeer("+self.#rtcLocalPeerUuid+") - " + message, data);
         } else {
-            console.log("TjsRtcPeer("+self.rtcLocalPeerUuid+") - " + message);
+            console.log("TjsRtcPeer("+self.#rtcLocalPeerUuid+") - " + message);
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _doState: function(message = 'state')
+    #doState(message = 'state')
     {
         let self = this;
 
-        self._doDebug(message, {
-            'signalingState' : self.rtcInstance.signalingState,
-            'connectionState' : self.rtcInstance.connectionState,
-            'iceConnectionState' : self.rtcInstance.iceConnectionState,
-            'iceGatheringState' : self.rtcInstance.iceGatheringState,
+        self.#doDebug(message, {
+            'signalingState' : self.#rtcInstance.signalingState,
+            'connectionState' : self.#rtcInstance.connectionState,
+            'iceConnectionState' : self.#rtcInstance.iceConnectionState,
+            'iceGatheringState' : self.#rtcInstance.iceGatheringState,
         });
-    },
+    }
     /**
      *
      * @private
      */
-    _init: function()
+    #init()
     {
         let self = this;
 
-        self._doDebug('_init', self.options);
-    },
+        self.#doDebug('_init', self.options);
+    }
     /**
      *
      * @param type
      * @param data
      * @private
      */
-    _doOutgoingMessage: function(type, data = {})
+    #doOutgoingMessage(type, data = {})
     {
         let self = this;
 
@@ -82,120 +91,120 @@ TjsRtcPeer.prototype = {
         }, data);
 
         let jsonMessage = {
-            'rtcFromPeerUuid' : self.rtcLocalPeerUuid,
-            'rtcToPeerUuid' : self.rtcRemotePeerUuid,
+            'rtcFromPeerUuid' : self.#rtcLocalPeerUuid,
+            'rtcToPeerUuid' : self.#rtcRemotePeerUuid,
             'rtcType' : 'TjsRtcPeer',
             'rtcData' : rtcData,
         };
 
-        self._doDebug("-> " + rtcData.type, jsonMessage);
+        self.#doDebug("-> " + rtcData.type, jsonMessage);
 
         if (typeof self.options.onOutgoingMessage === 'function') {
             self.options.onOutgoingMessage(jsonMessage);
         }
-    },
+    }
     /**
      *
      * @returns {*}
      */
-    getRtcLocalPeerUuid: function()
+    getRtcLocalPeerUuid()
     {
         let self = this;
 
-        return self.rtcLocalPeerUuid;
-    },
+        return self.#rtcLocalPeerUuid;
+    }
     /**
      *
      * @returns {*}
      */
-    getRtcRemotePeerUuid: function()
+    getRtcRemotePeerUuid()
     {
         let self = this;
 
-        return self.rtcRemotePeerUuid;
-    },
+        return self.#rtcRemotePeerUuid;
+    }
     /**
      *
      * @returns {null|*}
      */
-    getRtcInstance: function()
+    getRtcInstance()
     {
         let self = this;
 
-        return self.rtcInstance;
-    },
+        return self.#rtcInstance;
+    }
     /**
      *
      * @returns {boolean}
      */
-    isRtcConnected: function()
+    isRtcConnected()
     {
         let self = this;
 
-        return self.rtcInstance !== null
-            && self.rtcInstance.connectionState === 'connected'
-            && self.rtcInstance.iceConnectionState === 'connected'
-            && self.rtcInstance.iceGatheringState === 'complete';
-    },
+        return self.#rtcInstance !== null
+            && self.#rtcInstance.connectionState === 'connected'
+            && self.#rtcInstance.iceConnectionState === 'connected'
+            && self.#rtcInstance.iceGatheringState === 'complete';
+    }
     /**
      *
      * @returns {boolean}
      */
-    isRtcWait: function()
+    isRtcWait()
     {
         let self = this;
 
-        return self.rtcInstance !== null
-            && self.rtcInstance.connectionState === 'new'
-            && self.rtcInstance.iceConnectionState === 'new'
-            && self.rtcInstance.iceGatheringState === 'new';
-    },
+        return self.#rtcInstance !== null
+            && self.#rtcInstance.connectionState === 'new'
+            && self.#rtcInstance.iceConnectionState === 'new'
+            && self.#rtcInstance.iceGatheringState === 'new';
+    }
     /**
      *
      * @returns {boolean}
      */
-    isRtcBusy: function()
+    isRtcBusy()
     {
         let self = this;
 
         return !self.isRtcConnected() && !self.isRtcWait();
-    },
+    }
     /**
      *
      */
-    addLocalMediaToRtcTrack: function()
+    addLocalMediaToRtcTrack()
     {
         let self = this;
 
-        if (self.rtcInstance === null) {
+        if (self.#rtcInstance === null) {
             return;
         }
 
         if (typeof self.options.onLocalGetStream === 'function') {
             let stream = self.options.onLocalGetStream();
-            self.rtcInstance.addTrack(stream.getTracks()[0], stream);
+            self.#rtcInstance.addTrack(stream.getTracks()[0], stream);
         }
-    },
+    }
     /**
      *
      */
-    create: function()
+    create()
     {
         let self = this;
 
-        if (self.rtcInstance !== null) return;
+        if (self.#rtcInstance !== null) return;
 
-        self.rtcInstance = new self.RTCPeerConnection(self.options.rtcConfig);
+        self.#rtcInstance = new self.#RTCPeerConnection(self.options.rtcConfig);
 
-        self._doState('create');
+        self.#doState('create');
 
         /**
          * Обаботчик события о том, что мы получили видео поток
          * @param event
          */
-        self.rtcInstance.ontrack = function(event)
+        self.#rtcInstance.ontrack = function(event)
         {
-            self._doDebug("onRemoteSetStream");
+            self.#doDebug("onRemoteSetStream");
             if (typeof self.options.onRemoteSetStream === 'function') {
                 self.options.onRemoteSetStream(event.streams[0]);
             }
@@ -204,11 +213,11 @@ TjsRtcPeer.prototype = {
         /**
          * Обработчик
          */
-        self.rtcInstance.onicegatheringstatechange = function()
+        self.#rtcInstance.onicegatheringstatechange = function()
         {
-            self._doState('onIceGatheringStateChange');
+            self.#doState('onIceGatheringStateChange');
 
-            switch(self.rtcInstance.iceGatheringState) {
+            switch(self.#rtcInstance.iceGatheringState) {
                 case "gathering":
                 case "complete":
 
@@ -220,13 +229,13 @@ TjsRtcPeer.prototype = {
          * Обработчик обмена Ice Candidate
          * @param event
          */
-        self.rtcInstance.onicecandidate = function(event)
+        self.#rtcInstance.onicecandidate = function(event)
         {
             if (event.candidate) {
 
-                self._doState('onIceCandidate');
+                self.#doState('onIceCandidate');
 
-                self._doOutgoingMessage('ice-candidate', {
+                self.#doOutgoingMessage('ice-candidate', {
                     'candidate' : event.candidate,
                 });
 
@@ -237,11 +246,11 @@ TjsRtcPeer.prototype = {
          * Обработчик статусов ICE соединенния
          * @param event
          */
-        self.rtcInstance.oniceconnectionstatechange = function(event)
+        self.#rtcInstance.oniceconnectionstatechange = function(event)
         {
-            self._doState('onIceConnectionStateChange');
+            self.#doState('onIceConnectionStateChange');
 
-            switch(self.rtcInstance.iceConnectionState) {
+            switch(self.#rtcInstance.iceConnectionState) {
                 case "closed":
                 case "failed":
                 case "disconnected":
@@ -254,11 +263,11 @@ TjsRtcPeer.prototype = {
          * Обработчик статусов сигналиации
          * @param ev
          */
-        self.rtcInstance.onsignalingstatechange = function(ev)
+        self.#rtcInstance.onsignalingstatechange = function(ev)
         {
-            self._doState('onSignalingStateChange');
+            self.#doState('onSignalingStateChange');
 
-            switch (self.rtcInstance.signalingState) {
+            switch (self.#rtcInstance.signalingState) {
                 case "closed":
                     self.destroy();
                     break;
@@ -269,58 +278,58 @@ TjsRtcPeer.prototype = {
          *
          * @param ev
          */
-        self.rtcInstance.onconnectionstatechange = function (ev) {
-            self._doState('onConnectionStateChange');
+        self.#rtcInstance.onconnectionstatechange = function (ev) {
+            self.#doState('onConnectionStateChange');
         }
 
-        self._doOutgoingMessage('rtc-local-peer-uuid-update');
-    },
+        self.#doOutgoingMessage('rtc-local-peer-uuid-update');
+    }
     /**
      *
      */
-    destroy: function(reCreate = true)
+    destroy(reCreate = true)
     {
         let self = this;
 
-        if (self.rtcInstance === null) return;
+        if (self.#rtcInstance === null) return;
 
-        self._doState('destroy');
+        self.#doState('destroy');
 
-        self._doDebug("onRemoteClearStream");
+        self.#doDebug("onRemoteClearStream");
         if (typeof self.options.onRemoteClearStream === 'function') {
             self.options.onRemoteClearStream();
         }
 
-        self.rtcInstance.ontrack = null;
+        self.#rtcInstance.ontrack = null;
 
-        self.rtcInstance.onicegatheringstatechange = null;
+        self.#rtcInstance.onicegatheringstatechange = null;
 
-        self.rtcInstance.onicecandidate = null;
+        self.#rtcInstance.onicecandidate = null;
 
-        self.rtcInstance.oniceconnectionstatechange = null;
+        self.#rtcInstance.oniceconnectionstatechange = null;
 
-        self.rtcInstance.onsignalingstatechange = null;
+        self.#rtcInstance.onsignalingstatechange = null;
 
-        self.rtcInstance.close();
+        self.#rtcInstance.close();
 
-        self.rtcInstance = null;
+        self.#rtcInstance = null;
 
-        self.rtcRemotePeerUuid = null;
+        self.#rtcRemotePeerUuid = null;
 
         if (reCreate === true) {
             self.create();
         }
-    },
+    }
     /**
      *
      * @param jsonMessage
      * @returns {boolean}
      */
-    doIncomingMessage: function(jsonMessage = {})
+    doIncomingMessage(jsonMessage = {})
     {
         let self = this;
 
-        if (self.rtcInstance === null) return false;
+        if (self.#rtcInstance === null) return false;
 
         let localJsonMessage = js_object_merge_deep({
             'rtcType': '',
@@ -331,7 +340,7 @@ TjsRtcPeer.prototype = {
 
         if (localJsonMessage.rtcType !== 'TjsRtcPeer') return false;
         if (typeof localJsonMessage.rtcData !== 'object') return false;
-        if (localJsonMessage.rtcToPeerUuid !== self.rtcLocalPeerUuid) return false;
+        if (localJsonMessage.rtcToPeerUuid !== self.#rtcLocalPeerUuid) return false;
 
         /**
          * Получем всех зарегистрированных
@@ -343,13 +352,13 @@ TjsRtcPeer.prototype = {
         {
             if (typeof self.options.onRegisteredPeerUuids === 'function') {
                 const uuids = localJsonMessage.rtcData.registeredPeers;
-                const index = uuids.indexOf(self.rtcLocalPeerUuid);
+                const index = uuids.indexOf(self.#rtcLocalPeerUuid);
                 if (index > -1) {
                     uuids.splice(index, 1);
                 }
                 self.options.onRegisteredPeerUuids(uuids);
             } else {
-                self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+                self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
             }
 
             return true;
@@ -360,7 +369,7 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-accept-fail')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
             return true;
         }
@@ -370,18 +379,18 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-connect-to-offer')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
-            let saveRtcRemotePeerUuid = self.rtcRemotePeerUuid;
-            self.rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
+            let saveRtcRemotePeerUuid = self.#rtcRemotePeerUuid;
+            self.#rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
 
             if (!self.isRtcWait()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
-                self.rtcRemotePeerUuid = saveRtcRemotePeerUuid;
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#rtcRemotePeerUuid = saveRtcRemotePeerUuid;
                 return true;
             }
 
-            self._doOutgoingMessage('rtc-connect-to-answer');
+            self.#doOutgoingMessage('rtc-connect-to-answer');
 
             return true;
         }
@@ -391,31 +400,31 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-connect-to-answer')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
             if (!self.isRtcWait()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
                 return true;
             }
 
             self.addLocalMediaToRtcTrack();
 
-            self.rtcInstance.createOffer()
+            self.#rtcInstance.createOffer()
                 .then(function (offer) {
 
-                    return self.rtcInstance.setLocalDescription(offer);
+                    return self.#rtcInstance.setLocalDescription(offer);
 
                 })
                 .then(function () {
 
-                    self._doOutgoingMessage(self.rtcInstance.localDescription.type,{
-                        'sdp'  : self.rtcInstance.localDescription.sdp
+                    self.#doOutgoingMessage(self.#rtcInstance.localDescription.type,{
+                        'sdp'  : self.#rtcInstance.localDescription.sdp
                     });
 
                 })
                 .catch(function (e) {
 
-                    self._doDebug('Error: ' + e.message)
+                    self.#doDebug('Error: ' + e.message)
 
                 });
 
@@ -427,20 +436,20 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-reconnect-offer')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
             if (!self.isRtcConnected()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
                 return true;
             }
 
-            let rtcRemotePeerUuid = self.rtcRemotePeerUuid;
+            let rtcRemotePeerUuid = self.#rtcRemotePeerUuid;
 
             self.destroy();
 
-            self.rtcRemotePeerUuid = rtcRemotePeerUuid;
+            self.#rtcRemotePeerUuid = rtcRemotePeerUuid;
 
-            self._doOutgoingMessage('rtc-reconnect-answer');
+            self.#doOutgoingMessage('rtc-reconnect-answer');
 
             return true;
         }
@@ -450,14 +459,14 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-reconnect-answer')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
             if (!self.isRtcConnected()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
                 return true;
             }
 
-            let rtcRemotePeerUuid = self.rtcRemotePeerUuid;
+            let rtcRemotePeerUuid = self.#rtcRemotePeerUuid;
 
             self.destroy();
 
@@ -471,21 +480,21 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'offer' && localJsonMessage.rtcData.sdp !== undefined)
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
-            self._doState();
+            self.#doState();
 
-            self.rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
+            self.#rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
 
             if (!self.isRtcWait()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
                 return true;
             }
 
             self.addLocalMediaToRtcTrack();
 
-            self.rtcInstance
-                .setRemoteDescription(new self.RTCSessionDescription({
+            self.#rtcInstance
+                .setRemoteDescription(new self.#RTCSessionDescription({
                     'type' : localJsonMessage.rtcData.type,
                     'sdp': localJsonMessage.rtcData.sdp,
                 }))
@@ -500,19 +509,19 @@ TjsRtcPeer.prototype = {
                 })
                 .then(function() {
 
-                    return self.rtcInstance.createAnswer();
+                    return self.#rtcInstance.createAnswer();
 
                 })
                 .then(function(answer) {
 
-                    return self.rtcInstance.setLocalDescription(answer);
+                    return self.#rtcInstance.setLocalDescription(answer);
 
                 })
                 .then(function() {
 
-                    self._doOutgoingMessage(self.rtcInstance.localDescription.type,
+                    self.#doOutgoingMessage(self.#rtcInstance.localDescription.type,
                         {
-                            'sdp'  : self.rtcInstance.localDescription.sdp
+                            'sdp'  : self.#rtcInstance.localDescription.sdp
                         });
 
                 });
@@ -526,13 +535,13 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'answer' && localJsonMessage.rtcData.sdp !== undefined)
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
-            self._doState();
+            self.#doState();
 
-            self.rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
+            self.#rtcRemotePeerUuid = localJsonMessage.rtcFromPeerUuid;
 
-            self.rtcInstance.setRemoteDescription(new self.RTCSessionDescription({
+            self.#rtcInstance.setRemoteDescription(new self.#RTCSessionDescription({
                 'type' : localJsonMessage.rtcData.type,
                 'sdp' : localJsonMessage.rtcData.sdp
             }));
@@ -545,14 +554,14 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'ice-candidate' && localJsonMessage.rtcData.candidate !== undefined)
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
-            self._doState();
+            self.#doState();
 
-            self.rtcInstance
-                .addIceCandidate(new self.RTCIceCandidate(localJsonMessage.rtcData.candidate))
+            self.#rtcInstance
+                .addIceCandidate(new self.#RTCIceCandidate(localJsonMessage.rtcData.candidate))
                 .catch(function (e) {
-                    self._doDebug('Error: ' + e.message)
+                    self.#doDebug('Error: ' + e.message)
                 });
 
             return true;
@@ -563,10 +572,10 @@ TjsRtcPeer.prototype = {
          */
         if (localJsonMessage.rtcData.type === 'rtc-disconnected')
         {
-            self._doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
+            self.#doDebug("<- " + localJsonMessage.rtcData.type, localJsonMessage);
 
             if (!self.isRtcConnected()) {
-                self._doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
+                self.#doOutgoingMessage('rtc-accept-fail', {'acceptFailType' : localJsonMessage.rtcData.type});
                 return true;
             }
 
@@ -576,55 +585,55 @@ TjsRtcPeer.prototype = {
         }
 
         return false;
-    },
+    }
     /**
      *
      * @param rtcRemotePeerUuid
      * @param data
      */
-    connectTo: function(rtcRemotePeerUuid, data = {})
+    connectTo(rtcRemotePeerUuid, data = {})
     {
         let self = this;
 
-        if (self.rtcInstance === null) return;
+        if (self.#rtcInstance === null) return;
 
-        self._doState('connectTo');
+        self.#doState('connectTo');
 
         if (!self.isRtcWait()) return;
 
-        self.rtcRemotePeerUuid = rtcRemotePeerUuid;
+        self.#rtcRemotePeerUuid = rtcRemotePeerUuid;
 
-        self._doOutgoingMessage('rtc-connect-to-offer');
-    },
+        self.#doOutgoingMessage('rtc-connect-to-offer');
+    }
     /**
      *
      */
-    reConnect: function()
+    reConnect()
     {
         let self = this;
 
-        if (self.rtcInstance === null) return;
+        if (self.#rtcInstance === null) return;
 
-        self._doState('reConnect');
+        self.#doState('reConnect');
 
         if (!self.isRtcConnected()) return;
 
-        self._doOutgoingMessage('rtc-reconnect-offer');
-    },
+        self.#doOutgoingMessage('rtc-reconnect-offer');
+    }
     /**
      *
      */
-    disconnect: function()
+    disconnect()
     {
         let self = this;
 
-        if (self.rtcInstance === null) return;
+        if (self.#rtcInstance === null) return;
 
-        self._doState('disconnect');
+        self.#doState('disconnect');
 
         if (!self.isRtcConnected()) return;
 
-        self._doOutgoingMessage('rtc-disconnected');
+        self.#doOutgoingMessage('rtc-disconnected');
 
         self.destroy();
     }

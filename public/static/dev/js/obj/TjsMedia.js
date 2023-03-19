@@ -1,70 +1,76 @@
-let TjsMedia = function(tagId, options = {}) {
+"use strict";
 
-    let defOptions = {
-        debugging: false,
-        captureStartOnCreate: false,
-        mediaStreamMode: false,//false, 'user' | 'display'
-        userMedia: {
-            constraints: {
-                //video: true | false
-                audio: false,
-                //audio: true | false
-                video: true,
-                /*video: {
-                    //width: 1280, height: 720,
-                    //width: { min: 1024, ideal: 1280, max: 1920 },
-                    //height: { min: 576, ideal: 720, max: 1080 }
-                    //facingMode: "user" | "environment"
-                    //deviceId: myPreferredCameraDeviceId
-                    //deviceId: { exact: myExactCameraOrBustDeviceId }
-                }*/
-            }
-        },
-        displayMedia: {
-            constraints: {
-                audio: false,
-                //audio: true | false
-                /*audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    sampleRate: 44100
-                }*/
-                video: true,
-                //video: true | false
-                /*video: {
-                    cursor: "always"
-                },*/
-                /*video : {
-                    displaySurface: "monitor", // monitor, window, application, browser
-                    logicalSurface: true,
-                    cursor: "always", // never, always, motion
-                }*/
-            }
-        },
+class TjsMedia extends TjsBase
+{
+    #promiseMediaStream = null;
+    #element;
+    constructor(selectorOrEl, options = {})
+    {
+        let defOptions = {
+            debugging: false,
+            captureStartOnCreate: false,
+            mediaStreamMode: false,//false, 'user' | 'display'
+            userMedia: {
+                constraints: {
+                    //video: true | false
+                    audio: false,
+                    //audio: true | false
+                    video: true,
+                    /*video: {
+                        //width: 1280, height: 720,
+                        //width: { min: 1024, ideal: 1280, max: 1920 },
+                        //height: { min: 576, ideal: 720, max: 1080 }
+                        //facingMode: "user" | "environment"
+                        //deviceId: myPreferredCameraDeviceId
+                        //deviceId: { exact: myExactCameraOrBustDeviceId }
+                    }*/
+                }
+            },
+            displayMedia: {
+                constraints: {
+                    audio: false,
+                    //audio: true | false
+                    /*audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        sampleRate: 44100
+                    }*/
+                    video: true,
+                    //video: true | false
+                    /*video: {
+                        cursor: "always"
+                    },*/
+                    /*video : {
+                        displaySurface: "monitor", // monitor, window, application, browser
+                        logicalSurface: true,
+                        cursor: "always", // never, always, motion
+                    }*/
+                }
+            },
 
-        onStreamLoaded: function(){},
-        onStreamCleared: function(){},
-        onCaptureStarted: function(stream){},
-        onCaptureStopped: function(){},
-    };
+            onStreamLoaded(){},
+            onStreamCleared(){},
+            onCaptureStarted(stream){},
+            onCaptureStopped(){},
+        };
 
-    this.options = js_object_merge_deep(defOptions, options);
+        super(js_object_merge_deep(defOptions, options));
 
-    this.el = document.getElementById(tagId);
+        if (typeof selectorOrEl === "string") {
+            this.#element = document.querySelector(selectorOrEl);
+        } else {
+            this.#element = selectorOrEl;
+        }
 
-    this.promiseMediaStream = null;
-
-    this._init();
-};
-
-TjsMedia.prototype = {
+        this.#init();
+    }
     /**
      *
      * @param message
      * @param data
      * @private
      */
-    _doDebug: function(message, data = undefined)
+    #doDebug(message, data = undefined)
     {
         let self = this;
 
@@ -74,12 +80,12 @@ TjsMedia.prototype = {
         } else {
             console.log("TjsMedia("+self.el.id+") - " + message);
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _init: function()
+    #init()
     {
         let self = this;
 
@@ -93,119 +99,119 @@ TjsMedia.prototype = {
         if (self.options.captureStartOnCreate === true) {
             self.captureStart();
         }
-    },
+    }
     /**
      *
      * @returns {any}
      */
-    getEl: function()
+    getEl()
     {
         return this.el;
-    },
+    }
     /**
      *
      * @returns {boolean}
      */
-    isPromiseMediaStreamExists: function ()
+    isPromiseMediaStreamExists()
     {
        return this.promiseMediaStream !== null;
-    },
+    }
     /**
      *
      * @returns {null|Promise<MediaStream>|*}
      */
-    getPromiseMediaStream: function()
+    getPromiseMediaStream()
     {
         return this.promiseMediaStream;
-    },
+    }
     /**
      *
      * @returns {null|MediaProvider|*}
      */
-    getStream: function ()
+    getStream()
     {
         return this.el.srcObject;
-    },
+    }
     /**
      * @returns {boolean}
      */
-    isSrcObjectExists: function ()
+    isSrcObjectExists()
     {
         return this.el.srcObject !== null;
-    },
+    }
     /**
      *
      * @returns {MediaStreamTrack[]|null}
      */
-    getTracks: function()
+    getTracks()
     {
         if (this.el.srcObject === null) {
             return null;
         }
         return this.el.srcObject.getTracks();
-    },
+    }
     /**
      *
      * @param stream
      */
-    setStream: function(stream)
+    setStream(stream)
     {
         let self = this;
 
-        self._doDebug("onSetStream");
+        self.#doDebug("onSetStream");
 
         self.clearStream();
 
         self.el.onloadedmetadata = function (event) {
-            self._doDebug("onStreamLoaded");
+            self.#doDebug("onStreamLoaded");
             if (typeof self.options.onStreamLoaded === 'function') {
                 self.options.onStreamLoaded();
             }
         };
 
         self.el.srcObject = stream;
-    },
+    }
     /**
      *
      */
-    clearStream: function()
+    clearStream()
     {
         let self = this;
 
-        self._doDebug("onClearStream");
+        self.#doDebug("onClearStream");
 
         if (self.el.srcObject) {
             self.el.srcObject.getTracks().forEach(track => track.stop());
-            self._doDebug("onStreamCleared");
+            self.#doDebug("onStreamCleared");
             if (typeof self.options.onStreamCleared === 'function') {
                 self.options.onStreamCleared();
             }
         }
 
         self.el.srcObject = null;
-    },
+    }
     /**
      *
      * @param callback
      */
-    onCaptureStarted: function(callback){
+    onCaptureStarted(callback){
         let self = this;
         self.options.onCaptureStarted = callback;
-    },
+    }
     /**
      *
      * @param callback
      */
-    onCaptureStopped: function(callback){
+    onCaptureStopped(callback){
         let self = this;
         self.options.onCaptureStopped = callback;
-    },
+    }
     /**
      *
      * @param mediaStreamMode
      * @param constraints
      */
-    captureChange: function(mediaStreamMode, constraints = undefined)
+    captureChange(mediaStreamMode, constraints = undefined)
     {
         let self = this;
 
@@ -220,11 +226,11 @@ TjsMedia.prototype = {
         }
 
         self.captureStart();
-    },
+    }
     /**
      *
      */
-    captureStart: function()
+    captureStart()
     {
         let self = this;
 
@@ -233,13 +239,13 @@ TjsMedia.prototype = {
         self.clearStream();
 
         if (self.options.mediaStreamMode === 'display') {
-            self._doDebug("onCaptureStarting",{
+            self.#doDebug("onCaptureStarting",{
                 'mediaStreamMode' :  self.options.mediaStreamMode,
                 'constraints' :  self.options.displayMedia.constraints,
             });
             self.promiseMediaStream = navigator.mediaDevices.getDisplayMedia(self.options.displayMedia.constraints);
         } else if (self.options.mediaStreamMode === 'user') {
-            self._doDebug("onCaptureStarting",{
+            self.#doDebug("onCaptureStarting",{
                 'mediaStreamMode' :  self.options.mediaStreamMode,
                 'constraints' :  self.options.userMedia.constraints,
             });
@@ -258,11 +264,11 @@ TjsMedia.prototype = {
             .catch(function (e) {
                 console.log("TjsMedia("+self.el.id+") - Error: " + e.message);
             });
-    },
+    }
     /**
      *
      */
-    captureStop: function()
+    captureStop()
     {
         let self = this;
 
@@ -274,7 +280,7 @@ TjsMedia.prototype = {
 
         self.promiseMediaStream = null;
 
-        self._doDebug("onCaptureStopped");
+        self.#doDebug("onCaptureStopped");
         if (typeof self.options.onCaptureStopped === 'function') {
             self.options.onCaptureStopped();
         }
