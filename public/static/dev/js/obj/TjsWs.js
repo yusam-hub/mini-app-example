@@ -1,56 +1,66 @@
-let TjsWs = function(options = {}) {
+"use strict";
 
-    this.wsHostname = window.location.hostname;
-    this.wsProtocol = 'ws';
-    if (window.location.protocol.toLowerCase() === 'https:') {
-        this.wsProtocol += 's';
+class TjsWs extends TjsBase
+{
+    #wsAutoOpening;
+    #wsOpened;
+    #wsInstance;
+    #wsAutoOpenTimerId;
+    #wsHostname;
+    #wsProtocol;
+
+    constructor(options = {}) {
+
+        let defOptions = {
+            path: "/ws",
+            pathQuery: {}, //or function(){return {};}
+            debugging: false,
+            autoOpenOnCreate: true,
+            autoOpenOnCloseAbnormally: true,
+            autoOpenOnCloseAbnormallyInterval: 15000, //15 сек
+            noopInterval: 600000, //10 минут todo: нужно сделать таймер отправки пустого сообщения чтобы сокет не отвалился
+            onOpened: function(){},
+            onIncomingMessage: function(jsonMessage, stringMessage){},
+            onOutgoingMessage: function(jsonMessage, stringMessage){},
+            onClosed: function(){},
+            onError: function(){},
+        };
+
+        super(js_object_merge_deep(defOptions, options));
+
+        this.#wsHostname = window.location.hostname;
+        this.#wsProtocol = 'ws';
+        if (window.location.protocol.toLowerCase() === 'https:') {
+            this.#wsProtocol += 's';
+        }
+
+        this.#wsAutoOpening = false;
+        this.#wsOpened = false;
+        this.#wsInstance = null;
+        this.#wsAutoOpenTimerId = undefined;
+
+        this.#init();
     }
 
-    let defOptions = {
-        path: "/ws/dev/",
-        pathQuery: {}, //or function(){return {};}
-        debugging: false,
-        autoOpenOnCreate: true,
-        autoOpenOnCloseAbnormally: true,
-        autoOpenOnCloseAbnormallyInterval: 15000, //15 сек
-        noopInterval: 600000, //10 минут todo: нужно сделать таймер отправки пустого сообщения чтобы сокет не отвалился
-        onOpened: function(){},
-        onIncomingMessage: function(jsonMessage, stringMessage){},
-        onOutgoingMessage: function(jsonMessage, stringMessage){},
-        onClosed: function(){},
-        onError: function(){},
-    };
-
-    this.options = js_object_merge_deep(defOptions, options);
-
-    this.wsAutoOpening = false;
-    this.wsOpened = false;
-    this.wsInstance = null;
-    this.wsAutoOpenTimerId = undefined;
-
-    this._init();
-};
-
-TjsWs.prototype = {
     /**
      *
      * @private
      */
-    _init: function()
+    #init()
     {
         let self = this;
 
         if (self.options.autoOpenOnCreate === true) {
             self._doOpen();
         }
-    },
+    }
     /**
      *
      * @param message
      * @param data
      * @private
      */
-    _doDebug: function(message, data = undefined)
+    #doDebug(message, data = undefined)
     {
         let self = this;
         if (self.options.debugging !== true) return;
@@ -59,20 +69,20 @@ TjsWs.prototype = {
         } else {
             console.log("TjsWs - " + message);
         }
-    },
+    }
     /**
      *
      * @private
      */
-    _doOpen: function()
+    _doOpen()
     {
         let self = this;
 
-        if (self.wsOpened === true) {
+        if (self.#wsOpened === true) {
             return;
         }
 
-        self._doDebug("try to open");
+        self.#doDebug("try to open");
 
         let queryString = "";
         let pathQuery = self.options.pathQuery;
@@ -82,30 +92,30 @@ TjsWs.prototype = {
         if (typeof pathQuery === 'object') {
             queryString = (new URLSearchParams(self.options.pathQuery)).toString();
         }
-        let wsUrl = self.wsProtocol + '://' + self.wsHostname + '/' + self.options.path.jsLtrim('/') + ((queryString !== '') ? "?" + queryString : '');
+        let wsUrl = self.#wsProtocol + '://' + self.#wsHostname + '/' + self.options.path.jsLtrim('/') + ((queryString !== '') ? "?" + queryString : '');
 
-        self.wsInstance = new WebSocket(wsUrl);
+        self.#wsInstance = new WebSocket(wsUrl);
 
-        self.wsInstance.onopen = function(ev) {
-            self.wsOpened = true;
-            self.wsAutoOpening = false;
+        self.#wsInstance.onopen = function(ev) {
+            self.#wsOpened = true;
+            self.#wsAutoOpening = false;
 
-            self._doDebug("onOpened");
+            self.#doDebug("onOpened");
             if (typeof self.options.onOpened === 'function') {
                 self.options.onOpened();
             }
         };
 
-        self.wsInstance.onmessage = function(ev)
+        self.#wsInstance.onmessage = function(ev)
         {
             let jsonMessage = undefined;
             let stringMessage = ev.data;
 
             try {
                 jsonMessage = JSON.parse(stringMessage);
-                self._doDebug("onIncomingMessage", jsonMessage);
+                self.#doDebug("onIncomingMessage", jsonMessage);
             } catch (err) {
-                self._doDebug("onIncomingMessage", stringMessage);
+                self.#doDebug("onIncomingMessage", stringMessage);
             }
 
             if (typeof self.options.onIncomingMessage === 'function') {
@@ -113,7 +123,7 @@ TjsWs.prototype = {
             }
         };
 
-        self.wsInstance.onclose = function(ev) {
+        self.#wsInstance.onclose = function(ev) {
             if (ev.code !== 1000) {
                 self._doClose(true, ev);
             } else {
@@ -121,38 +131,38 @@ TjsWs.prototype = {
             }
         };
 
-        self.wsInstance.onerror = function(ev) {
-            self._doDebug("onError", ev);
+        self.#wsInstance.onerror = function(ev) {
+            self.#doDebug("onError", ev);
             if (typeof self.options.onError === 'function') {
                 self.options.onError();
             }
         };
 
-    },
+    }
     /**
      *
      * @param autoOpen
      * @param closeEvent
      * @private
      */
-    _doClose: function(autoOpen = false, closeEvent = undefined)
+    _doClose(autoOpen = false, closeEvent = undefined)
     {
         let self = this;
 
-        if (self.wsInstance === null) return;
+        if (self.#wsInstance === null) return;
 
-        self.wsInstance.close();
-        self.wsInstance = null;
-        self.wsOpened = false;
+        self.#wsInstance.close();
+        self.#wsInstance = null;
+        self.#wsOpened = false;
 
         if (typeof closeEvent === 'object') {
-            self._doDebug("onClosed", {
+            self.#doDebug("onClosed", {
                 'code' : closeEvent.code,
                 'timeStamp' : closeEvent.timeStamp,
                 'wasClean' : closeEvent.wasClean,
             });
         } else {
-            self._doDebug("onClosed");
+            self.#doDebug("onClosed");
         }
         if (typeof self.options.onClosed === 'function') {
             self.options.onClosed();
@@ -162,29 +172,29 @@ TjsWs.prototype = {
             &&
             self.options.autoOpenOnCloseAbnormally === true
             &&
-            self.wsAutoOpening !== true
+            self.#wsAutoOpening !== true
         ) {
-            self.wsAutoOpening = true;
+            self.#wsAutoOpening = true;
             self._doAutoOpenTimer({
                 'self': self,
             });
         }
-    },
+    }
     /**
      *
      * @param args
      * @private
      */
-    _doAutoOpenTimer: function(args)
+    _doAutoOpenTimer(args)
     {
         let self = args.self;
 
-        clearInterval(self.wsAutoOpenTimerId);
-        self.wsAutoOpenTimerId = undefined;
+        clearInterval(self.#wsAutoOpenTimerId);
+        self.#wsAutoOpenTimerId = undefined;
 
-        if (self.wsOpened !== true) {
+        if (self.#wsOpened !== true) {
 
-            self.wsAutoOpenTimerId = setInterval(
+            self.#wsAutoOpenTimerId = setInterval(
                 self._doAutoOpenTimer,
                 self.options.autoOpenOnCloseAbnormallyInterval,
                 {
@@ -194,41 +204,42 @@ TjsWs.prototype = {
 
             self._doOpen();
         }
-    },
+    }
     /**
      *
      */
-    open: function()
+    open()
     {
         let self = this;
 
         self._doOpen();
-    },
+    }
+
     /**
      *
      */
-    close: function()
+    close()
     {
         let self = this;
 
         self._doClose(false);
-    },
+    }
     /**
      *
      * @returns {boolean}
      */
-    isOpened: function()
+    isOpened()
     {
-       return this.wsOpened;
-    },
+        return this.#wsOpened;
+    }
     /**
      *
      * @param message object|string
      */
-    sendMessage: function(message)
+    sendMessage(message)
     {
         let self = this;
-        if (self.wsOpened !== true) return;
+        if (self.#wsOpened !== true) return;
 
         let jsonMessage = undefined;
         let stringMessage = undefined;
@@ -236,17 +247,16 @@ TjsWs.prototype = {
         if (typeof message === 'object') {
             jsonMessage = message;
             stringMessage = JSON.stringify(message);
-            self._doDebug("onOutgoingMessage", jsonMessage);
+            self.#doDebug("onOutgoingMessage", jsonMessage);
         } else if (typeof message === 'string') {
             stringMessage = message;
-            self._doDebug("onOutgoingMessage", stringMessage);
+            self.#doDebug("onOutgoingMessage", stringMessage);
         }
 
         if (typeof self.options.onOutgoingMessage === 'function') {
             self.options.onOutgoingMessage(jsonMessage, stringMessage);
         }
 
-        self.wsInstance.send(stringMessage);
+        self.#wsInstance.send(stringMessage);
     }
 }
-
