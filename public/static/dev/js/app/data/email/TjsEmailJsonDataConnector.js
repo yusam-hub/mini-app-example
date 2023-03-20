@@ -1,6 +1,7 @@
 "use strict";
 class TjsEmailJsonDataConnector extends TjsDataConnector
 {
+
     doFetch(params)
     {
         this.dataSource.data = {

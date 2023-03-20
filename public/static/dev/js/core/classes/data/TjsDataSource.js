@@ -50,11 +50,6 @@ class TjsDataSource extends TjsBase
         if (!(this.#dataConnector instanceof TjsDataConnector)) {
             throw Error("Invalid dataConnector");
         }
-        if (typeof this.#dataConnector.dataSource === "undefined"){
-            this.#dataConnector.dataSource = this;
-        } else if (this.#dataConnector.dataSource.constructor.name !== this.constructor.name) {
-            this.#dataConnector.dataSource = this;
-        }
     }
 
     doDataUndefined()
@@ -63,7 +58,7 @@ class TjsDataSource extends TjsBase
         this.#doDataChange();
     }
 
-    doDataFetch(params)
+    doDataFetch(params = {})
     {
         this.#dataConnector.doFetch(params);
     }

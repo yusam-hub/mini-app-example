@@ -4,9 +4,9 @@ class TjsUrlDataConnector extends TjsDataConnector
     #url;
     #jsPost;
     #showJsWait;
-    constructor(url, showJsWait, jsPost = undefined, options = {}) {
+    constructor(dataSource, url, showJsWait, jsPost = undefined, options = {}) {
 
-        super(options);
+        super(dataSource, options);
         this.#url = url;
         this.#showJsWait = showJsWait;
         this.#jsPost = jsPost;
@@ -15,15 +15,10 @@ class TjsUrlDataConnector extends TjsDataConnector
         }
     }
 
-    getRequestData()
-    {
-        return {};
-    }
-
     doFetch(params)
     {
         let self = this;
-        this.#jsPost.request(this.#url, js_object_merge_deep(this.getRequestData(), params), function (status, response, responseHeaders) {
+        this.#jsPost.request(this.#url, params, function (status, response, responseHeaders) {
             if (response.status === 'ok') {
                 self.dataSource.data = response.data;
             } else {

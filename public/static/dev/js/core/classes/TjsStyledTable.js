@@ -2,6 +2,7 @@
 
 class TjsStyledTable extends TjsBase
 {
+    #dataSource;
     #el;
     constructor(selectorOrEl, options = {})
     {
@@ -38,6 +39,34 @@ class TjsStyledTable extends TjsBase
         }
 
         this.#init();
+    }
+
+    get dataSource()
+    {
+        return this.#dataSource;
+    }
+
+    set dataSource(dataSource)
+    {
+        let self = this;
+
+        self.#dataSource = dataSource;
+        if (!(self.#dataSource instanceof TjsDataSource)) {
+            throw Error("Invalid dataSource");
+        }
+        self.#dataSource.onDataChangeListener(function (data){
+            self.changeRows(self.convertDataToRowsOnDataChangeListener(data));
+        });
+    }
+
+    /**
+     *
+     * @param data
+     * @returns {*}
+     */
+    convertDataToRowsOnDataChangeListener(data)
+    {
+        return data;
     }
 
     #init()

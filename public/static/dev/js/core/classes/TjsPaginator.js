@@ -2,12 +2,11 @@
 
 class TjsPaginator extends TjsBase
 {
+    #dataSource;
     #el;
     constructor(selectorOrEl, options = {})
     {
         let defOptions = {
-            'requestUri': false,//or '/'
-            'requestOnCreate': false,
             'initLocationSearch': true,
             'replaceHistorySearch': true,
             'page': 1,
@@ -47,15 +46,37 @@ class TjsPaginator extends TjsBase
         this.#init();
     }
 
+    get dataSource()
+    {
+        return this.#dataSource;
+    }
+
+    set dataSource(dataSource)
+    {
+        let self = this;
+
+        self.#dataSource = dataSource;
+        if (!(self.#dataSource instanceof TjsDataSource)) {
+            throw Error("Invalid dataSource");
+        }
+        self.#dataSource.onDataChangeListener(function (data){
+            if (!(typeof data === "undefined")) {
+                self.options.page = parseInt(data.query.page) || 1;
+                self.options.limit = parseInt(data.query.limit) || 1;
+                self.#reRender(false, data.data);
+            } else {
+                self.options.page = 1;
+                self.options.limit = 1;
+                self.#reRender(false, []);
+            }
+        });
+    }
+
     #init()
     {
         let self = this;
 
         self.#reRender(true);
-
-        if (self.options.requestOnCreate === true) {
-            self.change();
-        }
     }
     /**
      *
@@ -286,27 +307,10 @@ class TjsPaginator extends TjsBase
             window.history.replaceState(null, null, '?' + urlSearchParams.toString());
         }
 
-        if (typeof self.options.requestUri !== 'string') {
-            self.#reRender(false, []);
-            return;
-        }
-
-        window.jsPost.request(self.options.requestUri, {
+        self.dataSource.doDataFetch({
             'page': self.options.page,
             'limit': self.options.limit,
             'filter': {},
-        }, function (statusCode, response, headers)
-        {
-            console.log(statusCode, response);
-            if (statusCode === 200 && response.status === 'ok') {
-                self.options.page = parseInt(response.data.query.page) || 1;
-                self.options.limit = parseInt(response.data.query.limit) || 1;
-                self.#reRender(false, response.data.data);
-            } else {
-                self.options.page = 1;
-                self.options.limit = 1;
-                self.#reRender(false, []);
-            }
         });
     }
 }

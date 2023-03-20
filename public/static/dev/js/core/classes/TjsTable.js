@@ -691,7 +691,7 @@ class TjsTable extends TjsBase
      *
      * @param query
      */
-    doDataFetch(query = {})
+    open(query = {})
     {
         let self = this;
         self.#dataRowsQueryFilter = js_object_merge_deep(self.#dataRowsQueryFilter, query);

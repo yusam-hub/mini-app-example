@@ -59,6 +59,7 @@
         <script type="text/javascript" src="/public/static/dev/js/core/classes/TjsToggles.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataSource.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataSourceInstance.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataConnector.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsUrlDataConnector.js?rnd={ts}"></script>
 
@@ -82,9 +83,10 @@
         <script type="text/javascript" src="/public/static/dev/js/core/classes/TjsStyledTable.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/TjsTable.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/dev/js/app/data/email/TjsEmailTable.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/app/data/email/TjsEmailJsonDataConnector.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/app/data/email/TjsEmailUrlDataConnector.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/app/data/email/TjsEmailTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/app/data/email/TjsEmailStyledTable.js?rnd={ts}"></script>
 
         <script type="text/javascript" src="/public/static/dev/js/init_end.js?rnd={ts}"></script>
 
