@@ -13,10 +13,6 @@
             let jsEmailDataSource = new TjsDataSource();
             jsEmailDataSource.dataConnector = new TjsEmailJsonDataConnector();
             //jsEmailDataSource.dataConnector = new TjsEmailUrlDataConnector();
-            jsEmailDataSource.onDataChangeListener(function(data){
-                console.log(data);
-            });
-
             let jsEmailTable = new TjsEmailTable('#jsEmailTable');
             jsEmailTable.dataSource = jsEmailDataSource;
             jsEmailTable.doDataFetch();

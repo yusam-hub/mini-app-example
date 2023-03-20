@@ -16,6 +16,10 @@
     <script type="text/javascript">
         window.jsGlob.winReady(function(){
 
+            let jsEmailDataSource = new TjsDataSource();
+            jsEmailDataSource.dataConnector = new TjsEmailJsonDataConnector();
+            //jsEmailDataSource.dataConnector = new TjsEmailUrlDataConnector();
+
             let jsStyledTable = new TjsStyledTable(
                 '#jsStyledTable',
                 {
