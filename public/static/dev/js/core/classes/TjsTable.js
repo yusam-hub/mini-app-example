@@ -2,6 +2,7 @@
 
 class TjsTable extends TjsBase
 {
+    #dataSource;
     #el;
     #tableData;
     #selectedRowIndex;
@@ -11,7 +12,6 @@ class TjsTable extends TjsBase
     constructor(selectorOrEl, options = {})
     {
         let defOptions = {
-            'requestUri' : '/', //function(params) {}
             'initLocationSearch': true,
             'replaceHistorySearch': true,
             'onDrawPanelCenter': function(td){},
@@ -96,6 +96,28 @@ class TjsTable extends TjsBase
         this.#init();
     };
 
+    get dataSource()
+    {
+        return this.#dataSource;
+    }
+
+    set dataSource(dataSource)
+    {
+        let self = this;
+
+        self.#dataSource = dataSource;
+        if (!(self.#dataSource instanceof TjsDataSource)) {
+            throw Error("Invalid dataSource");
+        }
+        self.#dataSource.onDataChangeListener(function (data){
+            if (!(typeof data === "undefined")) {
+                self.setData(data.query, data.data);
+            } else {
+                self.setData({},[]);
+            }
+        });
+    }
+
     #init()
     {
         let self = this;
@@ -120,6 +142,7 @@ class TjsTable extends TjsBase
 
         self.#reRender(true);
     }
+
     /**
      *
      * @returns {number}
@@ -594,7 +617,7 @@ class TjsTable extends TjsBase
         let self = this;
         self.#selectedRowIndex = -1;
         self.#dataRowsQuery[fieldName] = fieldValue;
-        self.#doPost();
+        self.#doDataFetch();
     }
     /**
      *
@@ -606,7 +629,7 @@ class TjsTable extends TjsBase
         let self = this;
         self.#selectedRowIndex = -1;
         self.#dataRowsQuery = js_object_merge_deep(self.#dataRowsQuery, values);
-        self.#doPost();
+        self.#doDataFetch();
     }
     /**
      *
@@ -619,7 +642,7 @@ class TjsTable extends TjsBase
         let self = this;
         self.#selectedRowIndex = -1;
         self.#dataRowsQueryFilter[fieldName] = fieldValue;
-        self.#doPost();
+        self.#doDataFetch();
     }
     /**
      *
@@ -636,35 +659,14 @@ class TjsTable extends TjsBase
      *
      * @private
      */
-    #doPost()
+    #doDataFetch()
     {
         let self = this;
-
-        if (typeof self.options.requestUri === "function") {
-
-            let params = self.#dataRowsQuery;
-            params['filter'] = self.#dataRowsQueryFilter;
-
-            let response = self.options.requestUri(params);
-            if (response.status === 'ok') {
-                self.setData(response.data.query, response.data.data);
-            } else {
-                self.setData({},[]);
-            }
-            return;
-        }
 
         let params = self.#dataRowsQuery;
         params['filter'] = self.#dataRowsQueryFilter;
 
-        window.jsPost.request(self.options.requestUri, params, function (statusCode, response, headers)
-        {
-            if (statusCode === 200 && response.status === 'ok') {
-                self.setData(response.data.query, response.data.data);
-            } else {
-                self.setData({},[]);
-            }
-        });
+        self.#dataSource.doDataFetch(params);
     }
     /**
      *
@@ -689,11 +691,11 @@ class TjsTable extends TjsBase
      *
      * @param query
      */
-    open(query = {})
+    doDataFetch(query = {})
     {
         let self = this;
         self.#dataRowsQueryFilter = js_object_merge_deep(self.#dataRowsQueryFilter, query);
-        self.#doPost();
+        self.#doDataFetch();
     }
     /**
      *
