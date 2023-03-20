@@ -26,8 +26,6 @@
             let jsPaginator = new TjsPaginator('#jsPaginator');
             jsPaginator.dataSource = jsEmailDataSource;
             jsPaginator.change();
-
-            //jsEmailDataSource.doDataFetch();
         });
 
     </script>
