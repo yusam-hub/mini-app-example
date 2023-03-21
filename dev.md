@@ -2,6 +2,10 @@
 
     docker exec -it yusam-php74 sh
 
+###### tail
+
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example/storage/logs && tail -f app-2023-03-21.log"
+
 ###### composer
 
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && composer update"
@@ -9,6 +13,14 @@
 ###### console
 
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console"
+
+###### db migrate
+
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console db:migrate"
+
+###### demo
+
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console demo:test"
 
 ###### console client
 
