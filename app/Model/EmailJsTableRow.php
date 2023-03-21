@@ -87,6 +87,25 @@ MYSQL;
                 $where_conditions_bindings
             );
 
+        $queryBuilder = app_ext_db_global()->pdoExt()->queryBuilder();
+        $queryBuilder
+            ->select('*')
+            ->from(TABLE_TMP_EMAILS);
+        foreach($jsTableQuery->filter as $field => $value) {
+            if (!empty($value)) {
+                $queryBuilder->andWhere([$field => $value]);
+            }
+        }
+        if (!empty($tableResponse->query->sortFieldName) && !empty($tableResponse->query->sortDirection) && in_array($tableResponse->query->sortDirection, ['asc','desc']))
+        {
+            $queryBuilder->orderBy([
+                $tableResponse->query->sortFieldName => $tableResponse->query->sortDirection
+            ]);
+        }
+        $queryBuilder->offset(($tableResponse->query->page - 1) * $tableResponse->query->limit);
+        $queryBuilder->limit($tableResponse->query->limit);
+        //$rows2 = $queryBuilder->fetchAll();
+
         $tableResponse->data->import($rows);
         $tableResponse->detail->count = count($rows);
 
