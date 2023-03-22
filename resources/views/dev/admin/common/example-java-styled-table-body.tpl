@@ -23,7 +23,9 @@
             let jsEmailStyledTable = new TjsEmailStyledTable('#jsEmailStyledTable');
             jsEmailStyledTable.dataSource = jsEmailDataSource;
 
-            let jsPaginator = new TjsPaginator('#jsPaginator');
+            let jsPaginator = new TjsPaginator('#jsPaginator', {
+                'limit' : 15,
+            });
             jsPaginator.dataSource = jsEmailDataSource;
             jsPaginator.change();
         });

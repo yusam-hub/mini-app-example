@@ -22,7 +22,7 @@ class TjsPaginator extends TjsBase
                 'pageNextButtonTitle' : '&#9658;',
             },
             'onPaginatorChanged': function(page, limit, rows){
-                console.log(page, limit, rows);
+                //console.log(page, limit, rows);
             }
         };
 
