@@ -4231,7 +4231,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yusam-hub/db-ext.git",
-                "reference": "b91ef438b4c28006d0a3cd3219f05066dd4dfa94"
+                "reference": "3ee6e9ef5ae2c49b9e49dbbbdc00558d60c6b933"
             },
             "require": {
                 "ext-json": "*",
@@ -4259,7 +4259,7 @@
                 "files": []
             },
             "description": "yusam-hub/db-ext",
-            "time": "2023-03-21T23:27:15+00:00"
+            "time": "2023-03-22T04:31:37+00:00"
         },
         {
             "name": "yusam-hub/debug",
