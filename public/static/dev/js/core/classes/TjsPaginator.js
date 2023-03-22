@@ -10,7 +10,7 @@ class TjsPaginator extends TjsBase
             'initLocationSearch': true,
             'replaceHistorySearch': true,
             'page': 1,
-            'limit': 1,
+            'limit': 15,
             'limitList': [1,5,15,30,60],
             'settings' : {
                 'limitClassButton' : 'button-black',
