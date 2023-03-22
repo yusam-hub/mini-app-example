@@ -43,16 +43,16 @@ class EmailJsTableRow extends JsTableRow
         $tableResponse->query->sortDirection = $jsTableQuery->sortDirection;
 
         $queryBuilder = app_ext_db_global()->pdoExt()->queryBuilder();
-        $queryBuilder
+        $rows = $queryBuilder
             ->select('*')
-            ->from(TABLE_TMP_EMAILS);
-        $queryBuilder->where($jsTableQuery->filter);
-        $queryBuilder->orderBy([
-            $tableResponse->query->sortFieldName => $tableResponse->query->sortDirection
-        ]);
-        $queryBuilder->offset(($tableResponse->query->page - 1) * $tableResponse->query->limit);
-        $queryBuilder->limit($tableResponse->query->limit);
-        $rows = $queryBuilder->fetchAll();
+            ->from(TABLE_TMP_EMAILS)
+            ->where($jsTableQuery->filter)
+            ->orderBy([
+                $tableResponse->query->sortFieldName => $tableResponse->query->sortDirection
+            ])
+            ->offset(($tableResponse->query->page - 1) * $tableResponse->query->limit)
+            ->limit($tableResponse->query->limit)
+            ->fetchAll();
 
         $tableResponse->data->import($rows);
         $tableResponse->detail->count = count($rows);
