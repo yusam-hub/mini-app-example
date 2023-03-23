@@ -58,6 +58,9 @@
         <script type="text/javascript" src="/public/static/dev/js/core/classes/TjsTabs.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/TjsToggles.js?rnd={ts}"></script>
 
+        <script type="text/javascript" src="/public/static/dev/js/core/classes/ui/controls/TjsUiControlBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/dev/js/core/classes/ui/controls/TjsUiAutoCompleteControl.js?rnd={ts}"></script>
+
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataSource.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataSourceInstance.js?rnd={ts}"></script>
         <script type="text/javascript" src="/public/static/dev/js/core/classes/data/TjsDataConnector.js?rnd={ts}"></script>

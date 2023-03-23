@@ -213,3 +213,9 @@ function js_lang(dotKey)
     }
     return `window.jsLang.${dotKey}`;
 }*/
+
+function js_css_assign(el, style) {
+    for (const property in style) {
+        el.style[property] = style[property];
+    }
+}

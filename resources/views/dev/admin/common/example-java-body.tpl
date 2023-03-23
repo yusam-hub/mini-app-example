@@ -102,6 +102,7 @@
 </div>
 
 {literal}
+
 <script type="text/javascript">
 
     window.jsGlob.winReady(function(){
@@ -196,6 +197,11 @@
             }
         });
 
+        let jsUiAutoCompleteControl = new TjsUiAutoCompleteControl();
+        jsFormFirst.addFieldExtraFormFieldElement('jsUiAutoCompleteControl', jsUiAutoCompleteControl.el, {
+            'fieldLabel' : 'jsUiAutoCompleteControl',
+        });
+
         jsFormFirst.addFieldInputText('text1', {
             'fieldLabel' : 'text1',
             'readOnly' : false,
@@ -272,10 +278,7 @@
             ],
         });
 
-        let jsTableDiv = js_create_el('div','jsTable');
-        jsFormFirst.addFieldExtraFormFieldElement('jsTable', jsTableDiv, {
-            'fieldLabel' : 'jsTable',
-        });
+
 
         /*jsFormFirst.fromArray({
             'text1': 'value1',
@@ -289,7 +292,7 @@
         });*/
 
         jsFormFirst.fromErrorArray({
-            'jsTable': 'invalid value',
+            'jsUiAutoCompleteControl': 'invalid value',
         })
 
         jsFormFirst.appendForSelector('#jsFormFirstPlacement');
