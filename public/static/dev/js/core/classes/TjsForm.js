@@ -142,19 +142,33 @@ class TjsForm extends TjsBase
 
         for (const [fieldName, options] of Object.entries(fieldDefs)) {
             if (options.fieldType === 'input-hidden') {
+
                 self.addFieldInputHidden(fieldName, options.fieldValue);
+
             } else if (options.fieldType === 'input-text') {
+
                 self.addFieldInputText(fieldName, options);
+
             } else if (options.fieldType === 'input-file') {
+
                 self.addFieldInputFile(fieldName, options);
+
             } else if (options.fieldType === 'text-area') {
+
                 self.addFieldTextArea(fieldName, options);
+
             } else if (options.fieldType === 'select') {
+
                 self.addFieldSelect(fieldName, options);
+
             } else if (options.fieldType === 'radios') {
+
                 self.addFieldRadios(fieldName, options);
+
             } else if (options.fieldType === 'checkboxes') {
+
                 self.addFieldCheckboxes(fieldName, options);
+
             }
         }
     }
