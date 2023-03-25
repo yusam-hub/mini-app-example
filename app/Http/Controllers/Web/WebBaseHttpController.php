@@ -21,8 +21,14 @@ abstract class WebBaseHttpController extends BaseHttpController
                 'path' => $this->getRequest()->getPathInfo(),
             ]
         ]);
-        return app_ext_smarty_global()
-            ->smartyExt($this->getTemplateScheme())
+        $smartyExt = app_ext_smarty_global()
+            ->smartyExt($this->getTemplateScheme());
+
+        $smartyExt
+            ->getSmartyEngine()
+            ->setLinkedValue('translate', $this->getTranslate());
+
+        return $smartyExt
             ->view($template, $params);
     }
 }

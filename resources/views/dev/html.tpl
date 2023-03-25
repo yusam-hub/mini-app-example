@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="{if (isset($defaultComposer.html.headTitle))}{$defaultComposer.locale|escape}{/if}">
+<html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{if (isset($defaultComposer.html.headTitle))}{$defaultComposer.html.headTitle|escape}{/if}</title>
+    <title>{t}default.title{/t}</title>
 
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Pragma" content="no-cache">

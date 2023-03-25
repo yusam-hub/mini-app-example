@@ -18,5 +18,11 @@ function smarty_block_t($params, $content, Smarty_Internal_Template $template, &
     if (is_null($content)) {
         return;
     }
-    return app_ext_translate($content);
+    if ($template->smarty instanceof \YusamHub\SmartyExt\SmartyEngine) {
+        $translate = $template->smarty->getLinkedValue('translate');
+        if ($translate instanceof \YusamHub\AppExt\Translate) {
+            return $translate->translate(strval($content), $params['replace']??[], $params['locale']??null);
+        }
+    }
+    return $content;
 }

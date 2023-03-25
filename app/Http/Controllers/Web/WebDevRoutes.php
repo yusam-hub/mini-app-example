@@ -12,6 +12,7 @@ class WebDevRoutes extends BaseHttpController
 {
     public static function routesRegister(RoutingConfigurator $routes): void
     {
+        WebLocaleController::routesRegister($routes);
         WebDevHomeController::routesRegister($routes);
         WebDevAdminController::routesRegister($routes);
         WebDevAdminCommonController::routesRegister($routes);
