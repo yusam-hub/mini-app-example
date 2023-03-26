@@ -28,70 +28,70 @@
     {/if}
 
     {str_replace search='/public' replace=""}
-        <link rel="stylesheet" href="/public/static/default/css/app.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-msg-cropper.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-table.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-wait.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-button.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-common.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-form.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-js-msg-form.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-styled-table.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/js-yusam-tmp.css?rnd={ts}">
-        <link rel="stylesheet" href="/public/static/default/css/social-icons.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/app.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-msg-cropper.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-table.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-wait.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-button.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-common.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-form.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-js-msg-form.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-styled-table.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/js-yusam-tmp.css?rnd={ts}">
+        <link rel="stylesheet" href="/public/static/js-base/css/social-icons.css?rnd={ts}">
 
-        <script type="text/javascript" src="/public/static/default/js/init_begin.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/init_begin.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/prototypes/string.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/prototypes/object.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/prototypes/number.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/prototypes/array.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/prototypes/any.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/functions/any.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/prototypes/string.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/prototypes/object.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/prototypes/number.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/prototypes/array.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/prototypes/any.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/functions/any.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsBase.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsInterval.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsCountdown.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsGlob.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsCookie.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsTabs.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsToggles.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsInterval.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsCountdown.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsGlob.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsCookie.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsTabs.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsToggles.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/ui/controls/TjsUiControlBase.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/ui/controls/TjsUiAutoCompleteControl.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/ui/controls/TjsUiControlBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/ui/controls/TjsUiAutoCompleteControl.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/data/TjsDataSource.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/data/TjsDataSourceInstance.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/data/TjsDataConnector.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/data/TjsUrlDataConnector.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/data/TjsDataSource.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/data/TjsDataSourceInstance.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/data/TjsDataConnector.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/data/TjsUrlDataConnector.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/lang/TjsWait.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsWait.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/lang/TjsWait.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsWait.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/lang/TjsPost.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsPost.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/lang/TjsPost.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsPost.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsWs.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsMedia.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsRtcPeer.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsWs.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsMedia.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsRtcPeer.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsForm.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsForm.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsMsgBase.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/lang/TjsMsg.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsMsg.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsMsgBase.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/lang/TjsMsg.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsMsg.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsPaginator.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsStyledTable.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/core/classes/TjsTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsPaginator.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsStyledTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/core/classes/TjsTable.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/app/data/email/TjsEmailJsonDataConnector.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/app/data/email/TjsEmailUrlDataConnector.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/app/data/email/TjsEmailTable.js?rnd={ts}"></script>
-        <script type="text/javascript" src="/public/static/default/js/app/data/email/TjsEmailStyledTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/app/data/email/TjsEmailJsonDataConnector.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/app/data/email/TjsEmailUrlDataConnector.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/app/data/email/TjsEmailTable.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/app/data/email/TjsEmailStyledTable.js?rnd={ts}"></script>
 
-        <script type="text/javascript" src="/public/static/default/js/init_end.js?rnd={ts}"></script>
+        <script type="text/javascript" src="/public/static/js-base/js/init_end.js?rnd={ts}"></script>
 
 
     {/str_replace}
