@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'default' => \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
+    'default' => 'default',
 
     'templates' => [
-        \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV => [
+        'default' => [
             'smarty' => [
                 'debugging' => false,
                 'force_compile' => true,
@@ -12,11 +12,11 @@ return [
                 'cache_lifetime' => 120,
             ],
             'smartyDirs' => [
-                'pluginDir' => __DIR__ .'/../resources/views/smarty_plugins',
-                'templateDir' => __DIR__ .'/../resources/views/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
-                'configDir' => __DIR__ .'/../resources/views/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
-                'compileDir' => __DIR__ .'/../storage/smarty/compiles/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
-                'cacheDir' => __DIR__ .'/../storage/smarty/caches/' . \App\Http\Controllers\Web\WebInterface::TEMPLATE_SCHEME_DEV,
+                'pluginDir' => __DIR__ .'/../resources/views/default/_smarty_plugins',
+                'templateDir' => __DIR__ .'/../resources/views/default',
+                'configDir' => __DIR__ .'/../resources/views/default',
+                'compileDir' => __DIR__ .'/../storage/smarty/compiles/default',
+                'cacheDir' => __DIR__ .'/../storage/smarty/caches/default',
             ],
             'smartyExt' => [
                 'extension' => '.tpl',
