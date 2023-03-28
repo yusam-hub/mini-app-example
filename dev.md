@@ -24,10 +24,10 @@
 
 ###### console client
 
-    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console client:rabbit-mq-publisher test"
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console client:rabbit-mq-publisher hello-message"
 
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console client:web-socket-internal"
-    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console client:web-socket-external my-test-message"
+    docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example && php console client:web-socket-external hello-message"
 
 ###### console daemon
 
