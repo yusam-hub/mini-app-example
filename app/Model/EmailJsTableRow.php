@@ -21,7 +21,7 @@ class EmailJsTableRow extends JsTableRow
     public static function createExamples()
     {
         for($i=1; $i < 1000; $i++) {
-            app_ext_db_global()->pdoExt()->insert(TABLE_TMP_EMAILS, [
+            app_ext_db_global()->pdoExt()->insert(DB_NAME_LOCALHOST,TABLE_TMP_EMAILS, [
                 'id' => null,
                 'email' => sprintf('email%d@email%d.loc', $i, $i)
             ]);
@@ -45,7 +45,7 @@ class EmailJsTableRow extends JsTableRow
         $queryBuilder = app_ext_db_global()->pdoExt()->queryBuilder();
         $rows = $queryBuilder
             ->select('*')
-            ->from(TABLE_TMP_EMAILS)
+            ->from(DB_NAME_LOCALHOST .'.' . TABLE_TMP_EMAILS)
             ->where($jsTableQuery->filter)
             ->orderBy([
                 $tableResponse->query->sortFieldName => $tableResponse->query->sortDirection

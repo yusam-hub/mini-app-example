@@ -8,7 +8,7 @@ abstract class WebBaseHttpController extends BaseHttpController
 {
     protected function getTemplateScheme(): string
     {
-        return app_ext_config('smarty-ext.default');
+        return app_ext_config('smarty-ext.templateDefault');
     }
 
     /**

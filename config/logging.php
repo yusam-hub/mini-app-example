@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default' => app_ext_env('LOGGING_CHANNEL', 'app'),
+    'channelDefault' => app_ext_env('LOGGING_CHANNEL', 'app'),
 
     'channels' => [
         'app' => [

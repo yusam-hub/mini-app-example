@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'default' => 'default',
+    'connectionDefault' => 'app',
 
     'connections' => [
-        'default' => [
+        'app' => [
             "host" => app_ext_env("RABBIT_MQ_HOST",'rabbit-host'),
             "port" => app_ext_env("RABBIT_MQ_PORT", 5672),
             "vhost" => app_ext_env("RABBIT_MQ_VHOST", '/'),

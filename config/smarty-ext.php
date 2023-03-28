@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default' => 'default',
+    'templateDefault' => 'default',
 
     'templates' => [
         'default' => [

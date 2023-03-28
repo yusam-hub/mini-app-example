@@ -4,9 +4,9 @@ return new class {
     public function getQuery(): string
     {
         $query = <<<MYSQL
-DROP TABLE IF EXISTS `:table`;
+DROP TABLE IF EXISTS `:database`.`:table`;
 
-CREATE TABLE IF NOT EXISTS `:table` (
+CREATE TABLE IF NOT EXISTS `:database`.`:table` (
     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     `apiToken` varchar(32) NOT NULL COMMENT 'API токен',
     `apiSign` varchar(255) NOT NULL COMMENT 'API подпись, секретный ключ',
@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `:table` (
 MYSQL;
 
         return strtr($query, [
+            ':database' => DB_NAME_LOCALHOST,
             ':table' => TABLE_API_USERS
         ]);
     }
