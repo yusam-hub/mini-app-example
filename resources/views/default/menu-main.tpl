@@ -1,6 +1,6 @@
 <!-- Menu -->
 {str_replace search='/public' replace=""}
-<link rel="stylesheet" href="/public/static/dev/css/menu-main.css">
+<link rel="stylesheet" href="/public/static/js-base/css/menu-main.css">
 {/str_replace}
 {tpl_menu_main_loader varName="tpl_menu_main" requestPath=$_request.path}
 {tpl_locales_loader varName="tpl_locales"}
