@@ -2,6 +2,8 @@
 
     docker exec -it yusam-php74 sh
 
+    docker exec -it yusam-php74 sh -c "php -m"
+
 ###### tail
 
     docker exec -it yusam-php74 sh -c "cd /var/www/data/yusam/github/yusam-hub/mini-app-example/storage/logs && tail -f app-2023-03-21.log"
